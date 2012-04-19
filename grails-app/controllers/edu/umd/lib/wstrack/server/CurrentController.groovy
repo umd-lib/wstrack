@@ -1,10 +1,13 @@
-package umd.edu.lib.wstrack
+package edu.umd.lib.wstrack.server
 
 import org.springframework.dao.DataIntegrityViolationException
 
+import edu.umd.lib.wstrack.server.Current;
 
 
-class TrackingController {
+
+
+class CurrentController {
 
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -12,13 +15,13 @@ class TrackingController {
     //  redirect(action: "list", params: params)
 
     String url = "http://mckeldinb-13.umd.edu:8888/wstrack-client/wstrackClient/track/129.2.18.13/IFZaY/6PEjbf5DA8DqWDpWkeowM=/Mac%20OS%20X"
-    String[] trackingInstance = Tracking.getQueryParams(url)
+    String[] trackingInstance = Current.getQueryParams(url)
     def hostName = trackingInstance[0]
     def ip = trackingInstance[4]
     def usernameHash = trackingInstance[5]+trackingInstance[6]
     def os = trackingInstance[7]
 
-    def dbValues = new Tracking(guestFlag: 'False', hostName: hostName,ip : ip, os: os, status: 'Login', userHash : usernameHash)
+    def dbValues = new Current(guestFlag: 'False', hostName: hostName,ip : ip, os: os, status: 'Login', userHash : usernameHash)
     dbValues.save()
 
     //      def ip = request.getParameter("")
@@ -28,15 +31,15 @@ class TrackingController {
 
   def list() {
     params.max = Math.min(params.max ? params.int('max') : 10, 100)
-    [trackingInstanceList: Tracking.list(params), trackingInstanceTotal: Tracking.count()]
+    [trackingInstanceList: Current.list(params), trackingInstanceTotal: Current.count()]
   }
 
   def create() {
-    [trackingInstance: new Tracking(params)]
+    [trackingInstance: new Current(params)]
   }
 
   def save() {
-    def trackingInstance = new Tracking(params)
+    def trackingInstance = new Current(params)
     if (!trackingInstance.save(flush: true)) {
       render(view: "create", model: [trackingInstance: trackingInstance])
       return
@@ -50,7 +53,7 @@ class TrackingController {
   }
 
   def show() {
-    def trackingInstance = Tracking.get(params.id)
+    def trackingInstance = Current.get(params.id)
     if (!trackingInstance) {
       flash.message = message(code: 'default.not.found.message', args: [
         message(code: 'tracking.label', default: 'Tracking'),
@@ -64,7 +67,7 @@ class TrackingController {
   }
 
   def edit() {
-    def trackingInstance = Tracking.get(params.id)
+    def trackingInstance = Current.get(params.id)
     if (!trackingInstance) {
       flash.message = message(code: 'default.not.found.message', args: [
         message(code: 'tracking.label', default: 'Tracking'),
@@ -78,7 +81,7 @@ class TrackingController {
   }
 
   def update() {
-    def trackingInstance = Tracking.get(params.id)
+    def trackingInstance = Current.get(params.id)
     if (!trackingInstance) {
       flash.message = message(code: 'default.not.found.message', args: [
         message(code: 'tracking.label', default: 'Tracking'),
@@ -116,7 +119,7 @@ class TrackingController {
   }
 
   def delete() {
-    def trackingInstance = Tracking.get(params.id)
+    def trackingInstance = Current.get(params.id)
     if (!trackingInstance) {
       flash.message = message(code: 'default.not.found.message', args: [
         message(code: 'tracking.label', default: 'Tracking'),

@@ -3,11 +3,15 @@ package umd.edu.lib.wstrack
 
 
 import org.junit.*
+
+import edu.umd.lib.wstrack.server.Current;
+
+import umd.edu.lib.wstrack.server.CurrentController;
 import grails.test.mixin.*
 
-@TestFor(TrackingController)
-@Mock(Tracking)
-class TrackingControllerTests {
+@TestFor(CurrentController)
+@Mock(Current)
+class CurrentControllerTests {
 
 
     def populateValidParams(params) {
@@ -48,7 +52,7 @@ class TrackingControllerTests {
 
         assert response.redirectedUrl == '/tracking/show/1'
         assert controller.flash.message != null
-        assert Tracking.count() == 1
+        assert Current.count() == 1
     }
 
     void testShow() {
@@ -59,7 +63,7 @@ class TrackingControllerTests {
 
 
         populateValidParams(params)
-        def tracking = new Tracking(params)
+        def tracking = new Current(params)
 
         assert tracking.save() != null
 
@@ -78,7 +82,7 @@ class TrackingControllerTests {
 
 
         populateValidParams(params)
-        def tracking = new Tracking(params)
+        def tracking = new Current(params)
 
         assert tracking.save() != null
 
@@ -99,7 +103,7 @@ class TrackingControllerTests {
 
 
         populateValidParams(params)
-        def tracking = new Tracking(params)
+        def tracking = new Current(params)
 
         assert tracking.save() != null
 
@@ -143,17 +147,17 @@ class TrackingControllerTests {
         response.reset()
 
         populateValidParams(params)
-        def tracking = new Tracking(params)
+        def tracking = new Current(params)
 
         assert tracking.save() != null
-        assert Tracking.count() == 1
+        assert Current.count() == 1
 
         params.id = tracking.id
 
         controller.delete()
 
-        assert Tracking.count() == 0
-        assert Tracking.get(tracking.id) == null
+        assert Current.count() == 0
+        assert Current.get(tracking.id) == null
         assert response.redirectedUrl == '/tracking/list'
     }
 }

@@ -1,13 +1,16 @@
-package umd.edu.lib.wstrack
+package edu.umd.lib.wstrack.server
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
 
+import edu.umd.lib.wstrack.server.Current;
 
 
 
-class Tracking {
+
+
+class Current {
 
   String ip
   String hostName
@@ -41,7 +44,7 @@ class Tracking {
       return urlParameters
     }
 
-    def dbValues = new Tracking(guestFlag: 'False', hostName: urlParameters[0],ip : urlParameters[4], os: urlParameters[7], status: 'Login', userHash : urlParameters[5]+urlParameters[6])
+    def dbValues = new Current(guestFlag: 'False', hostName: urlParameters[0],ip : urlParameters[4], os: urlParameters[7], status: 'Login', userHash : urlParameters[5]+urlParameters[6])
     dbValues.save()
   }
 
