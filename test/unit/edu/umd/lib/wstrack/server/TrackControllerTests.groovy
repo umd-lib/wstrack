@@ -6,12 +6,12 @@ import org.junit.*
 
 import edu.umd.lib.wstrack.server.Current;
 
-import edu.umd.lib.wstrack.server.CurrentController;
+import edu.umd.lib.wstrack.server.TrackController;
 import grails.test.mixin.*
 
-@TestFor(CurrentController)
+@TestFor(TrackController)
 @Mock(Current)
-class CurrentControllerTests {
+class TrackControllerTests {
 
 
     def populateValidParams(params) {

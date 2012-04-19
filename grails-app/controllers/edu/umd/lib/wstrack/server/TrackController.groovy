@@ -7,7 +7,7 @@ import edu.umd.lib.wstrack.server.Current;
 
 
 
-class CurrentController {
+class TrackController {
 
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
