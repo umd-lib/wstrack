@@ -8,6 +8,7 @@ import edu.umd.lib.wstrack.server.Current;
 
 class Current {
 
+  Date timestamp = new Date()
   String ip
   String status
   String hostName
@@ -19,7 +20,7 @@ class Current {
   static mapping = { version false }
 
   static constraints = { ip(blank:false) }
-
+  
   public static String[] getQueryParams(String url) {
 
     String[] urlParts = url.split("//")

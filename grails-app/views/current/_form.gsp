@@ -42,6 +42,14 @@
 	<g:textField name="status" value="${currentInstance?.status}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'timestamp', 'error')} required">
+	<label for="timestamp">
+		<g:message code="current.timestamp.label" default="Timestamp" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:datePicker name="timestamp" precision="day"  value="${currentInstance?.timestamp}"  />
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'userHash', 'error')} ">
 	<label for="userHash">
 		<g:message code="current.userHash.label" default="User Hash" />

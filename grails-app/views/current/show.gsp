@@ -68,6 +68,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${currentInstance?.timestamp}">
+				<li class="fieldcontain">
+					<span id="timestamp-label" class="property-label"><g:message code="current.timestamp.label" default="Timestamp" /></span>
+					
+						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${currentInstance?.timestamp}" /></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${currentInstance?.userHash}">
 				<li class="fieldcontain">
 					<span id="userHash-label" class="property-label"><g:message code="current.userHash.label" default="User Hash" /></span>

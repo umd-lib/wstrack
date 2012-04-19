@@ -34,7 +34,7 @@
 					
 						<g:sortableColumn property="status" title="${message(code: 'current.status.label', default: 'Status')}" />
 					
-						<g:sortableColumn property="userHash" title="${message(code: 'current.userHash.label', default: 'User Hash')}" />
+						<g:sortableColumn property="timestamp" title="${message(code: 'current.timestamp.label', default: 'Timestamp')}" />
 					
 					</tr>
 				</thead>
@@ -52,7 +52,7 @@
 					
 						<td>${fieldValue(bean: currentInstance, field: "status")}</td>
 					
-						<td>${fieldValue(bean: currentInstance, field: "userHash")}</td>
+						<td><g:formatDate date="${currentInstance.timestamp}" /></td>
 					
 					</tr>
 				</g:each>
