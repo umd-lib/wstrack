@@ -6,7 +6,7 @@ import org.junit.*
 
 import edu.umd.lib.wstrack.server.Current;
 
-import umd.edu.lib.wstrack.server.CurrentController;
+import edu.umd.lib.wstrack.server.CurrentController;
 import grails.test.mixin.*
 
 @TestFor(CurrentController)
