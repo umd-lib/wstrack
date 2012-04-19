@@ -6,24 +6,17 @@ import java.util.regex.PatternSyntaxException
 
 import edu.umd.lib.wstrack.server.Current;
 
-
-
-
-
 class Current {
 
   String ip
+  String status
   String hostName
   String os
   String userHash
-  String status
   Boolean guestFlag
 
 
-  static mapping = {
-    table "History"
-    version false
-  }
+  static mapping = { version false }
 
   static constraints = { ip(blank:false) }
 
