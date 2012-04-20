@@ -1,7 +1,7 @@
 package edu.umd.lib.wstrack.server
 
 import org.springframework.dao.DataIntegrityViolationException
-
+import grails.converters.JSON
 import edu.umd.lib.wstrack.server.Current;
 
 class TrackController {
@@ -9,6 +9,8 @@ class TrackController {
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
   def track() {
+
+    def result = [status: "success"]
 
     // Input validation
     Boolean guestFlag = (params.guestFlag == 'true')
@@ -22,8 +24,9 @@ class TrackController {
     current.timestamp = history.timestamp
     current.save()
 
+    result.current = current
 
-    render current
+    render result as JSON
 
   }
 
