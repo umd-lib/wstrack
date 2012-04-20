@@ -8,6 +8,10 @@ class TrackController {
 
   static allowedMethods = [track: "GET"]
 
+  def index() {
+    render(view:'/error')
+  }
+  
   def track() {
 
     def result = [status: "success"]
