@@ -11,21 +11,15 @@ class TrackController {
 
   static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-  def index() {
-    //  redirect(action: "list", params: params)
+  def track() {
 
-    String url = "http://mckeldinb-13.umd.edu:8888/wstrack-client/wstrackClient/track/129.2.18.13/IFZaY/6PEjbf5DA8DqWDpWkeowM=/Mac%20OS%20X"
-    String[] trackingInstance = Current.getQueryParams(url)
-    def hostName = trackingInstance[0]
-    def ip = trackingInstance[4]
-    def usernameHash = trackingInstance[5]+trackingInstance[6]
-    def os = trackingInstance[7]
-
-    def dbValues = new Current(guestFlag: 'False', hostName: hostName,ip : ip, os: os, status: 'Login', userHash : usernameHash)
+    // Input validation
+    Boolean guestFlag = (params.guestFlag == 'true')
+    
+    def dbValues = new Current(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
     dbValues.save()
 
-    //      def ip = request.getParameter("")
-    render trackingInstance
+    render dbValues
 
   }
 
