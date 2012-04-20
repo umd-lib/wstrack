@@ -12,11 +12,18 @@ class TrackController {
 
     // Input validation
     Boolean guestFlag = (params.guestFlag == 'true')
-    
-    def dbValues = new Current(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
-    dbValues.save()
 
-    render dbValues
+    // Add entry in History
+    def history = new History(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
+    history.save()
+
+    // Create or Update entry in Current
+    def current = new Current(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
+    current.timestamp = history.timestamp
+    current.save()
+
+
+    render current
 
   }
 
