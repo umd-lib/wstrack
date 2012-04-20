@@ -18,6 +18,13 @@ class Current {
 
   static mapping = { version false }
 
-  static constraints = { ip(blank:false) }
+  static constraints = {
+    ip(blank:false, unique:true)
+    status(blank:false)
+    hostName(blank:false)
+    os(blank:false)
+    userHash(blank:false)
+    guestFlag(blank:false)
+  }
 
 }
