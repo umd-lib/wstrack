@@ -1,5 +1,5 @@
 
-<%@ page import="umd.edu.lib.wstrack.Current" %>
+<%@ page import="edu.umd.lib.wstrack.server.Current" %>
 <!doctype html>
 <html>
 	<head>
