@@ -9,7 +9,7 @@ class UrlMappings {
 
     "/track/$ip/$status/$hostName/$os/$userHash/$guestFlag"(controller: "track", action: "track")
 
-    "/"(view:"/index")
+    "/"(controller:"admin", action:"redirectindex")
     "500"(view:'/error')
   }
 }

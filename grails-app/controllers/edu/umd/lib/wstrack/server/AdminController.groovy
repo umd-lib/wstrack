@@ -5,4 +5,8 @@ class AdminController {
     def index() { }
     
     def grails() { }
+    
+    def redirectindex() {
+      redirect(action: 'index')
+    }
 }
