@@ -18,8 +18,9 @@ class TrackController {
 
     // Input validation
     Boolean guestFlag = (params.guestFlag == 'true')
-
-    // Add entry in History
+    
+    if(params.status == 'login' || params.status == 'Login' || params.status == 'logout' || params.status == 'Logout') {
+      // Add entry in History
     def history = new History(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
     history.save()
 
@@ -31,6 +32,11 @@ class TrackController {
     result.current = current
 
     render result as JSON
+    }
+    else {
+      params.status = 'error'
+      render 'Invalid status. Status should be either login or logout.'
+    }
 
   }
 
