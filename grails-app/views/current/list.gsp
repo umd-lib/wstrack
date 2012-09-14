@@ -28,6 +28,8 @@
 					
 						<g:sortableColumn property="guestFlag" title="${message(code: 'current.guestFlag.label', default: 'Guest Flag')}" />
 					
+                        <g:sortableColumn property="userHash" title="${message(code: 'current.userHash.label', default: 'User Hash')}" />
+                        
 						<g:sortableColumn property="hostName" title="${message(code: 'current.hostName.label', default: 'Host Name')}" />
 					
 						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" />
@@ -46,8 +48,10 @@
 					
 						<td><g:formatBoolean boolean="${currentInstance.guestFlag}" /></td>
 					
+                        <td>${fieldValue(bean: currentInstance, field: "userHash")}</td>
+                                  
 						<td>${fieldValue(bean: currentInstance, field: "hostName")}</td>
-					
+
 						<td>${fieldValue(bean: currentInstance, field: "os")}</td>
 					
 						<td>${fieldValue(bean: currentInstance, field: "status")}</td>
