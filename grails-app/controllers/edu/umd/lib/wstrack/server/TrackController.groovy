@@ -1,12 +1,30 @@
 package edu.umd.lib.wstrack.server
 
+import java.security.MessageDigest
+import java.util.logging.Logger
+
 import org.springframework.dao.DataIntegrityViolationException
+import sun.misc.BASE64Encoder
 import grails.converters.JSON
-import edu.umd.lib.wstrack.server.Current;
+import edu.umd.lib.wstrack.server.Current
 
 class TrackController {
 
+  public static final Logger log = Logger.getLogger(TrackController.class)
+
   static allowedMethods = [track: "GET"]
+
+  public static String generateHash(String input) {
+    String hash = ""
+    try {
+      MessageDigest sha = MessageDigest.getInstance("MD5")
+      byte[] hashedBytes = sha.digest(input.getBytes())
+      hash = (new BASE64Encoder().encode(hashedBytes))
+    } catch (Exception e) {
+      log.debug("The exception is " + e)
+    }
+    return hash
+  }
 
   def index() {
     redirect(action: "list", params: params)
@@ -19,6 +37,7 @@ class TrackController {
     // Input validation
     Boolean guestFlag = (params.guestFlag == 'true')
 
+
     /*
      * @Javadoc - This is the input validation. Only if status is 'login' or 'logout' , the tables 'Current' and 'History' will get populated.
      * In all other cases, an error message for 'Invalid status' will be rendered.
@@ -26,16 +45,17 @@ class TrackController {
     if(params.status == 'login' || params.status == 'Login' || params.status == 'logout' || params.status == 'Logout') {
 
       // Add entry in History
+      def userHash = generateHash(params.userName)
       //def userHash = params.userHash.decodeURL()
-      def history = new History(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
+      def history = new History(guestFlag: guestFlag, computerName: params.computerName, os: params.os, status: params.status, userHash : params.userHash)
       history.save()
 
-      // Defining Current Instance which will check if a value exists in the database for a particular IP ( primary Key)
-      def currentInstance = Current.findByIp(params.ip)
+      // Defining Current Instance which will check if a value exists in the database for a particular Computer Name ( primary Key)
+      def currentInstance = Current.findBycomputerName(params.computerName)
 
       if(!currentInstance) {
         // Create entry in Current
-        def current = new Current(guestFlag: guestFlag, hostName: params.hostName,ip : params.ip, os: params.os, status: params.status, userHash : params.userHash)
+        def current = new Current(guestFlag: guestFlag, computerName: params.computerName, os: params.os, status: params.status, userHash : params.userHash)
         current.timestamp = history.timestamp
         current.save()
         result.current = current
@@ -44,9 +64,9 @@ class TrackController {
       }
 
       else if(currentInstance) {
-        // Update the already existing entry for that particular IP
+        // Update the already existing entry for that particular Computer Name
         currentInstance.setGuestFlag(guestFlag)
-        currentInstance.setHostName(params.hostName)
+        currentInstance.setComputerName(params.computerName)
         currentInstance.setOs(params.os)
         currentInstance.setStatus(params.status)
         currentInstance.setUserHash(params.userHash)

@@ -24,17 +24,15 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="ip" title="${message(code: 'tracking.ip.label', default: 'Ip')}" />
+						<g:sortableColumn property="computerName" title="${message(code: 'tracking.computerName.label', default: 'Computer Name')}" />
 					
 						<g:sortableColumn property="guestFlag" title="${message(code: 'tracking.guestFlag.label', default: 'Guest Flag')}" />
-					
-						<g:sortableColumn property="hostName" title="${message(code: 'tracking.hostName.label', default: 'Host Name')}" />
 					
 						<g:sortableColumn property="os" title="${message(code: 'tracking.os.label', default: 'Os')}" />
 					
 						<g:sortableColumn property="status" title="${message(code: 'tracking.status.label', default: 'Status')}" />
 					
-						<g:sortableColumn property="userHash" title="${message(code: 'tracking.userHash.label', default: 'User Hash')}" />
+						<g:sortableColumn property="userName" title="${message(code: 'tracking.userName.label', default: 'User Name')}" />
 					
 					</tr>
 				</thead>
@@ -42,17 +40,15 @@
 				<g:each in="${trackingInstanceList}" status="i" var="trackingInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${trackingInstance.id}">${fieldValue(bean: trackingInstance, field: "ip")}</g:link></td>
+						<td><g:link action="show" id="${trackingInstance.id}">${fieldValue(bean: trackingInstance, field: "computerName")}</g:link></td>
 					
 						<td><g:formatBoolean boolean="${trackingInstance.guestFlag}" /></td>
-					
-						<td>${fieldValue(bean: trackingInstance, field: "hostName")}</td>
 					
 						<td>${fieldValue(bean: trackingInstance, field: "os")}</td>
 					
 						<td>${fieldValue(bean: trackingInstance, field: "status")}</td>
 					
-						<td>${fieldValue(bean: trackingInstance, field: "userHash")}</td>
+						<td>${fieldValue(bean: trackingInstance, field: "userName")}</td>
 					
 					</tr>
 				</g:each>

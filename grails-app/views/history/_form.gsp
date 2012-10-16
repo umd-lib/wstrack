@@ -2,12 +2,12 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'ip', 'error')} required">
-	<label for="ip">
-		<g:message code="history.ip.label" default="Ip" />
+<div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'computerName', 'error')} required">
+	<label for="computerName">
+		<g:message code="history.computerName.label" default="Computer Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="ip" required="" value="${historyInstance?.ip}"/>
+	<g:textField name="computerName" required="" value="${historyInstance?.computerName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'guestFlag', 'error')} ">
@@ -16,14 +16,6 @@
 		
 	</label>
 	<g:checkBox name="guestFlag" value="${historyInstance?.guestFlag}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'hostName', 'error')} ">
-	<label for="hostName">
-		<g:message code="history.hostName.label" default="Host Name" />
-		
-	</label>
-	<g:textField name="hostName" value="${historyInstance?.hostName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'os', 'error')} ">
@@ -50,11 +42,11 @@
 	<g:datePicker name="timestamp" precision="day"  value="${historyInstance?.timestamp}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'userHash', 'error')} ">
-	<label for="userHash">
-		<g:message code="history.userHash.label" default="User Hash" />
+<div class="fieldcontain ${hasErrors(bean: historyInstance, field: 'userName', 'error')} ">
+	<label for="userName">
+		<g:message code="history.userName.label" default="User Name" />
 		
 	</label>
-	<g:textField name="userHash" value="${historyInstance?.userHash}"/>
+	<g:textField name="userName" value="${historyInstance?.userName}"/>
 </div>
 

@@ -23,11 +23,11 @@
 			</g:if>
 			<ol class="property-list tracking">
 			
-				<g:if test="${trackingInstance?.ip}">
+				<g:if test="${trackingInstance?.computerName}">
 				<li class="fieldcontain">
-					<span id="ip-label" class="property-label"><g:message code="tracking.ip.label" default="Ip" /></span>
+					<span id="computerName-label" class="property-label"><g:message code="tracking.computerName.label" default="Computer Name" /></span>
 					
-						<span class="property-value" aria-labelledby="ip-label"><g:fieldValue bean="${trackingInstance}" field="ip"/></span>
+						<span class="property-value" aria-labelledby="computerName-label"><g:fieldValue bean="${trackingInstance}" field="computerName"/></span>
 					
 				</li>
 				</g:if>
@@ -37,15 +37,6 @@
 					<span id="guestFlag-label" class="property-label"><g:message code="tracking.guestFlag.label" default="Guest Flag" /></span>
 					
 						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${trackingInstance?.guestFlag}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${trackingInstance?.hostName}">
-				<li class="fieldcontain">
-					<span id="hostName-label" class="property-label"><g:message code="tracking.hostName.label" default="Host Name" /></span>
-					
-						<span class="property-value" aria-labelledby="hostName-label"><g:fieldValue bean="${trackingInstance}" field="hostName"/></span>
 					
 				</li>
 				</g:if>
@@ -68,11 +59,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${trackingInstance?.userHash}">
+				<g:if test="${trackingInstance?.userName}">
 				<li class="fieldcontain">
-					<span id="userHash-label" class="property-label"><g:message code="tracking.userHash.label" default="User Hash" /></span>
+					<span id="userName-label" class="property-label"><g:message code="tracking.userName.label" default="User Name" /></span>
 					
-						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${trackingInstance}" field="userHash"/></span>
+						<span class="property-value" aria-labelledby="userName-label"><g:fieldValue bean="${trackingInstance}" field="userName"/></span>
 					
 				</li>
 				</g:if>

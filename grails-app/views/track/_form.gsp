@@ -2,12 +2,12 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'ip', 'error')} required">
-	<label for="ip">
-		<g:message code="tracking.ip.label" default="Ip" />
+<div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'computerName', 'error')} required">
+	<label for="computerName">
+		<g:message code="tracking.computerName.label" default="Computer Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="ip" required="" value="${trackingInstance?.ip}"/>
+	<g:textField name="computerName" required="" value="${trackingInstance?.computerName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'guestFlag', 'error')} ">
@@ -16,14 +16,6 @@
 		
 	</label>
 	<g:checkBox name="guestFlag" value="${trackingInstance?.guestFlag}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'hostName', 'error')} ">
-	<label for="hostName">
-		<g:message code="tracking.hostName.label" default="Host Name" />
-		
-	</label>
-	<g:textField name="hostName" value="${trackingInstance?.hostName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'os', 'error')} ">
@@ -42,11 +34,11 @@
 	<g:textField name="status" value="${trackingInstance?.status}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'userHash', 'error')} ">
-	<label for="userHash">
-		<g:message code="tracking.userHash.label" default="User Hash" />
+<div class="fieldcontain ${hasErrors(bean: trackingInstance, field: 'userName', 'error')} ">
+	<label for="userName">
+		<g:message code="tracking.userName.label" default="User Name" />
 		
 	</label>
-	<g:textField name="userHash" value="${trackingInstance?.userHash}"/>
+	<g:textField name="userName" value="${trackingInstance?.userName}"/>
 </div>
 

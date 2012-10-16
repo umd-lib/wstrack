@@ -24,13 +24,11 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="ip" title="${message(code: 'current.ip.label', default: 'Ip')}" />
+						<g:sortableColumn property="computerName" title="${message(code: 'current.computerName.label', default: 'Computer Name')}" />
 					
 						<g:sortableColumn property="guestFlag" title="${message(code: 'current.guestFlag.label', default: 'Guest Flag')}" />
 					
-                        <g:sortableColumn property="userHash" title="${message(code: 'current.userHash.label', default: 'User Hash')}" />
-                        
-						<g:sortableColumn property="hostName" title="${message(code: 'current.hostName.label', default: 'Host Name')}" />
+                        <g:sortableColumn property="userName" title="${message(code: 'current.userName.label', default: 'User Name')}" />
 					
 						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" />
 					
@@ -44,13 +42,11 @@
 				<g:each in="${currentInstanceList}" status="i" var="currentInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${currentInstance.id}">${fieldValue(bean: currentInstance, field: "ip")}</g:link></td>
+						<td><g:link action="show" id="${currentInstance.id}">${fieldValue(bean: currentInstance, field: "computerName")}</g:link></td>
 					
 						<td><g:formatBoolean boolean="${currentInstance.guestFlag}" /></td>
 					
-                        <td>${fieldValue(bean: currentInstance, field: "userHash")}</td>
-                                  
-						<td>${fieldValue(bean: currentInstance, field: "hostName")}</td>
+                        <td>${fieldValue(bean: currentInstance, field: "userName")}</td>
 
 						<td>${fieldValue(bean: currentInstance, field: "os")}</td>
 					

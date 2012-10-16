@@ -23,11 +23,11 @@
 			</g:if>
 			<ol class="property-list current">
 			
-				<g:if test="${currentInstance?.ip}">
+				<g:if test="${currentInstance?.computerName}">
 				<li class="fieldcontain">
-					<span id="ip-label" class="property-label"><g:message code="current.ip.label" default="Ip" /></span>
+					<span id="computerName-label" class="property-label"><g:message code="current.computerName.label" default="Computer Name" /></span>
 					
-						<span class="property-value" aria-labelledby="ip-label"><g:fieldValue bean="${currentInstance}" field="ip"/></span>
+						<span class="property-value" aria-labelledby="computerName-label"><g:fieldValue bean="${currentInstance}" field="computerName"/></span>
 					
 				</li>
 				</g:if>
@@ -37,15 +37,6 @@
 					<span id="guestFlag-label" class="property-label"><g:message code="current.guestFlag.label" default="Guest Flag" /></span>
 					
 						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${currentInstance?.guestFlag}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${currentInstance?.hostName}">
-				<li class="fieldcontain">
-					<span id="hostName-label" class="property-label"><g:message code="current.hostName.label" default="Host Name" /></span>
-					
-						<span class="property-value" aria-labelledby="hostName-label"><g:fieldValue bean="${currentInstance}" field="hostName"/></span>
 					
 				</li>
 				</g:if>
@@ -77,11 +68,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${currentInstance?.userHash}">
+				<g:if test="${currentInstance?.userName}">
 				<li class="fieldcontain">
-					<span id="userHash-label" class="property-label"><g:message code="current.userHash.label" default="User Hash" /></span>
+					<span id="userName-label" class="property-label"><g:message code="current.userName.label" default="User Name" /></span>
 					
-						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${currentInstance}" field="userHash"/></span>
+						<span class="property-value" aria-labelledby="userName-label"><g:fieldValue bean="${currentInstance}" field="userName"/></span>
 					
 				</li>
 				</g:if>

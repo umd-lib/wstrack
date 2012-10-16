@@ -1,30 +1,23 @@
 package edu.umd.lib.wstrack.server
 
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-import java.util.regex.PatternSyntaxException
 
-import edu.umd.lib.wstrack.server.Current;
 
 class Current {
 
   Date timestamp = new Date()
-  String ip
+  String computerName
   String status
-  String hostName
   String os
-  String userHash
+  String userName
   Boolean guestFlag
 
   static mapping = { version false }
 
   static constraints = {
-    ip(blank:false, unique:true)
+    computerName(blank:false, unique:true)
     status(blank:false)
-    hostName(blank:false)
     os(blank:false)
-    userHash(blank:false)
+    userName(blank:false)
     guestFlag(blank:false)
   }
-
 }

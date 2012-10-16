@@ -2,12 +2,12 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'ip', 'error')} required">
-	<label for="ip">
-		<g:message code="current.ip.label" default="Ip" />
+<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'computerName', 'error')} required">
+	<label for="computerName">
+		<g:message code="current.computerName.label" default="Computer Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="ip" required="" value="${currentInstance?.ip}"/>
+	<g:textField name="computerName" required="" value="${currentInstance?.computerName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'guestFlag', 'error')} ">
@@ -16,14 +16,6 @@
 		
 	</label>
 	<g:checkBox name="guestFlag" value="${currentInstance?.guestFlag}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'hostName', 'error')} ">
-	<label for="hostName">
-		<g:message code="current.hostName.label" default="Host Name" />
-		
-	</label>
-	<g:textField name="hostName" value="${currentInstance?.hostName}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'os', 'error')} ">
@@ -50,11 +42,11 @@
 	<g:datePicker name="timestamp" precision="day"  value="${currentInstance?.timestamp}"  />
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'userHash', 'error')} ">
-	<label for="userHash">
-		<g:message code="current.userHash.label" default="User Hash" />
+<div class="fieldcontain ${hasErrors(bean: currentInstance, field: 'userName', 'error')} ">
+	<label for="userName">
+		<g:message code="current.userName.label" default="User Name" />
 		
 	</label>
-	<g:textField name="userHash" value="${currentInstance?.userHash}"/>
+	<g:textField name="userName" value="${currentInstance?.userName}"/>
 </div>
 
