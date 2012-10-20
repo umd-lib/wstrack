@@ -1,12 +1,13 @@
 package edu.umd.lib.wstrack.server
 
+import grails.converters.JSON
+
 import java.security.MessageDigest
 import java.util.logging.Logger
 
 import org.springframework.dao.DataIntegrityViolationException
+
 import sun.misc.BASE64Encoder
-import grails.converters.JSON
-import edu.umd.lib.wstrack.server.Current
 
 class TrackController {
 
@@ -51,7 +52,7 @@ class TrackController {
       history.save()
 
       // Defining Current Instance which will check if a value exists in the database for a particular Computer Name ( primary Key)
-      def currentInstance = Current.findBycomputerName(params.computerName)
+      def currentInstance = Current.findByComputerName(params.computerName)
 
       if(!currentInstance) {
         // Create entry in Current
