@@ -32,11 +32,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${historyInstance?.guestFlag}">
+				<g:if test="${historyInstance?.status}">
 				<li class="fieldcontain">
-					<span id="guestFlag-label" class="property-label"><g:message code="history.guestFlag.label" default="Guest Flag" /></span>
+					<span id="status-label" class="property-label"><g:message code="history.status.label" default="Status" /></span>
 					
-						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${historyInstance?.guestFlag}" /></span>
+						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${historyInstance}" field="status"/></span>
 					
 				</li>
 				</g:if>
@@ -50,11 +50,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${historyInstance?.status}">
+				<g:if test="${historyInstance?.userHash}">
 				<li class="fieldcontain">
-					<span id="status-label" class="property-label"><g:message code="history.status.label" default="Status" /></span>
+					<span id="userHash-label" class="property-label"><g:message code="history.userHash.label" default="User Hash" /></span>
 					
-						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${historyInstance}" field="status"/></span>
+						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${historyInstance}" field="userHash"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${historyInstance?.guestFlag}">
+				<li class="fieldcontain">
+					<span id="guestFlag-label" class="property-label"><g:message code="history.guestFlag.label" default="Guest Flag" /></span>
+					
+						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${historyInstance?.guestFlag}" /></span>
 					
 				</li>
 				</g:if>
@@ -64,15 +73,6 @@
 					<span id="timestamp-label" class="property-label"><g:message code="history.timestamp.label" default="Timestamp" /></span>
 					
 						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${historyInstance?.timestamp}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${historyInstance?.userName}">
-				<li class="fieldcontain">
-					<span id="userName-label" class="property-label"><g:message code="history.userName.label" default="User Name" /></span>
-					
-						<span class="property-value" aria-labelledby="userName-label"><g:fieldValue bean="${historyInstance}" field="userName"/></span>
 					
 				</li>
 				</g:if>

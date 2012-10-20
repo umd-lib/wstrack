@@ -26,13 +26,13 @@
 					
 						<g:sortableColumn property="computerName" title="${message(code: 'history.computerName.label', default: 'Computer Name')}" />
 					
-						<g:sortableColumn property="guestFlag" title="${message(code: 'history.guestFlag.label', default: 'Guest Flag')}" />
-					
-                        <g:sortableColumn property="userName" title="${message(code: 'history.userName.label', default: 'User Name')}" />
+						<g:sortableColumn property="status" title="${message(code: 'history.status.label', default: 'Status')}" />
 					
 						<g:sortableColumn property="os" title="${message(code: 'history.os.label', default: 'Os')}" />
 					
-						<g:sortableColumn property="status" title="${message(code: 'history.status.label', default: 'Status')}" />
+						<g:sortableColumn property="userHash" title="${message(code: 'history.userHash.label', default: 'User Hash')}" />
+					
+						<g:sortableColumn property="guestFlag" title="${message(code: 'history.guestFlag.label', default: 'Guest Flag')}" />
 					
 						<g:sortableColumn property="timestamp" title="${message(code: 'history.timestamp.label', default: 'Timestamp')}" />
 					
@@ -44,13 +44,13 @@
 					
 						<td><g:link action="show" id="${historyInstance.id}">${fieldValue(bean: historyInstance, field: "computerName")}</g:link></td>
 					
-						<td><g:formatBoolean boolean="${historyInstance.guestFlag}" /></td>
-            
-                        <td>${fieldValue(bean: historyInstance, field: "userName")}</td>
+						<td>${fieldValue(bean: historyInstance, field: "status")}</td>
 					
 						<td>${fieldValue(bean: historyInstance, field: "os")}</td>
 					
-						<td>${fieldValue(bean: historyInstance, field: "status")}</td>
+						<td>${fieldValue(bean: historyInstance, field: "userHash")}</td>
+					
+						<td><g:formatBoolean boolean="${historyInstance.guestFlag}" /></td>
 					
 						<td><g:formatDate date="${historyInstance.timestamp}" /></td>
 					

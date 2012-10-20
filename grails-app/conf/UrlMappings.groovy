@@ -5,7 +5,7 @@ class UrlMappings {
         // apply constraints here
       } }
 
-    "/track/$computerName/$status/$os/$guestFlag/$userName"(controller: "track", action: "track")
+    "/track/$computerName/$status/$os/$userName"(controller: "track", action: "track")
 
     "/"(controller:"admin", action:"redirectindex")
     "500"(view:'/error')

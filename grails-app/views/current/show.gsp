@@ -32,11 +32,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${currentInstance?.guestFlag}">
+				<g:if test="${currentInstance?.status}">
 				<li class="fieldcontain">
-					<span id="guestFlag-label" class="property-label"><g:message code="current.guestFlag.label" default="Guest Flag" /></span>
+					<span id="status-label" class="property-label"><g:message code="current.status.label" default="Status" /></span>
 					
-						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${currentInstance?.guestFlag}" /></span>
+						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${currentInstance}" field="status"/></span>
 					
 				</li>
 				</g:if>
@@ -50,11 +50,20 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${currentInstance?.status}">
+				<g:if test="${currentInstance?.userHash}">
 				<li class="fieldcontain">
-					<span id="status-label" class="property-label"><g:message code="current.status.label" default="Status" /></span>
+					<span id="userHash-label" class="property-label"><g:message code="current.userHash.label" default="User Hash" /></span>
 					
-						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${currentInstance}" field="status"/></span>
+						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${currentInstance}" field="userHash"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currentInstance?.guestFlag}">
+				<li class="fieldcontain">
+					<span id="guestFlag-label" class="property-label"><g:message code="current.guestFlag.label" default="Guest Flag" /></span>
+					
+						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${currentInstance?.guestFlag}" /></span>
 					
 				</li>
 				</g:if>
@@ -64,15 +73,6 @@
 					<span id="timestamp-label" class="property-label"><g:message code="current.timestamp.label" default="Timestamp" /></span>
 					
 						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${currentInstance?.timestamp}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${currentInstance?.userName}">
-				<li class="fieldcontain">
-					<span id="userName-label" class="property-label"><g:message code="current.userName.label" default="User Name" /></span>
-					
-						<span class="property-value" aria-labelledby="userName-label"><g:fieldValue bean="${currentInstance}" field="userName"/></span>
 					
 				</li>
 				</g:if>
