@@ -23,38 +23,11 @@
 			</g:if>
 			<ol class="property-list history">
 			
-				<g:if test="${historyInstance?.ip}">
+				<g:if test="${historyInstance?.computerName}">
 				<li class="fieldcontain">
-					<span id="ip-label" class="property-label"><g:message code="history.ip.label" default="Ip" /></span>
+					<span id="computerName-label" class="property-label"><g:message code="history.computerName.label" default="Computer Name" /></span>
 					
-						<span class="property-value" aria-labelledby="ip-label"><g:fieldValue bean="${historyInstance}" field="ip"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${historyInstance?.guestFlag}">
-				<li class="fieldcontain">
-					<span id="guestFlag-label" class="property-label"><g:message code="history.guestFlag.label" default="Guest Flag" /></span>
-					
-						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${historyInstance?.guestFlag}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${historyInstance?.hostName}">
-				<li class="fieldcontain">
-					<span id="hostName-label" class="property-label"><g:message code="history.hostName.label" default="Host Name" /></span>
-					
-						<span class="property-value" aria-labelledby="hostName-label"><g:fieldValue bean="${historyInstance}" field="hostName"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${historyInstance?.os}">
-				<li class="fieldcontain">
-					<span id="os-label" class="property-label"><g:message code="history.os.label" default="Os" /></span>
-					
-						<span class="property-value" aria-labelledby="os-label"><g:fieldValue bean="${historyInstance}" field="os"/></span>
+						<span class="property-value" aria-labelledby="computerName-label"><g:fieldValue bean="${historyInstance}" field="computerName"/></span>
 					
 				</li>
 				</g:if>
@@ -68,11 +41,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${historyInstance?.timestamp}">
+				<g:if test="${historyInstance?.os}">
 				<li class="fieldcontain">
-					<span id="timestamp-label" class="property-label"><g:message code="history.timestamp.label" default="Timestamp" /></span>
+					<span id="os-label" class="property-label"><g:message code="history.os.label" default="Os" /></span>
 					
-						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${historyInstance?.timestamp}" /></span>
+						<span class="property-value" aria-labelledby="os-label"><g:fieldValue bean="${historyInstance}" field="os"/></span>
 					
 				</li>
 				</g:if>
@@ -82,6 +55,24 @@
 					<span id="userHash-label" class="property-label"><g:message code="history.userHash.label" default="User Hash" /></span>
 					
 						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${historyInstance}" field="userHash"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${historyInstance?.guestFlag}">
+				<li class="fieldcontain">
+					<span id="guestFlag-label" class="property-label"><g:message code="history.guestFlag.label" default="Guest Flag" /></span>
+					
+						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${historyInstance?.guestFlag}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${historyInstance?.timestamp}">
+				<li class="fieldcontain">
+					<span id="timestamp-label" class="property-label"><g:message code="history.timestamp.label" default="Timestamp" /></span>
+					
+						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${historyInstance?.timestamp}" /></span>
 					
 				</li>
 				</g:if>

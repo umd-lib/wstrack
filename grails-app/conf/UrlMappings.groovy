@@ -1,10 +1,11 @@
 class UrlMappings {
 
   static mappings = {
-    "/$controller/$action?/$id?"{ constraints { // apply constraints here
+    "/$controller/$action?/$id?"{ constraints {
+        // apply constraints here
       } }
 
-    "/track/$ip/$status/$hostName/$os/$guestFlag/$userHash**"(controller: "track", action: "track")
+    "/track/$computerName/$status/$os/$userName"(controller: "track", action: "track")
 
     "/"(controller:"admin", action:"redirectindex")
     "500"(view:'/error')

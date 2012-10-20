@@ -23,38 +23,11 @@
 			</g:if>
 			<ol class="property-list current">
 			
-				<g:if test="${currentInstance?.ip}">
+				<g:if test="${currentInstance?.computerName}">
 				<li class="fieldcontain">
-					<span id="ip-label" class="property-label"><g:message code="current.ip.label" default="Ip" /></span>
+					<span id="computerName-label" class="property-label"><g:message code="current.computerName.label" default="Computer Name" /></span>
 					
-						<span class="property-value" aria-labelledby="ip-label"><g:fieldValue bean="${currentInstance}" field="ip"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${currentInstance?.guestFlag}">
-				<li class="fieldcontain">
-					<span id="guestFlag-label" class="property-label"><g:message code="current.guestFlag.label" default="Guest Flag" /></span>
-					
-						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${currentInstance?.guestFlag}" /></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${currentInstance?.hostName}">
-				<li class="fieldcontain">
-					<span id="hostName-label" class="property-label"><g:message code="current.hostName.label" default="Host Name" /></span>
-					
-						<span class="property-value" aria-labelledby="hostName-label"><g:fieldValue bean="${currentInstance}" field="hostName"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${currentInstance?.os}">
-				<li class="fieldcontain">
-					<span id="os-label" class="property-label"><g:message code="current.os.label" default="Os" /></span>
-					
-						<span class="property-value" aria-labelledby="os-label"><g:fieldValue bean="${currentInstance}" field="os"/></span>
+						<span class="property-value" aria-labelledby="computerName-label"><g:fieldValue bean="${currentInstance}" field="computerName"/></span>
 					
 				</li>
 				</g:if>
@@ -68,11 +41,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${currentInstance?.timestamp}">
+				<g:if test="${currentInstance?.os}">
 				<li class="fieldcontain">
-					<span id="timestamp-label" class="property-label"><g:message code="current.timestamp.label" default="Timestamp" /></span>
+					<span id="os-label" class="property-label"><g:message code="current.os.label" default="Os" /></span>
 					
-						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${currentInstance?.timestamp}" /></span>
+						<span class="property-value" aria-labelledby="os-label"><g:fieldValue bean="${currentInstance}" field="os"/></span>
 					
 				</li>
 				</g:if>
@@ -82,6 +55,24 @@
 					<span id="userHash-label" class="property-label"><g:message code="current.userHash.label" default="User Hash" /></span>
 					
 						<span class="property-value" aria-labelledby="userHash-label"><g:fieldValue bean="${currentInstance}" field="userHash"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currentInstance?.guestFlag}">
+				<li class="fieldcontain">
+					<span id="guestFlag-label" class="property-label"><g:message code="current.guestFlag.label" default="Guest Flag" /></span>
+					
+						<span class="property-value" aria-labelledby="guestFlag-label"><g:formatBoolean boolean="${currentInstance?.guestFlag}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${currentInstance?.timestamp}">
+				<li class="fieldcontain">
+					<span id="timestamp-label" class="property-label"><g:message code="current.timestamp.label" default="Timestamp" /></span>
+					
+						<span class="property-value" aria-labelledby="timestamp-label"><g:formatDate date="${currentInstance?.timestamp}" /></span>
 					
 				</li>
 				</g:if>
