@@ -90,7 +90,7 @@
 			<div id="controller-list" role="navigation">
 				<h2>Tables</h2>
 				<ul>
-					<li class="controller"><g:link controller="current">Current</g:link></li>
+					<li class="controller"><g:link controller="current" params="${[sort:'timestamp', max:10, order:'asc'] }">Current</g:link></li>
 					<li class="controller"><g:link controller="history">History</g:link></li>
 				</ul>
 				
