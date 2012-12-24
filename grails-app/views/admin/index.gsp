@@ -96,6 +96,7 @@
 				
 				<h2>Other</h2>
 				<ul>
+                    <li class="controller"><g:link controller="statistics" action="index">Statistics</g:link></li>
 					<li class="controller"><g:link controller="admin" action="grails">Grails Status</g:link></li>
 				</ul>
 			</div>

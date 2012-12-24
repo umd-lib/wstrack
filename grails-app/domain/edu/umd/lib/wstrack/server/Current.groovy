@@ -19,4 +19,11 @@ class Current {
     userHash(blank:false)
     guestFlag(blank:false)
   }
+
+  static List listOs() {
+    return withCriteria {
+      projections { distinct("os") }
+      order("os","asc")
+    }
+  }
 }

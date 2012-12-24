@@ -10,11 +10,11 @@ class BootStrap {
 
       Map params = [:]
 
-      for (i in 1..1000) {
-        params.computerName = 'computerName' + (i % 10)
-        params.os = 'os' + (i % 3)
-        params.status = ((i % 3 in [1,2]) ? 'login' : 'logout')
-        params .userName = ((i % 15 == 0) ? 'libguest' : '') + 'userName' + (i % 20)
+      for (i in 0..999) {
+        params.computerName = 'computerName' + (i % 11)
+        params.os = 'os' + (i % 5)
+        params.status = ((i % 2) ? 'login' : 'logout')
+        params .userName = ((i % 17 == 0) ? 'libguest' : '') + 'userName' + (i % 23)
 
         TrackController.trackX(params)
       }
