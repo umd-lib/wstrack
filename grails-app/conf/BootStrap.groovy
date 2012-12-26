@@ -18,6 +18,10 @@ class BootStrap {
 
         TrackController.trackX(params)
       }
+
+      params.userName= 'libguestuserName0'
+      params.status='login'
+      TrackController.trackX(params)
     }
   }
   def destroy = {

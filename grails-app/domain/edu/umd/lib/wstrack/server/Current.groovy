@@ -32,7 +32,7 @@ class Current {
   }
 
   static def listGuestFlag() {
-    return ['false', 'true']
+    return [false, true]
   }
 
   static Map counts() {
@@ -44,12 +44,12 @@ class Current {
           def c = Current.countByOsAndStatusAndGuestFlag(os, status, guestFlag)
 
           r[os][status][guestFlag] = c
-
           r[os][status]['all'] += c
           r[os]['all'][guestFlag] += c
-          r['all'][status][guestFlag] += c
           r[os]['all']['all'] += c
+          r['all'][status][guestFlag] += c
           r['all'][status]['all'] += c
+          r['all']['all'][guestFlag] += c
           r['all']['all']['all'] += c
         }
       }
