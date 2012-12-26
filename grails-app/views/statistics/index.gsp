@@ -16,53 +16,55 @@
 			</ul>
 		</div>
 		<div id="list-current" class="content scaffold-list" role="main">
+            <g:set var="c" value="${Current.counts() }" />
 			<h1>Statistics - Current</h1>
                   <table>
                     <tbody>
                       <tr>
                         <th>OS</th>
-                        <th>login</th>
-                        <th>logout</th>
-                        <th>Total</th>
+                        <th>login (regular/guest)</th>
+                        <th>logout (regular/guest)</th>
+                        <th>Total (regular/guest)</th>
                       </tr>
                       <g:each in="${Current.listOs() }" status="i" var="os">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                           <td>${os}</td>
-                          <td>${Current.countByOsAndStatus(os, "login") }</td>
-                          <td>${Current.countByOsAndStatus(os, "logout") }</td>
-                          <td>${Current.countByOs(os)}</td>
+                          <td>${c[os]['login']['all'] } (${c[os]['login'][false] }/${c[os]['login'][true] })</td>
+                          <td>${c[os]['logout']['all'] } (${c[os]['logout'][false] }/${c[os]['logout'][true] })</td>
+                          <td>${c[os]['all']['all'] } (${c[os]['all'][false] }/${c[os]['all'][true] })</td>
                         </tr>
                       </g:each>
-                      <tr>
+                      <tr class="${(Current.listOs().size() % 2) == 0 ? 'even' : 'odd' }">
                         <td>Total</td>
-                        <td>${Current.countByStatus("login") }</td>
-                        <td>${Current.countByStatus("logout") }</td>
-                        <td>${Current.count() }</td>
+                        <td>${c['all']['login']['all'] } (${c['all']['login'][false] }/${c['all']['login'][true] })</td>
+                        <td>${c['all']['logout']['all'] } (${c['all']['logout'][false] }/${c['all']['logout'][true] })</td>
+                        <td>${c['all']['all']['all'] } (${c['all']['all'][false] }/${c['all']['all'][true] })</td>
                       </tr>
                     </tbody>
                   </table>
-                <h1>Statistics - History</h1>
+            <g:set var="c" value="${History.counts() }" />
+			<h1>Statistics - History</h1>
                   <table>
                     <tbody>
                       <tr>
                         <th>OS</th>
-                        <th>login</th>
-                        <th>logout</th>
-                        <th>Total</th>
+                        <th>login (regular/guest)</th>
+                        <th>logout (regular/guest)</th>
+                        <th>Total (regular/guest)</th>
                       </tr>
                       <g:each in="${History.listOs() }" status="i" var="os">
                         <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                           <td>${os}</td>
-                          <td>${History.countByOsAndStatus(os, "login") }</td>
-                          <td>${History.countByOsAndStatus(os, "logout") }</td>
-                          <td>${History.countByOs(os)}</td>
+                          <td>${c[os]['login']['all'] } (${c[os]['login'][false] }/${c[os]['login'][true] })</td>
+                          <td>${c[os]['logout']['all'] } (${c[os]['logout'][false] }/${c[os]['logout'][true] })</td>
+                          <td>${c[os]['all']['all'] } (${c[os]['all'][false] }/${c[os]['all'][true] })</td>
                         </tr>
                       </g:each>
-                      <tr>
+                      <tr class="${(Current.listOs().size() % 2) == 0 ? 'even' : 'odd' }">
                         <td>Total</td>
-                        <td>${History.countByStatus("login") }</td>
-                        <td>${History.countByStatus("logout") }</td>
-                        <td>${History.count() }</td>
+                        <td>${c['all']['login']['all'] } (${c['all']['login'][false] }/${c['all']['login'][true] })</td>
+                        <td>${c['all']['logout']['all'] } (${c['all']['logout'][false] }/${c['all']['logout'][true] })</td>
+                        <td>${c['all']['all']['all'] } (${c['all']['all'][false] }/${c['all']['all'][true] })</td>
                       </tr>
                     </tbody>
                   </table>
