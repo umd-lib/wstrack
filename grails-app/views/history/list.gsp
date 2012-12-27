@@ -24,17 +24,17 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="computerName" title="${message(code: 'history.computerName.label', default: 'Computer Name')}" />
+						<g:sortableColumn property="computerName" title="${message(code: 'history.computerName.label', default: 'Computer Name')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="status" title="${message(code: 'history.status.label', default: 'Status')}" />
+						<g:sortableColumn property="status" title="${message(code: 'history.status.label', default: 'Status')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="os" title="${message(code: 'history.os.label', default: 'Os')}" />
+						<g:sortableColumn property="os" title="${message(code: 'history.os.label', default: 'Os')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="userHash" title="${message(code: 'history.userHash.label', default: 'User Hash')}" />
+						<g:sortableColumn property="userHash" title="${message(code: 'history.userHash.label', default: 'User Hash')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="guestFlag" title="${message(code: 'history.guestFlag.label', default: 'Guest Flag')}" />
+						<g:sortableColumn property="guestFlag" title="${message(code: 'history.guestFlag.label', default: 'Guest Flag')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="timestamp" title="${message(code: 'history.timestamp.label', default: 'Timestamp')}" />
+						<g:sortableColumn property="timestamp" title="${message(code: 'history.timestamp.label', default: 'Timestamp')}" params="${filterParams}"/>
 					
 					</tr>
 				</thead>
@@ -59,8 +59,10 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${historyInstanceTotal}" />
+                <filterpane:filterButton text="Filter" />
+				<g:paginate total="${historyInstanceTotal}" params="${filterParams}" />
 			</div>
 		</div>
+        <filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
 	</body>
 </html>

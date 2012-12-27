@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 		<g:layoutHead/>
         <r:layoutResources />
+        <filterpane:includes />
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner">

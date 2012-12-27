@@ -15,6 +15,17 @@ class HistoryController {
         [historyInstanceList: History.list(params), historyInstanceTotal: History.count()]
     }
 
+    def filterPaneService
+
+    def filter = {
+        params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        render( view:'list',
+          model:[ historyInstanceList: filterPaneService.filter( params, History ),
+          historyInstanceTotal: filterPaneService.count( params, History ),
+          filterParams: org.grails.plugin.filterpane.FilterPaneUtils.extractFilterParams(params),
+          params:params ] )
+    }
+
     def create() {
         [historyInstance: new History(params)]
     }
