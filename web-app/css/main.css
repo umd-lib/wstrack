@@ -51,6 +51,12 @@ body {
 	background-color: #abbf78;
 }
 
+#appVersion {
+    float: right;
+    padding-top: 1.5em;
+    padding-right: 1em;
+}
+
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
 .ie7 body,
