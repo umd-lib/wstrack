@@ -60,6 +60,7 @@
 			</table>
 			<div class="pagination">
 				<g:paginate total="${currentInstanceTotal}" />
+                <span>Entries: ${currentInstanceTotal}</span>
 			</div>
 		</div>
 	</body>
