@@ -62,7 +62,6 @@
                 <filterpane:filterButton text="Filter" />
 				<g:paginate total="${historyInstanceTotal}" params="${filterParams}" />
                 <span>Entries: ${historyInstanceTotal}</span>
-                <export:formats formats="['csv', 'excel', 'xml']" params="${exportParams }"/>
 			</div>
 		</div>
         <filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
