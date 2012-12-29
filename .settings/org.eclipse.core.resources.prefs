@@ -1,5 +1,8 @@
-#Thu Apr 19 07:01:33 EDT 2012
 eclipse.preferences.version=1
+encoding//.link_to_grails_plugins/filterpane-2.0.1.1/grails-app/i18n/messages-filterpane.properties=UTF-8
+encoding//.link_to_grails_plugins/filterpane-2.0.1.1/grails-app/i18n/messages-filterpane_de.properties=UTF-8
+encoding//.link_to_grails_plugins/filterpane-2.0.1.1/grails-app/i18n/messages-filterpane_sv.properties=UTF-8
+encoding//.link_to_grails_plugins/filterpane-2.0.1.1/grails-app/i18n/messages.properties=UTF-8
 encoding//.link_to_grails_plugins/jquery-1.7.1/grails-app/i18n=UTF-8
 encoding//.link_to_grails_plugins/jquery-1.7.1/grails-app/i18n/messages.properties=UTF-8
 encoding//.link_to_grails_plugins/resources-1.1.6/grails-app/i18n=UTF-8
