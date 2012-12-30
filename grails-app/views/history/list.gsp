@@ -60,7 +60,11 @@
 			</table>
 			<div class="pagination">
                 <filterpane:filterButton text="Filter" />
-				<g:paginate total="${historyInstanceTotal}" params="${filterParams}" />
+                &#x7c;
+				<g:paginate total="${historyInstanceTotal}" params="${filterParams}"/>
+                &#x7c;
+                <g:link controller="history" action="export" params="${exportParams }">Export CSV</g:link>
+                &#x7c;
                 <span>Entries: ${historyInstanceTotal}</span>
 			</div>
 		</div>
