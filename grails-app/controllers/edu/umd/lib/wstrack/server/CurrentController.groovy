@@ -11,7 +11,6 @@ class CurrentController {
   }
 
   def list() {
-	println params
 	if(params.order == null && params.sort == null) {
 		params.sort = "timestamp"
 		params.order = "desc"
