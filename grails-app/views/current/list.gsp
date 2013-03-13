@@ -24,17 +24,17 @@
 				<thead>
 					<tr>
 					
-						<g:sortableColumn property="computerName" title="${message(code: 'current.computerName.label', default: 'Computer Name')}" />
+						<g:sortableColumn property="computerName" title="${message(code: 'current.computerName.label', default: 'Computer Name')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="status" title="${message(code: 'current.status.label', default: 'Status')}" />
+						<g:sortableColumn property="status" title="${message(code: 'current.status.label', default: 'Status')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" />
+						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="userHash" title="${message(code: 'current.userHash.label', default: 'User Hash')}" />
+						<g:sortableColumn property="userHash" title="${message(code: 'current.userHash.label', default: 'User Hash')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="guestFlag" title="${message(code: 'current.guestFlag.label', default: 'Guest Flag')}" />
+						<g:sortableColumn property="guestFlag" title="${message(code: 'current.guestFlag.label', default: 'Guest Flag')}" params="${filterParams}"/>
 					
-						<g:sortableColumn property="timestamp" title="${message(code: 'current.timestamp.label', default: 'Timestamp')}" />
+						<g:sortableColumn property="timestamp" title="${message(code: 'current.timestamp.label', default: 'Timestamp')}" params="${filterParams}"/>
 					
 					</tr>
 				</thead>
@@ -59,10 +59,13 @@
 				</tbody>
 			</table>
 			<div class="pagination">
-				<g:paginate total="${currentInstanceTotal}" />
+			 	<filterpane:filterButton text="Filter" />
+                &#x7c;
+				<g:paginate total="${currentInstanceTotal}" params="${filterParams}" />
                 &#x7c;
                 <span>Entries: ${currentInstanceTotal}</span>
 			</div>
 		</div>
+		<filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
 	</body>
 </html>
