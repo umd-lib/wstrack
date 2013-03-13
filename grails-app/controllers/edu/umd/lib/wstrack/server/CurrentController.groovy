@@ -11,10 +11,16 @@ class CurrentController {
   }
 
   def list() {
+	println params
+	if(params.order == null && params.sort == null) {
+		params.sort = "timestamp"
+		params.order = "desc"
+	}	
     params.max = Math.min(params.max ? params.int('max') : 10, 100)
     [currentInstanceList: Current.list(params), currentInstanceTotal: Current.count()]
   }
 
+  
   def create() {
     [currentInstance: new Current(params)]
   }
