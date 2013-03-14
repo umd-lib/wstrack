@@ -6,6 +6,21 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'history.label', default: 'History')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<link href="../../css/smoothness/jquery-ui-1.10.1.custom.css" type="text/css" rel="stylesheet" media="screen, projection" />
+		<g:javascript src="jquery-1.9.1.js" />
+		<g:javascript src="jquery-ui-1.10.1.custom.js" />
+		<g:javascript src="jquery-migrate-1.0.0.js" />
+		<g:javascript src="history.js" />
+		<style type="text/css">
+			.ui-dialog .ui-dialog-content {
+				padding : 0px !important;
+			}
+					
+			#exportDialog {
+				display: none;
+				overflow : hidden;
+			}
+		</style>
 	</head>
 	<body>
 		<a href="#list-history" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -63,11 +78,14 @@
                 &#x7c;
 				<g:paginate total="${historyInstanceTotal}" params="${filterParams}"/>
                 &#x7c;
-                <g:link controller="history" action="export" params="${exportParams }">Export CSV</g:link>
+                <a href="#" id="exportLink" >Export CSV</a>
                 &#x7c;
                 <span>Entries: ${historyInstanceTotal}</span>
 			</div>
 		</div>
         <filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
+        <div id="exportDialog" >
+        	<iframe height="100%" width="100%" src="/wstrack-server/history/export"></iframe>
+        </div>
 	</body>
 </html>
