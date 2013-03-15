@@ -13,6 +13,7 @@ class HistoryController {
 	def grailsApplication
 	
 	def dataSource
+	def exportFile
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -44,7 +45,7 @@ class HistoryController {
 			def date2 = formatter.parseDateTime(params.endDate)
 			def sql = new Sql(dataSource)
 			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
-				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO \'/tmp/try.csv\'")
+				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO \'" + exportFile + "\'")
 		}
 	}
 	
