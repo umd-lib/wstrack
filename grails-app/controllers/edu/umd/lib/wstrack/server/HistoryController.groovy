@@ -44,8 +44,12 @@ class HistoryController {
 			def date = formatter.parseDateTime(params.startDate)
 			def date2 = formatter.parseDateTime(params.endDate)
 			def sql = new Sql(dataSource)
+			def exportFilePath = "/tmp/wstrack.csv"
+			if(exportFile != null) {
+				exportFilePath = exportFile
+			} 
 			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
-				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO \'" + exportFile + "\'")
+				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO \'" + exportFilePath + "\' DELIMITER AS \',\'")
 		}
 	}
 	
