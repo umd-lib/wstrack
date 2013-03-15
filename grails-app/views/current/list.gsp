@@ -63,6 +63,8 @@
                 &#x7c;
 				<g:paginate total="${currentInstanceTotal}" params="${filterParams}" />
                 &#x7c;
+                <g:link controller="current" action="filteredDelete" params="${filterParams}">Delete Entries</g:link>
+                &#x7c;
                 <span>Entries: ${currentInstanceTotal}</span>
 			</div>
 		</div>

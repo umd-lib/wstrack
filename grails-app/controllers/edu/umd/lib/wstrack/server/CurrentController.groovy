@@ -21,7 +21,7 @@ class CurrentController {
 			params.order = "desc"
 		}
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[currentInstanceList: Current.list(params), currentInstanceTotal: Current.count()]
+		[currentInstanceList: Current.list(params), currentInstanceTotal: Current.count(), exportParams:getExportParams(params)]
 	}
 
 	def filter = {
@@ -155,5 +155,25 @@ class CurrentController {
 			])
 			redirect(action: "show", id: params.id)
 		}
+	}
+
+	def filteredDelete = {
+		def exportParams = params.clone()
+
+		def total = filterPaneService.count( exportParams, Current )
+		def offset = 0l
+		def chunk = 100l
+		exportParams.max = chunk as String
+
+		while (offset < total) {
+			exportParams.offset = offset as String
+			List data = filterPaneService.filter( exportParams, Current )
+			// each row
+			for(cur in data) {
+				cur.delete()
+			}
+			offset += 100l
+		}
+		redirect(action: "list")
 	}
 }
