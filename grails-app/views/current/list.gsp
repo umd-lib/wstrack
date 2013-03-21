@@ -86,7 +86,8 @@
 		<div id="dialog-confirm" title="Delete These Records?">
 			<p>
 				<span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
-				<span>These records will be permanently deleted and cannot be recovered. Are you sure?</span>
+				<span id="dialog-confirm-rec-count"></span> 
+				<span id="dialog-confirm-rec-message"> Records will be permanently deleted and cannot be recovered. Are you sure?</span>
 			</p>
 		</div>
 </body>
