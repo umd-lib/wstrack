@@ -157,7 +157,7 @@ class CurrentController {
 		}
 	}
 
-	def filteredDelete = {
+	def filteredDelete () {
 		def exportParams = params.clone()
 
 		def total = filterPaneService.count( exportParams, Current )

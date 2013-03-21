@@ -6,6 +6,20 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'current.label', default: 'Current')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<link href="../css/smoothness/jquery-ui-1.10.1.custom.css" type="text/css" rel="stylesheet" media="screen, projection" />
+		<g:javascript src="jquery-1.9.1.js" />
+		<g:javascript src="jquery-ui-1.10.1.custom.js" />
+		<g:javascript src="jquery-migrate-1.0.0.js" />
+		<g:javascript src="current.js" />
+		<style type="text/css">	
+			#dialog-confirm {
+				display: none;
+				overflow : hidden;
+			}
+			.ui-dialog {
+				font-size : .8em;
+			}
+		</style>
 	</head>
 	<body>
 		<a href="#list-current" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -63,11 +77,17 @@
                 &#x7c;
 				<g:paginate total="${currentInstanceTotal}" params="${filterParams}" />
                 &#x7c;
-                <g:link controller="current" action="filteredDelete" params="${filterParams}">Delete Entries</g:link>
+                <g:link elementId="deleteRecords" controller="current" action="filteredDelete" params="${filterParams}">Delete Entries</g:link>
                 &#x7c;
-                <span>Entries: ${currentInstanceTotal}</span>
+                <span id="totalEntries" title="${currentInstanceTotal}">Entries: ${currentInstanceTotal}</span>
 			</div>
 		</div>
 		<filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
-	</body>
+		<div id="dialog-confirm" title="Delete These Records?">
+			<p>
+				<span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+				<span>These records will be permanently deleted and cannot be recovered. Are you sure?</span>
+			</p>
+		</div>
+</body>
 </html>
