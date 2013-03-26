@@ -11,7 +11,14 @@ class History {
   String userHash
   Boolean guestFlag
 
-  static mapping = { version false }
+  static mapping = { version false
+	  computerName column: 'computer_name', index: 'computer_name_Idx'
+	  status column: 'status', index: 'status_Idx'
+	  os column: 'os', index: 'os_Idx'
+	  userHash column: 'user_hash', index: 'user_hash_Idx'
+	  guestFlag column: 'guest_flag', index: 'guest_flag_Idx'
+	  timestamp column: 'timestamp', index: 'timestamp_Idx'
+  }
 
   static constraints = {
     computerName(blank:false)
