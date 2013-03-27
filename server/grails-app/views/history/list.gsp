@@ -85,7 +85,7 @@
 		</div>
         <filterpane:filterPane domain="edu.umd.lib.wstrack.server.History" />
         <div id="exportDialog" >
-        	<iframe height="100%" width="100%" src="/wstrack-server/history/export"></iframe>
+        	<iframe height="100%" width="100%" src="./history/export"></iframe>
         </div>
 	</body>
 </html>
