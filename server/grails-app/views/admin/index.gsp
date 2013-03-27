@@ -91,7 +91,7 @@
 				<h2>Tables</h2>
 				<ul>
 					<li class="controller"><g:link controller="current" params="${[sort:'timestamp', max:10, order:'desc'] }">Current</g:link></li>
-					<li class="controller"><g:link controller="history">History</g:link></li>
+					<li class="controller"><g:link controller="history" params="${[sort:'timestamp', max:10, order:'desc'] }">History</g:link></li>
 				</ul>
 				
 				<h2>Other</h2>
