@@ -100,9 +100,9 @@
 			<groupId>org.grails.plugins</groupId>
 			<artifactId>filterpane</artifactId>
 			<version>2.0.1.2</version>
-			<scope>system</scope>
+			<scope>runtime</scope>
 			<type>zip</type>
-			<systemPath>${basedir}/grails-filterpane-2.0.1.2.zip</systemPath>
+			<!-- <systemPath>${basedir}/grails-filterpane-2.0.1.2.zip</systemPath> -->
 		</dependency>
 
 
