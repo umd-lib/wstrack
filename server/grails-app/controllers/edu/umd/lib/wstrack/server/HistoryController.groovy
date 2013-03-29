@@ -47,9 +47,11 @@ class HistoryController {
 			def exportFilePath = "/tmp/wstrack.csv"
 			if(exportFile != null) {
 				exportFilePath = exportFile
-			} 
-			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
-				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO \'" + exportFilePath + "\' DELIMITER AS \',\'")
+			} 			
+			sql.execute("select dmp(text('" + formatter.print(date) + "'), text('" + formatter.print(date) + "'), text('" + exportFilePath + "'))")
+			
+//			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
+//				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO STDOUT") //\'" + exportFilePath + "\' DELIMITER AS \',\'")
 		}
 	}
 	
