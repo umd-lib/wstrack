@@ -1,5 +1,9 @@
 package edu.umd.lib.wstrack.server
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import groovy.sql.Sql
 import groovy.transform.WithReadLock
 
@@ -14,6 +18,8 @@ class HistoryController {
 	
 	def dataSource
 	def exportFile
+	
+	HistoryService historyService
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -37,34 +43,35 @@ class HistoryController {
 					exportParams:getExportParams(params) ] )
 	}
 
-	@WithReadLock
 	def export() {
-		println params
-		if(params.startDate != null && params.endDate != null) {
-			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-			def date = formatter.parseDateTime(params.startDate)
-			def date2 = formatter.parseDateTime(params.endDate)
-			def sql = new Sql(dataSource)
-			def exportFilePath = "/tmp/wstrack.csv"
-			if(exportFile != null) {
-				exportFilePath = exportFile
-			} 			
-			
-//			def fileName = java.util.UUID.randomUUID().toString()
-//			def file = new File(exportFilePath,fileName)
-			
-			def file = new File(exportFilePath)
-			sql.execute("select dmp(text('" + formatter.print(date) + "'), text('" + formatter.print(date2) + "'), text('" + file.getAbsolutePath() + "'))")
-			
-			response.contentType = grailsApplication.config.grails.mime.types['csv']
-			response.setHeader("Content-disposition", "attachment; filename=wstrack.csv")
-			response.outputStream << file.text
-			response.outputStream.flush()
-			
-			
-//			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
-//				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO STDOUT") //\'" + exportFilePath + "\' DELIMITER AS \',\'")
-		}
+		
+		historyService.exportService(params.startDate, params.endDate , exportFile.toString() , response)
+//		println params
+//		if(params.startDate != null && params.endDate != null) {
+//			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+//			def date = formatter.parseDateTime(params.startDate)
+//			def date2 = formatter.parseDateTime(params.endDate)
+//			def sql = new Sql(dataSource)
+//			def exportFilePath = "/tmp/wstrack.csv"
+//			if(exportFile != null) {
+//				exportFilePath = exportFile
+//			} 			
+//			
+////			def fileName = java.util.UUID.randomUUID().toString()
+////			def file = new File(exportFilePath,fileName)
+//			
+//			def file = new File(exportFilePath)
+//			sql.execute("select dmp(text('" + formatter.print(date) + "'), text('" + formatter.print(date2) + "'), text('" + file.getAbsolutePath() + "'))")
+//			
+//			response.contentType = grailsApplication.config.grails.mime.types['csv']
+//			response.setHeader("Content-disposition", "attachment; filename=wstrack.csv")
+//			response.outputStream << file.text
+//			response.outputStream.flush()
+//			
+//			
+////			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
+////				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO STDOUT") //\'" + exportFilePath + "\' DELIMITER AS \',\'")
+//		}
 	}
 	
 	/**
