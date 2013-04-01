@@ -1,8 +1,8 @@
 package edu.umd.lib.wstrack.server
 
 import groovy.sql.Sql
+import groovy.transform.Synchronized
 
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import org.springframework.dao.DataIntegrityViolationException
@@ -14,6 +14,8 @@ class HistoryController {
 	
 	def dataSource
 	def exportFile
+	
+	def exportLock
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -37,6 +39,7 @@ class HistoryController {
 					exportParams:getExportParams(params) ] )
 	}
 
+	@Synchronized('exportLock')
 	def export() {
 		println params
 		if(params.startDate != null && params.endDate != null) {
@@ -49,9 +52,10 @@ class HistoryController {
 				exportFilePath = exportFile
 			} 			
 			
-			def fileName = java.util.UUID.randomUUID().toString()
-			def file = new File(exportFilePath,fileName)
+//			def fileName = java.util.UUID.randomUUID().toString()
+//			def file = new File(exportFilePath,fileName)
 			
+			def file = new File(exportFilePath)
 			sql.execute("select dmp(text('" + formatter.print(date) + "'), text('" + formatter.print(date2) + "'), text('" + file.getAbsolutePath() + "'))")
 			
 			response.contentType = grailsApplication.config.grails.mime.types['csv']
@@ -59,7 +63,6 @@ class HistoryController {
 			response.outputStream << file.text
 			response.outputStream.flush()
 			
-			file.delete()
 			
 //			sql.execute("COPY (Select * from History where timestamp >= to_timestamp('" + formatter.print(date) +  
 //				"', 'yyyy-mm-dd hh24:mi:ss') and timestamp <= to_timestamp('" + formatter.print(date2) + "', 'yyyy-mm-dd hh24:mi:ss')) TO STDOUT") //\'" + exportFilePath + "\' DELIMITER AS \',\'")
