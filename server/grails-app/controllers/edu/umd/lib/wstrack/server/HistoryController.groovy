@@ -45,7 +45,7 @@ class HistoryController {
 
 	def export() {
 		
-		historyService.exportService(params.startDate, params.endDate , exportFile.toString() , response)
+		historyService.exportService(params.startDate, params.endDate , exportFile , response)
 //		println params
 //		if(params.startDate != null && params.endDate != null) {
 //			DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
@@ -74,57 +74,6 @@ class HistoryController {
 //		}
 	}
 	
-	/**
-	 * Export History rows as CSV, honoring selected sort and filter
-	 */
-//	def export = {
-//		response.contentType = grailsApplication.config.grails.mime.types['csv']
-//		response.setHeader("Content-disposition", "attachment; filename=wstrack.csv")
-//
-//		// Open the CSVWriter
-//		char separator = ','
-//		char quoteCharacter = '"'
-//		String lineEnd = CSVWriter.DEFAULT_LINE_END
-//		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(response.outputStream, "UTF-8")
-//
-//		CSVWriter writer = new CSVWriter(outputStreamWriter, separator, quoteCharacter, lineEnd)
-//
-//		// add the header
-//		writer.writeNext(["Timestamp", "Computer Name", "Status", "OS", "User Hash", "Guest Flag"] as String[])
-//
-//		// stream out the chunked data
-//		List fields = ["timestamp", "computerName", "status", "os", "userHash", "guestFlag"]
-//
-//		def exportParams = params.clone()
-//
-//		def total = filterPaneService.count( exportParams, History )
-//		def offset = 0l
-//		def chunk = 100l
-//		exportParams.max = chunk as String
-//
-//		while (offset < total) {
-//			exportParams.offset = offset as String
-//
-//			List data = filterPaneService.filter( exportParams, History )
-//
-//			// each row
-//			data.each { object ->
-//				List row = []
-//
-//				fields.each { field ->
-//					String value = object?."$field"?.toString()
-//					row.add(value)
-//				}
-//
-//				writer.writeNext(row as String[])
-//			}
-//
-//			offset += 100l
-//		}
-//
-//		writer.flush()
-//	}
-//
 	static def getExportParams(params) {
 
 		Map exportParams = params.clone()
