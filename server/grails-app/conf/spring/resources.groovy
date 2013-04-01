@@ -4,7 +4,7 @@ beans = {
 	
 	if (Environment.getCurrent() == Environment.DEVELOPMENT) {
 		exportFile(org.springframework.jndi.JndiObjectFactoryBean){
-			defaultObject = new String ("/tmp/wstrack.csv")
+			defaultObject = new String ("/tmp")
 			jndiName = 'jsava:comp/env/exportFile'
 		}
 
