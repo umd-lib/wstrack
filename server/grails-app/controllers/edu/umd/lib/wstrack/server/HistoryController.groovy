@@ -1,7 +1,7 @@
 package edu.umd.lib.wstrack.server
 
 import groovy.sql.Sql
-import groovy.transform.Synchronized
+import groovy.transform.WithReadLock
 
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
@@ -14,8 +14,6 @@ class HistoryController {
 	
 	def dataSource
 	def exportFile
-	
-	def exportLock
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -39,7 +37,7 @@ class HistoryController {
 					exportParams:getExportParams(params) ] )
 	}
 
-	@Synchronized('exportLock')
+	@WithReadLock
 	def export() {
 		println params
 		if(params.startDate != null && params.endDate != null) {
