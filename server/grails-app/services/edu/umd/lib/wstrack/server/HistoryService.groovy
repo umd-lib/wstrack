@@ -3,7 +3,7 @@
 package edu.umd.lib.wstrack.server
 
 import groovy.sql.Sql
-import groovy.transform.WithReadLock
+import groovy.transform.WithWriteLock
 
 import javax.servlet.http.HttpServletResponse
 
@@ -15,7 +15,7 @@ class HistoryService {
 	def dataSource
 	def grailsApplication
 
-	@WithReadLock
+	@WithWriteLock
     def exportService(String startDate, String endDate , String exportFile,  HttpServletResponse response) {
 //			println params
 			if(startDate != null && endDate != null) {
