@@ -10,7 +10,7 @@ class Current {
   String userHash
   Boolean guestFlag
   String location
-
+  
   static mapping = { version false }
 
   static constraints = {
@@ -19,7 +19,7 @@ class Current {
     os(blank:false)
     userHash(blank:false)
     guestFlag(blank:false)
-	location(blank:false)
+	location(nullable:true)
   }
 
   static List listOs() {
@@ -59,5 +59,9 @@ class Current {
 
     return r
   }
+  
+  
+  
+  
 
 }
