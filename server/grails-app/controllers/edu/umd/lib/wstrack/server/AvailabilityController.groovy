@@ -16,7 +16,10 @@ class AvailabilityController {
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 
 	def listAvailable() {
-
+		
+		if(params.listComputers == 'true'){
+			render listAll()
+		}
 		//Filter out non standard names
 		def matchedAllCurrentList= []
 		matchedAllCurrentList=getAllMatchedCurrentList();
@@ -62,17 +65,30 @@ class AvailabilityController {
 		/*****************************************************/
 		
 		
-		def locationVsCountsMap = new HashMap<String,Map<String,Integer>>() //of the form [Mck 1st floor:{Pc=3,Mac=4}]
+		def locationVsCountsMap = new HashMap<String,Map<String,String>>() //of the form [Mck 1st floor:{Pc=3,Mac=4}]
 		int macCount=0
 		int pcCount=0
+		int availablePcCount=0
+		int	availableMacCount=0
+		
 		String finder=""
 		def countsMap=[]
 		for(map in locationVsCurrentMap){
 			//Reinitialize for the next iteration.
 			macCount=0
 			pcCount=0
+			availablePcCount=0
+			availableMacCount=0
+			
 			countsMap = new HashMap<String, Integer>()
-			//iterate over each of the computer and find out the count for pcs and macs
+			
+			//Get total systems list
+			def availableSystemsList = []
+			availableSystemsList = getAllAvailableSystems(map.value)
+			
+			//Get system counts
+			//iterate over each of the computer and find out the count for ALL the pcs and macs
+			//irrespective of their availability
 			for(Current tempCurr:map.value){
 				finder=findComputerOS(tempCurr.getComputerName())
 				println "finder is ${finder}"
@@ -83,19 +99,47 @@ class AvailabilityController {
 				}
 				
 			}
+			finder=""
+			//Count available systems for both mac and pc
+			for(Current tempCurr:availableSystemsList){
+				finder=findComputerOS(tempCurr.getComputerName())
+				println "finder is ${finder}"
+				if(finder.equalsIgnoreCase("PC")){
+					availablePcCount++
+				}else if(finder.equalsIgnoreCase("MAC")){
+					availableMacCount++
+				}
+				
+			}
+			
 			//Populate the map with the counts
-			countsMap.put("pc",pcCount)
-			countsMap.put("mac",macCount)
+			countsMap.put("pc",availablePcCount+"/"+pcCount)
+			countsMap.put("mac",availableMacCount+"/"+macCount)
 			locationVsCountsMap.put(map.key, countsMap)
 		}
 		
 		/****************************************************/
-
+		def renderAs="JSON"
+		renderAs = params.format
 		def result = [locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap]
 
-		//render result as JSON
-		return result
-		//return [locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap]
+		if(renderAs == 'JSON'){
+		 	render result as JSON
+		}
+//		 else if(renderAs=='XML'){
+//			render(text:"<xml>some xml</xml>",contentType:"text/xml",encoding:"UTF-8")
+//		}
+		else{
+			return result
+		}
+	}
+	
+	/**
+	 * For debugging purpose
+	 * @return
+	 */
+	def listAll(){
+		render "In List All"
 	}
 
 	/**
@@ -155,13 +199,11 @@ class AvailabilityController {
 
 	/**
 	 * This class removes all the entries with non-standard computer names
-	 * and then returns the COMPLETE LIST WITH ONLY standard computer names. 
+	 * and then returns the COMPLETE LIST that contains ONLY the standard 
+	 * computer names. 
 	 * @return
 	 */
 	List getAllMatchedCurrentList(){
-
-		//This fetches the list with status logout. So basically this
-		//fetches the list of available systems. def currentList = Current.list(fetch: [status:"logout"]);
 
 		//This fetches all the current systems.
 		def currentList = Current.list();
