@@ -36,93 +36,18 @@ class AvailabilityController {
 		currentAvailableList = getAllAvailableSystems(matchedAllCurrentList)
 		currentAvailableCount = currentAvailableList.size()
 
+		def retSymMap=getSymVsLocationMap()
 
-		/******To be put in method that gives
-		 * locationVSLIst of computers in that location*******/
-		def locationMap = getLocationMappingFromCSV();//Mapping of location vs regex
-		 ArrayList<Current> locCurrentList = null//Array list to hold all the systems available in a particular location
 		def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
-		
-		//For location, check all the systems that match
-		for(map in locationMap){
-			locCurrentList = new ArrayList<Current>()
-			//check all the "valid" systems only
-			for(Current tempCurr:matchedAllCurrentList){
-				
-				if(isMatch(tempCurr.getComputerName(),map.value)){
-					//Create an array list of all the systems in a particular location
-					locCurrentList.add(tempCurr)
-				}
-				
-			}
-			if(locCurrentList!=null || locCurrentList.size()!=0){
-				locationVsCurrentMap.put(map.key,locCurrentList)
-			}
-			//Clear the locCurrentList for the next location
-			//locCurrentList.clear()
-		}
-		
-		/*****************************************************/
-		
-		
-		def locationVsCountsMap = new HashMap<String,Map<String,String>>() //of the form [Mck 1st floor:{Pc=3,Mac=4}]
-		int macCount=0
-		int pcCount=0
-		int availablePcCount=0
-		int	availableMacCount=0
-		
-		String finder=""
-		def countsMap=[]
-		for(map in locationVsCurrentMap){
-			//Reinitialize for the next iteration.
-			macCount=0
-			pcCount=0
-			availablePcCount=0
-			availableMacCount=0
-			
-			countsMap = new HashMap<String, Integer>()
-			
-			//Get total systems list
-			def availableSystemsList = []
-			availableSystemsList = getAllAvailableSystems(map.value)
-			
-			//Get system counts
-			//iterate over each of the computer and find out the count for ALL the pcs and macs
-			//irrespective of their availability
-			for(Current tempCurr:map.value){
-				finder=findComputerOS(tempCurr.getComputerName())
-				println "finder is ${finder}"
-				if(finder.equalsIgnoreCase("PC")){
-					pcCount++
-				}else if(finder.equalsIgnoreCase("MAC")){
-					macCount++
-				}
-				
-			}
-			finder=""
-			//Count available systems for both mac and pc
-			for(Current tempCurr:availableSystemsList){
-				finder=findComputerOS(tempCurr.getComputerName())
-				println "finder is ${finder}"
-				if(finder.equalsIgnoreCase("PC")){
-					availablePcCount++
-				}else if(finder.equalsIgnoreCase("MAC")){
-					availableMacCount++
-				}
-				
-			}
-			
-			//Populate the map with the counts
-			countsMap.put("pc",availablePcCount+"/"+pcCount)
-			countsMap.put("mac",availableMacCount+"/"+macCount)
-			locationVsCountsMap.put(map.key, countsMap)
-		}
-		
-		/****************************************************/
-		def renderAs="JSON"
-		renderAs = params.format
-		def result = [locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap]
+		locationVsCurrentMap=getLocationsVsCurrentMap(matchedAllCurrentList)
 
+		def locationVsCountsMap = []
+		locationVsCountsMap=setLocationVsCountsMap(locationVsCurrentMap)
+		
+		def renderAs="JSON"
+		if(null!=params.format)
+			renderAs = params.format
+		def result = [locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
 		if(renderAs == 'JSON'){
 		 	render result as JSON
 		}
@@ -134,6 +59,108 @@ class AvailabilityController {
 		}
 	}
 	
+	
+	/**
+	 * This function gives the total list of current systems (Available and Not Available systems) 
+	 * in all the locations.
+	 * @param matchedAllCurrentList
+	 * @return locationVsCurrentMap
+	 */
+	def getLocationsVsCurrentMap(def matchedAllCurrentList){
+		
+		def locationMap = getLocationMappingFromCSV();//Mapping of location vs regex
+		ArrayList<Current> locCurrentList = null//Array list to hold all the systems available in a particular location
+	   def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
+	   
+	   //For location, check all the systems that match
+	   for(map in locationMap){
+		   locCurrentList = new ArrayList<Current>()
+		   //check all the "valid" systems only
+		   for(Current tempCurr:matchedAllCurrentList){
+			   
+			   if(isMatch(tempCurr.getComputerName(),map.value)){
+				   //Create an array list of all the systems in a particular location
+				   locCurrentList.add(tempCurr)
+			   }
+			   
+		   }
+		   if(locCurrentList!=null || locCurrentList.size()!=0){
+			   locationVsCurrentMap.put(map.key,locCurrentList)
+		   }
+		   //Clear the locCurrentList for the next location
+		   //locCurrentList.clear()
+	   }
+	   
+	   return locationVsCurrentMap
+	}
+	
+	/**
+	 * This method returns a map with the available and total system counts.
+	 * @param locationVsCurrentMap
+	 * @return
+	 */
+	def setLocationVsCountsMap(HashMap<String,ArrayList<Current>> locationVsCurrentMap){
+		def locationVsCountsMap = new HashMap<String,Map<String,Map<String,Integer>>>() //of the form
+		//[Mck 1st floor:{Pc=[total:4,available=2],Mac=[total:4,available=2]}]
+		int macCount=0
+		int pcCount=0
+		int availablePcCount=0
+		int	availableMacCount=0
+		
+		String finder=""
+		def countsMap=[]
+		def osPcMap=[]
+		def osMacMap=[]
+		for(map in locationVsCurrentMap){
+			//Reinitialize for the next iteration.
+			macCount=0
+			pcCount=0
+			availablePcCount=0
+			availableMacCount=0
+			
+			countsMap = new HashMap<String, Map<String,Integer>>()
+			osPcMap = new HashMap<String,Integer>();
+			osMacMap = new HashMap<String,Integer>();
+			//Get total systems list
+			def availableSystemsList = []
+			availableSystemsList = getAllAvailableSystems(map.value)
+			
+			//Get system counts
+			//iterate over each of the computer and find out the count for ALL the pcs and macs
+			//irrespective of their availability
+			for(Current tempCurr:map.value){
+				finder=findComputerOS(tempCurr.getComputerName())
+
+				//If the status is logout. INcrement both the counts. else just increment the total count.
+				if(finder.equalsIgnoreCase("PC") && tempCurr.getStatus().equalsIgnoreCase("logout")){
+					availablePcCount++
+					pcCount++
+				}else if(finder.equalsIgnoreCase("PC") && !tempCurr.getStatus().equalsIgnoreCase("logout")){
+					pcCount++
+				}else if(finder.equalsIgnoreCase("MAC") && tempCurr.getStatus().equalsIgnoreCase("logout")){
+					availableMacCount++
+					macCount++
+				}
+				else if(finder.equalsIgnoreCase("MAC") && !tempCurr.getStatus().equalsIgnoreCase("logout")){
+					macCount++
+				}
+				
+			}
+			osPcMap.put("available", availablePcCount);
+			osPcMap.put("total", pcCount);
+			
+			osMacMap.put("available", availableMacCount);
+			osMacMap.put("total", macCount);
+			
+			//Populate the map with the counts
+			countsMap.put("pc",osPcMap)
+			countsMap.put("mac",osMacMap)
+			locationVsCountsMap.put(map.key, countsMap)
+			
+			
+		}
+		return locationVsCountsMap
+	}
 	/**
 	 * For debugging purpose
 	 * @return
@@ -253,7 +280,7 @@ class AvailabilityController {
 	 * @param tempComputerName
 	 * @return
 	 *
-	def getLocationByComputerName(def tempComputerName){
+	def getLocation(def tempComputerName){
 
 		println "for computer name ${tempComputerName}"
 		/**
@@ -328,7 +355,7 @@ class AvailabilityController {
 				//Skip this iteration since this is the header
 				continue
 			}else{
-				retLocationMap.put(nextLine[1].toString(),nextLine[0].toString())
+				retLocationMap.put(nextLine[2].toString(),nextLine[1].toString())
 
 			}
 
@@ -338,4 +365,35 @@ class AvailabilityController {
 
 		return retLocationMap
 	}
+	
+	/**
+	 * This function returns the symbol vs the location name map. 
+	 * Eg. MCK1F=McKeldin Library 1st floor
+	 * @return retSymMap
+	 */
+	def getSymVsLocationMap(){
+		
+		CSVReader reader = new CSVReader(new FileReader(FILE_PATH));
+		String [] nextLine;
+		int counter = 0
+		def retSymMap=[:]
+		while ((nextLine = reader.readNext()) != null) {
+			//INcrement the count by 1 for every new line.
+			counter++
+
+			if(counter==1){
+				//Skip this iteration since this is the header
+				continue
+			}else{
+				retSymMap.put(nextLine[2].toString(),nextLine[0].toString())
+
+			}
+
+			// nextLine[] is an array of values from the line
+			//System.out.println(nextLine[0] +" "+ nextLine[1] );
+		}
+
+		return retSymMap
+	}
+	
 }
