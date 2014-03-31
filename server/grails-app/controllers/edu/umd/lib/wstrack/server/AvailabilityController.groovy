@@ -16,10 +16,7 @@ class AvailabilityController {
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 
 	def listAvailable() {
-		
-		if(params.listComputers == 'true'){
-			render listAll()
-		}
+
 		//Filter out non standard names
 		def matchedAllCurrentList= []
 		matchedAllCurrentList=getAllMatchedCurrentList();
@@ -42,24 +39,53 @@ class AvailabilityController {
 		locationVsCurrentMap=getLocationsVsCurrentMap(matchedAllCurrentList)
 
 		def locationVsCountsMap = []
-		locationVsCountsMap=setLocationVsCountsMap(locationVsCurrentMap)
-		
+		locationVsCountsMap=getLocationVsCountsMap(locationVsCurrentMap)
+
+		def locVsCountFinalMap = []
+		locVsCountFinalMap=generateLocationNamesMap(locationVsCountsMap,retSymMap)
+
 		def renderAs="JSON"
 		if(null!=params.format)
 			renderAs = params.format
-		def result = [locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
-		if(renderAs == 'JSON'){
-		 	render result as JSON
+		//def result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
+		def result = [locVsCountFinalMap:locVsCountFinalMap]
+		
+		if(params.debug=='true'){
+			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
+			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]	
+			
 		}
-//		 else if(renderAs=='XML'){
-//			render(text:"<xml>some xml</xml>",contentType:"text/xml",encoding:"UTF-8")
-//		}
+		
+		if(renderAs == 'JSON'){
+			render result as JSON
+		}
+		//		 else if(renderAs=='XML'){
+		//			render(text:"<xml>some xml</xml>",contentType:"text/xml",encoding:"UTF-8")
+		//		}
 		else{
 			return result
 		}
 	}
-	
-	
+
+	/**
+	 * This method replaces the locations with there full names 
+	 * based on the retSymMap mapping between the symbols and the locations.
+	 * @param locationVsCountsMap
+	 * @return
+	 */
+	def generateLocationNamesMap(def locationVsCountsMap,def retSymMap){
+		def newMap = [:]
+		for (locVsCountsMap in locationVsCountsMap){
+			for(retSymbolVsLocMap in retSymMap){
+				if(retSymbolVsLocMap.key == locVsCountsMap.key){
+					newMap.put(retSymbolVsLocMap.value, locVsCountsMap.value)
+					print "hello"
+				}
+			}
+		}
+		return newMap
+	}
+
 	/**
 	 * This function gives the total list of current systems (Available and Not Available systems) 
 	 * in all the locations.
@@ -67,46 +93,46 @@ class AvailabilityController {
 	 * @return locationVsCurrentMap
 	 */
 	def getLocationsVsCurrentMap(def matchedAllCurrentList){
-		
+
 		def locationMap = getLocationMappingFromCSV();//Mapping of location vs regex
 		ArrayList<Current> locCurrentList = null//Array list to hold all the systems available in a particular location
-	   def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
-	   
-	   //For location, check all the systems that match
-	   for(map in locationMap){
-		   locCurrentList = new ArrayList<Current>()
-		   //check all the "valid" systems only
-		   for(Current tempCurr:matchedAllCurrentList){
-			   
-			   if(isMatch(tempCurr.getComputerName(),map.value)){
-				   //Create an array list of all the systems in a particular location
-				   locCurrentList.add(tempCurr)
-			   }
-			   
-		   }
-		   if(locCurrentList!=null || locCurrentList.size()!=0){
-			   locationVsCurrentMap.put(map.key,locCurrentList)
-		   }
-		   //Clear the locCurrentList for the next location
-		   //locCurrentList.clear()
-	   }
-	   
-	   return locationVsCurrentMap
+		def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
+
+		//For location, check all the systems that match
+		for(map in locationMap){
+			locCurrentList = new ArrayList<Current>()
+			//check all the "valid" systems only
+			for(Current tempCurr:matchedAllCurrentList){
+
+				if(isMatch(tempCurr.getComputerName(),map.value)){
+					//Create an array list of all the systems in a particular location
+					locCurrentList.add(tempCurr)
+				}
+
+			}
+			if(locCurrentList!=null || locCurrentList.size()!=0){
+				locationVsCurrentMap.put(map.key,locCurrentList)
+			}
+			//Clear the locCurrentList for the next location
+			//locCurrentList.clear()
+		}
+
+		return locationVsCurrentMap
 	}
-	
+
 	/**
 	 * This method returns a map with the available and total system counts.
 	 * @param locationVsCurrentMap
 	 * @return
 	 */
-	def setLocationVsCountsMap(HashMap<String,ArrayList<Current>> locationVsCurrentMap){
+	def getLocationVsCountsMap(HashMap<String,ArrayList<Current>> locationVsCurrentMap){
 		def locationVsCountsMap = new HashMap<String,Map<String,Map<String,Integer>>>() //of the form
 		//[Mck 1st floor:{Pc=[total:4,available=2],Mac=[total:4,available=2]}]
 		int macCount=0
 		int pcCount=0
 		int availablePcCount=0
 		int	availableMacCount=0
-		
+
 		String finder=""
 		def countsMap=[]
 		def osPcMap=[]
@@ -117,14 +143,14 @@ class AvailabilityController {
 			pcCount=0
 			availablePcCount=0
 			availableMacCount=0
-			
+
 			countsMap = new HashMap<String, Map<String,Integer>>()
 			osPcMap = new HashMap<String,Integer>();
 			osMacMap = new HashMap<String,Integer>();
 			//Get total systems list
 			def availableSystemsList = []
 			availableSystemsList = getAllAvailableSystems(map.value)
-			
+
 			//Get system counts
 			//iterate over each of the computer and find out the count for ALL the pcs and macs
 			//irrespective of their availability
@@ -144,20 +170,20 @@ class AvailabilityController {
 				else if(finder.equalsIgnoreCase("MAC") && !tempCurr.getStatus().equalsIgnoreCase("logout")){
 					macCount++
 				}
-				
+
 			}
 			osPcMap.put("available", availablePcCount);
 			osPcMap.put("total", pcCount);
-			
+
 			osMacMap.put("available", availableMacCount);
 			osMacMap.put("total", macCount);
-			
+
 			//Populate the map with the counts
 			countsMap.put("pc",osPcMap)
 			countsMap.put("mac",osMacMap)
 			locationVsCountsMap.put(map.key, countsMap)
-			
-			
+
+
 		}
 		return locationVsCountsMap
 	}
@@ -165,8 +191,8 @@ class AvailabilityController {
 	 * For debugging purpose
 	 * @return
 	 */
-	def listAll(){
-		render "In List All"
+	def listAll(def result){
+		return result
 	}
 
 	/**
@@ -176,9 +202,9 @@ class AvailabilityController {
 	 * @return
 	 */
 	def findComputerOS(def localComputerName){
-		
+
 		def match = false
-		
+
 		match = isMatch(localComputerName,PATTERNMAC)
 		if(match){
 			return "MAC"
@@ -189,7 +215,7 @@ class AvailabilityController {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method compares the string to check with the regex pattern
 	 * and returns a true or false based on the match
@@ -204,7 +230,7 @@ class AvailabilityController {
 		match = pattern.matcher(strToCheck).matches();
 		return match
 	}
-	
+
 	/**
 	 * This method updates the location for the list of current
 	 * systems.
@@ -273,70 +299,63 @@ class AvailabilityController {
 		return tempCurrentListByStatus
 	}
 
-/*	/**
+	/*	/**
 	 * This method returns a string location based on the
 	 * name of the computer. It matches the computer name with the
 	 * location map and returns a string accordingly.
 	 * @param tempComputerName
 	 * @return
 	 *
-	def getLocation(def tempComputerName){
+	 def getLocation(def tempComputerName){
+	 println "for computer name ${tempComputerName}"
+	 /**
+	 * This is the locationMap that contains the regex for
+	 * finding the location of a workstation. SInce this is an initial
+	 * commit, this map is created manually. Preferred method is to read
+	 * this off a configuration file (csv,txt etc) and should be done in the
+	 * later releases.
+	 *
+	 *
+	 def locationMap = getLocationMappingFromCSV();
+	 //		def locationMap= ['^LIBWKMCK[PM]1F[0-9]+[a-zA-Z]$':'McKeldin Library 1st floor',
+	 //		 '^LIBWKMCK[PM]2F[0-9]+[a-zA-Z]$':'McKeldin Library 2nd floor',
+	 //		 '^LIBWKMCK[PM]4F[0-9]+[a-zA-Z]$':'McKeldin Library 4th floor',
+	 //		 '^LIBWKMCK[PM]5F[0-9]+[a-zA-Z]$':'McKeldin Library 5th floor',
+	 //		 '^LIBWKMCK[PM]6F[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor',
+	 //		 '^LIBWKMCK[PM]6F1[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6101',
+	 //		 '^LIBWKMCK[PM]6F3[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6103',
+	 //		 '^LIBWKMCK[PM]6F7[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6107',
+	 //		 '^LIBWKMCK[PM]7F[0-9]+[a-zA-Z]$':'McKeldin Library 7th floor',
+	 //		 '^LIBWKEPL[PM]1F[0-9]+[a-zA-Z]$':'Engineering Library 1st floor',
+	 //		 '^LIBWKEPL[PM]2F[0-9]+[a-zA-Z]$':'Engineering Library 2nd floor',
+	 //		 '^LIBWKEPL[PM]3F[0-9]+[a-zA-Z]$':'Engineering Library 3rd floor',
+	 //		 '^LIBWKCHM[PM]1F[0-9]+[a-zA-Z]$':'Chemistry Library 1st floor',
+	 //		 '^LIBWKCHM[PM]2F[0-9]+[a-zA-Z]$':'Chemistry Library 2nd floor',
+	 //		 '^LIBWKCHM[PM]3F[0-9]+[a-zA-Z]$':'Chemistry Library 3rd floor',
+	 //		 '^LIBWKNON[PM]1F[0-9]+[a-zA-Z]$':'Nonprint Library 1st floor',
+	 //		 '^LIBWKMDR[PM]1F[0-9]+[a-zA-Z]$':'MARYLANDIA',
+	 //		 '^LIBWKPAL[PM]1F[0-9]+[a-zA-Z]$':'PAL 1st floor',
+	 //		 '^LIBWKPAL[PM]2F[0-9]+[a-zA-Z]$':'PAL 2nd floor',
+	 //		 '^LIBWKART[PM]1F[0-9]+[a-zA-Z]$':'Art Library 1st floor',
+	 //		 '^LIBWKARC[PM]1F[0-9]+[a-zA-Z]$':'Arch Library'
+	 //		 ]
+	 boolean regexCheck = false
+	 def pattern=""
+	 def retLocation=""
+	 for (var in locationMap){
+	 pattern = ~/${var.value}/
+	 //println "Pattern to be checked is ${pattern}"
+	 assert pattern instanceof Pattern
+	 regexCheck = pattern.matcher(tempComputerName).matches();
+	 println "Regex check = ${regexCheck}"
+	 if(regexCheck){
+	 retLocation = var.key
+	 return retLocation
+	 }
+	 }
+	 }
+	 */
 
-		println "for computer name ${tempComputerName}"
-		/**
-		 * This is the locationMap that contains the regex for
-		 * finding the location of a workstation. SInce this is an initial
-		 * commit, this map is created manually. Preferred method is to read
-		 * this off a configuration file (csv,txt etc) and should be done in the
-		 * later releases.
-		 *
-		 *
-		def locationMap = getLocationMappingFromCSV();
-
-		//		def locationMap= ['^LIBWKMCK[PM]1F[0-9]+[a-zA-Z]$':'McKeldin Library 1st floor',
-		//		 '^LIBWKMCK[PM]2F[0-9]+[a-zA-Z]$':'McKeldin Library 2nd floor',
-		//		 '^LIBWKMCK[PM]4F[0-9]+[a-zA-Z]$':'McKeldin Library 4th floor',
-		//		 '^LIBWKMCK[PM]5F[0-9]+[a-zA-Z]$':'McKeldin Library 5th floor',
-		//		 '^LIBWKMCK[PM]6F[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor',
-		//		 '^LIBWKMCK[PM]6F1[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6101',
-		//		 '^LIBWKMCK[PM]6F3[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6103',
-		//		 '^LIBWKMCK[PM]6F7[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6107',
-		//		 '^LIBWKMCK[PM]7F[0-9]+[a-zA-Z]$':'McKeldin Library 7th floor',
-		//		 '^LIBWKEPL[PM]1F[0-9]+[a-zA-Z]$':'Engineering Library 1st floor',
-		//		 '^LIBWKEPL[PM]2F[0-9]+[a-zA-Z]$':'Engineering Library 2nd floor',
-		//		 '^LIBWKEPL[PM]3F[0-9]+[a-zA-Z]$':'Engineering Library 3rd floor',
-		//		 '^LIBWKCHM[PM]1F[0-9]+[a-zA-Z]$':'Chemistry Library 1st floor',
-		//		 '^LIBWKCHM[PM]2F[0-9]+[a-zA-Z]$':'Chemistry Library 2nd floor',
-		//		 '^LIBWKCHM[PM]3F[0-9]+[a-zA-Z]$':'Chemistry Library 3rd floor',
-		//		 '^LIBWKNON[PM]1F[0-9]+[a-zA-Z]$':'Nonprint Library 1st floor',
-		//		 '^LIBWKMDR[PM]1F[0-9]+[a-zA-Z]$':'MARYLANDIA',
-		//		 '^LIBWKPAL[PM]1F[0-9]+[a-zA-Z]$':'PAL 1st floor',
-		//		 '^LIBWKPAL[PM]2F[0-9]+[a-zA-Z]$':'PAL 2nd floor',
-		//		 '^LIBWKART[PM]1F[0-9]+[a-zA-Z]$':'Art Library 1st floor',
-		//		 '^LIBWKARC[PM]1F[0-9]+[a-zA-Z]$':'Arch Library'
-		//		 ]
-
-		boolean regexCheck = false
-		def pattern=""
-
-		def retLocation=""
-
-		for (var in locationMap){
-
-			pattern = ~/${var.value}/
-			//println "Pattern to be checked is ${pattern}"
-			assert pattern instanceof Pattern
-			regexCheck = pattern.matcher(tempComputerName).matches();
-			println "Regex check = ${regexCheck}"
-			if(regexCheck){
-				retLocation = var.key
-				return retLocation
-			}
-		}
-
-	}
-	*/
-	
 	/**
 	 * This method gets the location mapping from the FILE_PATH.
 	 * It returns a map of Location vs its regex pattern
@@ -365,14 +384,14 @@ class AvailabilityController {
 
 		return retLocationMap
 	}
-	
+
 	/**
 	 * This function returns the symbol vs the location name map. 
 	 * Eg. MCK1F=McKeldin Library 1st floor
 	 * @return retSymMap
 	 */
 	def getSymVsLocationMap(){
-		
+
 		CSVReader reader = new CSVReader(new FileReader(FILE_PATH));
 		String [] nextLine;
 		int counter = 0
@@ -395,5 +414,5 @@ class AvailabilityController {
 
 		return retSymMap
 	}
-	
+
 }
