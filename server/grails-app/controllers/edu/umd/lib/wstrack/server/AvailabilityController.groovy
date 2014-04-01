@@ -9,8 +9,8 @@ import grails.converters.JSON
  *
  */
 class AvailabilityController {
-
-	static final FILE_PATH = "/apps/git/wstrack/server/location_map.csv"
+	
+	static final FILE_PATH = "location_map.csv"
 	static final PATTERNMAC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
@@ -79,7 +79,6 @@ class AvailabilityController {
 			for(retSymbolVsLocMap in retSymMap){
 				if(retSymbolVsLocMap.key == locVsCountsMap.key){
 					newMap.put(retSymbolVsLocMap.value, locVsCountsMap.value)
-					print "hello"
 				}
 			}
 		}
@@ -221,6 +220,7 @@ class AvailabilityController {
 	 * and returns a true or false based on the match
 	 * @param strToCheck = String to check
 	 * @param regexPattern = Pattern used for string check without the ~/ /
+	 * @return if strToCheck=regexPattern returns true else false
 	 */
 	def isMatch(def strToCheck, def regexPattern){
 		def match = false
