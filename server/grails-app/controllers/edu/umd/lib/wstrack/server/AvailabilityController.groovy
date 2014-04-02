@@ -1,7 +1,9 @@
 package edu.umd.lib.wstrack.server
 import java.util.regex.*
+import javax.xml.transform.Result
 import au.com.bytecode.opencsv.CSVReader
 import grails.converters.JSON
+import grails.converters.XML
 
 /**
  * 
@@ -9,7 +11,7 @@ import grails.converters.JSON
  *
  */
 class AvailabilityController {
-	
+
 	static final FILE_PATH = "location_map.csv"
 	static final PATTERNMAC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
@@ -49,19 +51,20 @@ class AvailabilityController {
 			renderAs = params.format
 		//def result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
 		def result = [locVsCountFinalMap:locVsCountFinalMap]
-		
+
 		if(params.debug=='true'){
 			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
-			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]	
-			
+			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]
+
 		}
-		
+
 		if(renderAs == 'JSON'){
 			render result as JSON
 		}
-		//		 else if(renderAs=='XML'){
-		//			render(text:"<xml>some xml</xml>",contentType:"text/xml",encoding:"UTF-8")
-		//		}
+		else if(renderAs=='XML'){
+			def xml = new XML(result)
+			render text: xml, contentType: 'text/xml', encoding: 'UTF-8'
+		}
 		else{
 			return result
 		}

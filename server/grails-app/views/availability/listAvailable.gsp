@@ -5,7 +5,7 @@
 		<th>Location</th>
 		<th>Workstations</th>
 	</tr>
-	<g:each in="${locationVsCountsMap}" var="map">
+	<g:each in="${locVsCountFinalMap}" var="map">
 		<tr>
 			<td>
 				${map.key}
@@ -19,3 +19,28 @@
 
 	</g:each>
 </table>
+
+<%-- THis is for listAll 
+<table border=2>
+<tr>
+	<th >Location</th>
+	<th colspan="5">Workstations</th>
+	</tr>
+	<tr><th></th><th colspan="3">name</th><th colspan="2">Status</th>
+<g:each in="${locationVsCurrentFinal}" var="map">
+	<tr>
+		<td>
+			${map.key}
+		</td>
+		<g:each in="${map.value}" var="ws">
+				<td>${ws.computerName}</td><td>${ws.status}</td>
+			</g:each>
+
+	</tr>
+
+
+</g:each>
+</table>
+		
+		
+--%>
