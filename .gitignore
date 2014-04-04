@@ -1,3 +1,8 @@
-/target-eclipse
-/target
+target-eclipse/
+target/
 stacktrace.log
+logs/
+plugins/
+.classpath
+.project
+.settings/
