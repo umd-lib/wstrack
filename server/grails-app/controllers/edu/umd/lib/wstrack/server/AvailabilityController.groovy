@@ -46,7 +46,7 @@ class AvailabilityController {
 		def locVsCountFinalMap = []
 		locVsCountFinalMap=generateLocationNamesMap(locationVsCountsMap,retSymMap)
 
-		def renderAs="JSON"
+		def renderAs="json"
 		if(null!=params.format)
 			renderAs = params.format
 		//def result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
@@ -58,10 +58,10 @@ class AvailabilityController {
 
 		}
 
-		if(renderAs == 'JSON'){
+		if(renderAs.equalsIgnoreCase("json")){
 			render result as JSON
 		}
-		else if(renderAs=='XML'){
+		else if(renderAs.equalsIgnoreCase("xml")){
 			def xml = new XML(result)
 			render text: xml, contentType: 'text/xml', encoding: 'UTF-8'
 		}
