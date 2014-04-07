@@ -12,7 +12,6 @@ import grails.converters.XML
  */
 class AvailabilityController {
 
-	static final FILE_PATH = "location_map.csv"
 	static final PATTERNMAC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
@@ -93,7 +92,7 @@ class AvailabilityController {
 	 */
 	def getLocationsVsCurrentMap(def matchedAllCurrentList){
 
-		def locationMap = getLocationMappingFromCSV();//Mapping of location vs regex
+		def locationMap = getLocationMap();//Mapping of location vs regex
 		ArrayList<Current> locCurrentList = null//Array list to hold all the systems available in a particular location
 		def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
 
@@ -112,8 +111,6 @@ class AvailabilityController {
 			if(locCurrentList!=null || locCurrentList.size()!=0){
 				locationVsCurrentMap.put(map.key,locCurrentList)
 			}
-			//Clear the locCurrentList for the next location
-			//locCurrentList.clear()
 		}
 
 		return locationVsCurrentMap
@@ -124,7 +121,7 @@ class AvailabilityController {
 	 * @param locationVsCurrentMap
 	 * @return
 	 */
-	def getLocationVsCountsMap(HashMap<String,ArrayList<Current>> locationVsCurrentMap){
+	def getLocationVsCountsMap(def locationVsCurrentMap){
 		def locationVsCountsMap = new HashMap<String,Map<String,Map<String,Integer>>>() //of the form
 		//[Mck 1st floor:{Pc=[total:4,available=2],Mac=[total:4,available=2]}]
 		int macCount=0
@@ -256,9 +253,6 @@ class AvailabilityController {
 		}
 
 		return tempMatchList
-
-
-		//
 	}
 
 	/**
@@ -283,31 +277,16 @@ class AvailabilityController {
 
 
 	/**
-	 * This method gets the location mapping from the FILE_PATH.
+	 * This method gets the location mapping from the Config.groovy file.
 	 * It returns a map of Location vs its regex pattern
 	 * @return locationMap [key as location: value as regex pattern]
 	 */
-	def getLocationMappingFromCSV(){
-		CSVReader reader = new CSVReader(new FileReader(FILE_PATH));
-		String [] nextLine;
-		int counter = 0
+	def getLocationMap(){
+		
 		def retLocationMap=[:]
-		while ((nextLine = reader.readNext()) != null) {
-			//INcrement the count by 1 for every new line.
-			counter++
-
-			if(counter==1){
-				//Skip this iteration since this is the header
-				continue
-			}else{
-				retLocationMap.put(nextLine[2].toString(),nextLine[1].toString())
-
-			}
-
-			// nextLine[] is an array of values from the line
-			//System.out.println(nextLine[0] +" "+ nextLine[1] );
+		for (map in grailsApplication.config.edu.umd.lib.wstrack.server.locationMap){
+			retLocationMap.put(map.key, map.value['regex'])
 		}
-
 		return retLocationMap
 	}
 
@@ -318,26 +297,10 @@ class AvailabilityController {
 	 */
 	def getSymVsLocationMap(){
 
-		CSVReader reader = new CSVReader(new FileReader(FILE_PATH));
-		String [] nextLine;
-		int counter = 0
 		def retSymMap=[:]
-		while ((nextLine = reader.readNext()) != null) {
-			//INcrement the count by 1 for every new line.
-			counter++
-
-			if(counter==1){
-				//Skip this iteration since this is the header
-				continue
-			}else{
-				retSymMap.put(nextLine[2].toString(),nextLine[0].toString())
-
-			}
-
-			// nextLine[] is an array of values from the line
-			//System.out.println(nextLine[0] +" "+ nextLine[1] );
+		for (map in grailsApplication.config.edu.umd.lib.wstrack.server.locationMap){
+			retSymMap.put(map.key, map.value['location'])
 		}
-
 		return retSymMap
 	}
 

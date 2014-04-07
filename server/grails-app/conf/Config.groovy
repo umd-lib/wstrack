@@ -108,6 +108,25 @@ log4j = {
 }
 
 edu.umd.lib.wstrack.server.locationMap = [
-  [location: 'McKeldin Library 1st floor',  regex: '^LIBWKMCK[PM]1F[0-9]+[a-zA-Z]$',  Symbol : 'MCK1F'],
-  [location: 'McKeldin Library 2nd floor',  regex: '^LIBWKMCK[PM]2F[0-9]+[a-zA-Z]$',  Symbol : 'MCK2F']
+	MCK1F:[location:'McKeldin Library 1st floor', regex:'^LIBWKMCK[PM]1F[0-9]+[a-zA-Z]$'],
+	MCK2F:[location:'McKeldin Library 2nd floor',regex:'^LIBWKMCK[PM]2F[0-9]+[a-zA-Z]$'],
+	MCK4F:[location:'McKeldin Library 4th floor',regex:'^LIBWKMCK[PM]4F[0-9]+[a-zA-Z]$'],
+	MCK5F:[location:'McKeldin Library 5th floor',regex:'^LIBWKMCK[PM]5F[0-9]+[a-zA-Z]$'],
+	MCK6F:[location:'McKeldin Library 6th floor',regex:'^LIBWKMCK[PM]6F[0-9]+[a-zA-Z]$'],
+	MCK6F1:[location:'McKeldin Library 6th floor RM 6101',regex:'^LIBWKMCK[PM]6F1[0-9]+[a-zA-Z]$'],
+	MCK6F3:[location:'McKeldin Library 6th floor RM 6103',regex:'^LIBWKMCK[PM]6F3[0-9]+[a-zA-Z]$'],
+	MCK6F7:[location:'McKeldin Library 6th floor RM 6107',regex:'^LIBWKMCK[PM]6F7[0-9]+[a-zA-Z]$'],
+	MCK7F:[location:'McKeldin Library 7th floor',regex:'^LIBWKMCK[PM]7F[0-9]+[a-zA-Z]$'],
+	EPL1F:[location:'Engineering Library 1st floor',regex:'^LIBWKEPL[PM]1F[0-9]+[a-zA-Z]$'],
+	EPL2F:[location:'Engineering Library 2nd floor',regex:'^LIBWKEPL[PM]2F[0-9]+[a-zA-Z]$'],
+	EPL3F:[location:'Engineering Library 3rd floor',regex:'^LIBWKEPL[PM]3F[0-9]+[a-zA-Z]$'],
+	CHM1F:[location:'Chemistry Library 1st floor',regex:'^LIBWKCHM[PM]1F[0-9]+[a-zA-Z]$'],
+	CHM2F:[location:'Chemistry Library 2nd floor',regex:'^LIBWKCHM[PM]2F[0-9]+[a-zA-Z]$'],
+	CHM3F:[location:'Chemistry Library 3rd floor',regex:'^LIBWKCHM[PM]3F[0-9]+[a-zA-Z]$'],
+	NON1F:[location:'Nonprint Library 1st floor',regex:'^LIBWKNON[PM]1F[0-9]+[a-zA-Z]$'],
+	MDR1F:[location:'MARYLANDIA',regex:'^LIBWKMDR[PM]1F[0-9]+[a-zA-Z]$'],
+	PAL1F:[location:'PAL 1st floor',regex:'^LIBWKPAL[PM]1F[0-9]+[a-zA-Z]$'],
+	PAL2F:[location:'PAL 2nd floor',regex:'^LIBWKPAL[PM]2F[0-9]+[a-zA-Z]$'],
+	ART1F:[location:'Art Library 1st floor',regex:'^LIBWKART[PM]1F[0-9]+[a-zA-Z]$'],
+	ARC1F:[location:'Arch Library',regex:'^LIBWKARC[PM]1F[0-9]+[a-zA-Z]$']
 ]
