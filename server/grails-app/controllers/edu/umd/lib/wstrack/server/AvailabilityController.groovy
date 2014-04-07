@@ -17,14 +17,11 @@ class AvailabilityController {
 	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 
-	def listAvailable() {
+	def list() {
 
 		//Filter out non standard names
 		def matchedAllCurrentList= []
 		matchedAllCurrentList=getAllMatchedCurrentList();
-
-		//Set Locations for the system.
-		//setLocations(matchedAllCurrentList)
 
 		//This gives the total count of all the systems with standard name.
 		def totalCount = matchedAllCurrentList.size();
@@ -234,24 +231,6 @@ class AvailabilityController {
 		return match
 	}
 
-	/**
-	 * This method updates the location for the list of current
-	 * systems.
-	 * @param tempList
-	 */
-	void setLocations(def tempList){
-		def loc = ""
-		for(Current curr:tempList){
-
-			loc = getLocation(curr.getComputerName())
-			if(null!=loc || ""!=loc){
-				curr.setLocation(loc)
-				curr.timestamp = curr.timestamp
-				curr.save()
-			}
-		}
-	}
-
 
 	/**
 	 * This class removes all the entries with non-standard computer names
@@ -302,62 +281,6 @@ class AvailabilityController {
 		return tempCurrentListByStatus
 	}
 
-	/*	/**
-	 * This method returns a string location based on the
-	 * name of the computer. It matches the computer name with the
-	 * location map and returns a string accordingly.
-	 * @param tempComputerName
-	 * @return
-	 *
-	 def getLocation(def tempComputerName){
-	 println "for computer name ${tempComputerName}"
-	 /**
-	 * This is the locationMap that contains the regex for
-	 * finding the location of a workstation. SInce this is an initial
-	 * commit, this map is created manually. Preferred method is to read
-	 * this off a configuration file (csv,txt etc) and should be done in the
-	 * later releases.
-	 *
-	 *
-	 def locationMap = getLocationMappingFromCSV();
-	 //		def locationMap= ['^LIBWKMCK[PM]1F[0-9]+[a-zA-Z]$':'McKeldin Library 1st floor',
-	 //		 '^LIBWKMCK[PM]2F[0-9]+[a-zA-Z]$':'McKeldin Library 2nd floor',
-	 //		 '^LIBWKMCK[PM]4F[0-9]+[a-zA-Z]$':'McKeldin Library 4th floor',
-	 //		 '^LIBWKMCK[PM]5F[0-9]+[a-zA-Z]$':'McKeldin Library 5th floor',
-	 //		 '^LIBWKMCK[PM]6F[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor',
-	 //		 '^LIBWKMCK[PM]6F1[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6101',
-	 //		 '^LIBWKMCK[PM]6F3[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6103',
-	 //		 '^LIBWKMCK[PM]6F7[0-9]+[a-zA-Z]$':'McKeldin Library 6th floor RM 6107',
-	 //		 '^LIBWKMCK[PM]7F[0-9]+[a-zA-Z]$':'McKeldin Library 7th floor',
-	 //		 '^LIBWKEPL[PM]1F[0-9]+[a-zA-Z]$':'Engineering Library 1st floor',
-	 //		 '^LIBWKEPL[PM]2F[0-9]+[a-zA-Z]$':'Engineering Library 2nd floor',
-	 //		 '^LIBWKEPL[PM]3F[0-9]+[a-zA-Z]$':'Engineering Library 3rd floor',
-	 //		 '^LIBWKCHM[PM]1F[0-9]+[a-zA-Z]$':'Chemistry Library 1st floor',
-	 //		 '^LIBWKCHM[PM]2F[0-9]+[a-zA-Z]$':'Chemistry Library 2nd floor',
-	 //		 '^LIBWKCHM[PM]3F[0-9]+[a-zA-Z]$':'Chemistry Library 3rd floor',
-	 //		 '^LIBWKNON[PM]1F[0-9]+[a-zA-Z]$':'Nonprint Library 1st floor',
-	 //		 '^LIBWKMDR[PM]1F[0-9]+[a-zA-Z]$':'MARYLANDIA',
-	 //		 '^LIBWKPAL[PM]1F[0-9]+[a-zA-Z]$':'PAL 1st floor',
-	 //		 '^LIBWKPAL[PM]2F[0-9]+[a-zA-Z]$':'PAL 2nd floor',
-	 //		 '^LIBWKART[PM]1F[0-9]+[a-zA-Z]$':'Art Library 1st floor',
-	 //		 '^LIBWKARC[PM]1F[0-9]+[a-zA-Z]$':'Arch Library'
-	 //		 ]
-	 boolean regexCheck = false
-	 def pattern=""
-	 def retLocation=""
-	 for (var in locationMap){
-	 pattern = ~/${var.value}/
-	 //println "Pattern to be checked is ${pattern}"
-	 assert pattern instanceof Pattern
-	 regexCheck = pattern.matcher(tempComputerName).matches();
-	 println "Regex check = ${regexCheck}"
-	 if(regexCheck){
-	 retLocation = var.key
-	 return retLocation
-	 }
-	 }
-	 }
-	 */
 
 	/**
 	 * This method gets the location mapping from the FILE_PATH.
