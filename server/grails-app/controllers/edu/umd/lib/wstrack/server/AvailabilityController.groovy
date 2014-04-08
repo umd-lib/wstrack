@@ -1,6 +1,8 @@
 package edu.umd.lib.wstrack.server
 import java.util.regex.*
+
 import javax.xml.transform.Result
+
 import au.com.bytecode.opencsv.CSVReader
 import grails.converters.JSON
 import grails.converters.XML
@@ -58,13 +60,16 @@ class AvailabilityController {
 			render result as JSON
 		}
 		else if(renderAs.equalsIgnoreCase("xml")){
-			def xml = new XML(result)
-			render text: xml, contentType: 'text/xml', encoding: 'UTF-8'
+			//def xml = new XML(result)
+			//render text: xml, contentType: 'text/xml', encoding: 'UTF-8'
+			render result as XML
 		}
 		else{
 			return result
 		}
 	}
+	
+	
 
 	/**
 	 * This method replaces the locations with there full names 

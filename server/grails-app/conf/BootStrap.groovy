@@ -1,5 +1,7 @@
 import edu.umd.lib.wstrack.server.TrackController
+import grails.converters.XML
 import grails.util.Environment
+import org.codehaus.groovy.grails.web.converters.marshaller.xml.CollectionMarshaller
 
 class BootStrap {
 
@@ -29,8 +31,58 @@ class BootStrap {
       params.userName= 'libguestuserName0'
       params.status='login'
       TrackController.trackX(params)
-    }
+
+	  XML.registerObjectMarshaller(new CollectionMarshaller() {
+		@Override
+		public boolean supports(Object object) {
+			object instanceof Map
+		}
+		
+//		@Override
+//		String getElementName(final Object o) {
+//			'availability'
+//		}
+		
+		@Override
+		public void marshalObject(Object object, XML converter) {
+			Map foo = object as Map
+			
+			converter.startNode("availability")
+			converter.attribute("action", "list")
+			
+			
+			for(locVsCountFinalMap in foo){
+				for(locationMap in locVsCountFinalMap.value){
+					converter.startNode("location")
+//					converter.attribute("key", "MCK1f")
+					converter.attribute("name", locationMap.key)
+					
+					//For every workstation
+					for(workstationMap in locationMap.value){
+					
+						converter.startNode("workstation")
+						converter.attribute("type", workstationMap.key)
+						
+						//For every pc or mac the total and available attr.
+						for(totalAvailMap in workstationMap.value){
+							converter.attribute(totalAvailMap.key,totalAvailMap.value.toString())
+//							converter.chars totalAvailMap.value
+							//converter.end()
+						}
+						
+						converter.end()
+					}	
+					converter.end()
+				}
+			}
+			converter.end()
+			
+	
+		}
+	  })
+	}
   }
   def destroy = {
   }
+  
 }
