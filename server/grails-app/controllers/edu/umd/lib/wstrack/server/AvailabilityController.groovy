@@ -53,15 +53,14 @@ class AvailabilityController {
 		if(params.debug=='true'){
 			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
 			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]
+			return result
 
 		}
-
+		
 		if(renderAs.equalsIgnoreCase("json")){
 			render result as JSON
 		}
 		else if(renderAs.equalsIgnoreCase("xml")){
-			//def xml = new XML(result)
-			//render text: xml, contentType: 'text/xml', encoding: 'UTF-8'
 			render result as XML
 		}
 		else{
