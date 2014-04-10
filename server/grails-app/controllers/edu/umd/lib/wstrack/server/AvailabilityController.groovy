@@ -47,7 +47,6 @@ class AvailabilityController {
 		def renderAs="json"
 		if(null!=params.format)
 			renderAs = params.format
-		//def result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentMap:locationVsCurrentMap,locationVsCountsMap:locationVsCountsMap,retSymMap:retSymMap]
 		def result = [locVsCountFinalMap:locVsCountFinalMap]
 
 		if(params.debug=='true'){
@@ -81,7 +80,7 @@ class AvailabilityController {
 		for (locVsCountsMap in locationVsCountsMap){
 			for(retSymbolVsLocMap in retSymMap){
 				if(retSymbolVsLocMap.key == locVsCountsMap.key){
-					newMap.put(retSymbolVsLocMap.value, locVsCountsMap.value)
+					newMap.put(retSymbolVsLocMap.value, locVsCountsMap)
 				}
 			}
 		}

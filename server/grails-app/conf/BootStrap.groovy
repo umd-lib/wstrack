@@ -50,34 +50,32 @@ class BootStrap {
 			converter.startNode("availability")
 			converter.attribute("action", "list")
 			
-			
 			for(locVsCountFinalMap in foo){
-				for(locationMap in locVsCountFinalMap.value){
+				
+				for(fullLocationNameMap in locVsCountFinalMap.value){
 					converter.startNode("location")
-//					converter.attribute("key", "MCK1f")
-					converter.attribute("name", locationMap.key)
+					converter.attribute("name", fullLocationNameMap.key)
 					
-					//For every workstation
-					for(workstationMap in locationMap.value){
-					
-						converter.startNode("workstation")
-						converter.attribute("type", workstationMap.key)
-						
-						//For every pc or mac the total and available attr.
-						for(totalAvailMap in workstationMap.value){
-							converter.attribute(totalAvailMap.key,totalAvailMap.value.toString())
-//							converter.chars totalAvailMap.value
-							//converter.end()
-						}
-						
-						converter.end()
-					}	
+					for(locationSymbolMap in fullLocationNameMap.value){
+						converter.attribute("key", locationSymbolMap.key)
+	
+						//For every workstation
+						for(workstationMap in locationSymbolMap.value){
+							converter.startNode("workstation")
+							converter.attribute("type", workstationMap.key)
+							
+							//For every pc or mac the total and available attr.
+							for(totalAvailMap in workstationMap.value){
+								converter.attribute(totalAvailMap.key,totalAvailMap.value.toString())
+							}
+							
+							converter.end()
+						}	
+					}
 					converter.end()
 				}
 			}
 			converter.end()
-			
-	
 		}
 	  })
 	}
