@@ -77,10 +77,13 @@ class AvailabilityController {
 	 */
 	def generateLocationNamesMap(def locationVsCountsMap,def retSymMap){
 		def newMap = [:]
+		def tempMap
 		for (locVsCountsMap in locationVsCountsMap){
+			tempMap=[:]
 			for(retSymbolVsLocMap in retSymMap){
 				if(retSymbolVsLocMap.key == locVsCountsMap.key){
-					newMap.put(retSymbolVsLocMap.value, locVsCountsMap)
+					tempMap.put(locVsCountsMap.key, locVsCountsMap.value)
+					newMap.put(retSymbolVsLocMap.value, tempMap)
 				}
 			}
 		}
