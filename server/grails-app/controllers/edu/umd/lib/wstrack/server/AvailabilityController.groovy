@@ -49,12 +49,12 @@ class AvailabilityController {
 			renderAs = params.format
 		def result = [locVsCountFinalMap:locVsCountFinalMap]
 
-		if(params.debug=='true'){
-			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
-			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]
-			return result
-
-		}
+//		if(params.debug=='true'){
+//			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
+//			result = [locVsCountFinalMap:locVsCountFinalMap,locationVsCurrentFinal:locationVsCurrentFinal]
+//			return result
+//
+//		}
 		
 		if(renderAs.equalsIgnoreCase("json")){
 			render result as JSON
@@ -68,7 +68,6 @@ class AvailabilityController {
 	}
 	
 	
-
 	/**
 	 * This method replaces the locations with there full names 
 	 * based on the retSymMap mapping between the symbols and the locations.
@@ -309,5 +308,19 @@ class AvailabilityController {
 		}
 		return retSymMap
 	}
-
+	
+	/**
+	 * This method refers the locationMap created in Config.groovy
+	 * and returns the location based on a computerName
+	 * @param computerName
+	 * @return
+	 */
+	def findLocation(def computerName){
+		for (map in grailsApplication.config.edu.umd.lib.wstrack.server.locationMap){
+			if(isMatch(computerName,map.value['regex'])){
+				return map.value['location']
+			}
+		}
+		return null
+	}
 }

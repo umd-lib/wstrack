@@ -1,4 +1,4 @@
-
+<%@ page import="edu.umd.lib.wstrack.server.AvailabilityController" %>
 <%@ page import="edu.umd.lib.wstrack.server.Current" %>
 <!doctype html>
 <html>
@@ -23,6 +23,7 @@
 	</head>
 	<body>
 		<a href="#list-current" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+		<g:set var="availabilityBean" value="${new AvailabilityController() }"/>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
@@ -39,7 +40,7 @@
 					<tr>
 					
 						<g:sortableColumn property="computerName" title="${message(code: 'current.computerName.label', default: 'Computer Name')}" params="${filterParams}"/>
-					
+						<g:sortableColumn property="location" title="location" params="${filterParams}"/>
 						<g:sortableColumn property="status" title="${message(code: 'current.status.label', default: 'Status')}" params="${filterParams}"/>
 					
 						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" params="${filterParams}"/>
@@ -57,7 +58,9 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${currentInstance.id}">${fieldValue(bean: currentInstance, field: "computerName")}</g:link></td>
-					
+						
+						<td>${availabilityBean.findLocation(currentInstance.computerName)}</td>
+						
 						<td>${fieldValue(bean: currentInstance, field: "status")}</td>
 					
 						<td>${fieldValue(bean: currentInstance, field: "os")}</td>
