@@ -40,7 +40,7 @@
 					<tr>
 					
 						<g:sortableColumn property="computerName" title="${message(code: 'current.computerName.label', default: 'Computer Name')}" params="${filterParams}"/>
-						<g:sortableColumn property="location" title="location" params="${filterParams}"/>
+						<g:sortableColumn property="location" title="Location" params="${filterParams}"/>
 						<g:sortableColumn property="status" title="${message(code: 'current.status.label', default: 'Status')}" params="${filterParams}"/>
 					
 						<g:sortableColumn property="os" title="${message(code: 'current.os.label', default: 'Os')}" params="${filterParams}"/>
