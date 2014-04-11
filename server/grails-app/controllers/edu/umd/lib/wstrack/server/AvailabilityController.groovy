@@ -17,7 +17,36 @@ class AvailabilityController {
 	static final PATTERNMAC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
 	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+[a-zA-Z]$'
+	
+	def index() {
+		//Filter out non standard names
+		def matchedAllCurrentList= []
+		matchedAllCurrentList=getAllMatchedCurrentList();
 
+		//This gives the total count of all the systems with standard name.
+		def totalCount = matchedAllCurrentList.size();
+
+		//Filter out all available system available and their count
+		def currentAvailableList = []
+		def currentAvailableCount = 0;
+		currentAvailableList = getAllAvailableSystems(matchedAllCurrentList)
+		currentAvailableCount = currentAvailableList.size()
+
+		def retSymMap=getSymVsLocationMap()
+		
+		def locationVsCurrentMap = new HashMap<String,ArrayList<Current>>() //Map that stores the location vs the list of all the systems at that location
+		locationVsCurrentMap=getLocationsVsCurrentMap(matchedAllCurrentList)
+
+		def locationVsCountsMap = []
+		locationVsCountsMap=getLocationVsCountsMap(locationVsCurrentMap)
+
+		def locVsCountFinalMap = []
+		locVsCountFinalMap=generateLocationNamesMap(locationVsCountsMap,retSymMap)
+		
+		return [locVsCountFinalMap:locVsCountFinalMap]
+		
+	}
+	
 	def list() {
 
 		//Filter out non standard names
