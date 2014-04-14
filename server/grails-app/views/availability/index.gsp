@@ -33,11 +33,11 @@
 			<table>
 				<thead>
 					<tr>
-						<g:sortableColumn property="location" title="Location" params="${filterParams}"/>
+						<th>Location</th>
 					
-						<g:sortableColumn property="pc" title="PC (Available/Total)" params="${filterParams}"/>
+						<th>PC (Available/Total)</th>
 					
-						<g:sortableColumn property="mac" title="MAC (Available/Total)" params="${filterParams}"/>
+						<th>MAC (Available/Total)</th>
 					
 					</tr>
 				</thead>
