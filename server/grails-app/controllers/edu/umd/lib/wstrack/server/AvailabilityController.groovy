@@ -101,10 +101,10 @@ class AvailabilityController {
 	 * This method replaces the locations with there full names 
 	 * based on the retSymMap mapping between the symbols and the locations.
 	 * @param locationVsCountsMap
-	 * @return
+	 * @return Map with sorted Keys. Uses a tree Map to achieve this
 	 */
 	def generateLocationNamesMap(def locationVsCountsMap,def retSymMap){
-		def newMap = [:]
+		TreeMap newMap = new TreeMap()
 		def tempMap
 		for (locVsCountsMap in locationVsCountsMap){
 			tempMap=[:]
