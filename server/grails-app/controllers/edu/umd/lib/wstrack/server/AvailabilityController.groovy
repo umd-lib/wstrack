@@ -76,7 +76,7 @@ class AvailabilityController {
 		def renderAs="json"
 		if(null!=params.format)
 			renderAs = params.format
-		def result = [locVsCountFinalMap:locVsCountFinalMap]
+		def result = [availability:locVsCountFinalMap]
 
 //		if(params.debug=='true'){
 //			def locationVsCurrentFinal = generateLocationNamesMap(locationVsCurrentMap,retSymMap)
