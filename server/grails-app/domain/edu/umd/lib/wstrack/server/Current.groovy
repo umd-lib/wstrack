@@ -9,7 +9,6 @@ class Current {
   String os
   String userHash
   Boolean guestFlag
-  String location
   
   static mapping = { version false }
 
@@ -19,7 +18,6 @@ class Current {
     os(blank:false)
     userHash(blank:false)
     guestFlag(blank:false)
-	location(nullable:true)
   }
 
   static List listOs() {
