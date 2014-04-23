@@ -1,7 +1,9 @@
 import edu.umd.lib.wstrack.server.TrackController
+import grails.converters.JSON
 import grails.converters.XML
 import grails.util.Environment
 import org.codehaus.groovy.grails.web.converters.marshaller.xml.CollectionMarshaller
+import org.codehaus.groovy.grails.web.json.JSONWriter
 
 class BootStrap {
 
@@ -31,7 +33,53 @@ class BootStrap {
       params.userName= 'libguestuserName0'
       params.status='login'
       TrackController.trackX(params)
-
+	  
+	  JSON.registerObjectMarshaller(new org.codehaus.groovy.grails.web.converters.marshaller.json.CollectionMarshaller() {
+		@Override
+		public boolean supports(Object object) {
+			object instanceof Map
+		}
+		
+		
+		@Override
+		public void marshalObject(Object object, JSON json) {
+			def tempMap=[:]
+			Map foo = object as Map
+			JSONWriter writer = json.getWriter();
+			for(locVsCountFinalMap in foo){
+				writer.array()
+				
+				for(fullLocationNameMap in locVsCountFinalMap.value){
+					//converter.property("location", fullLocationNameMap.key)
+					writer.object().key("location").value(fullLocationNameMap.key.toString())
+					
+					for(locationSymbolMap in fullLocationNameMap.value){
+						writer.key("key").value(locationSymbolMap.key)
+						//For every workstation
+						for(workstationMap in locationSymbolMap.value){
+							//writer.key("workstation_type").value(workstationMap.key)
+							
+							tempMap.put("type",workstationMap.key)
+							//For every pc or mac the total and available attr.
+							for(totalAvailMap in workstationMap.value){
+								//writer.key(totalAvailMap.key).value(totalAvailMap.value)
+								tempMap.put(totalAvailMap.key,totalAvailMap.value)
+							}
+							
+							writer.key("workstation").value(tempMap)
+							
+						}
+						
+					}
+					writer.endObject()
+				}
+				
+				writer.endArray()
+			}
+		}
+	  })
+	  
+	  
 	  XML.registerObjectMarshaller(new CollectionMarshaller() {
 		@Override
 		public boolean supports(Object object) {
