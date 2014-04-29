@@ -1,3 +1,5 @@
+import edu.umd.lib.wstrack.marshallers.JsonCustomMarshaller
+import edu.umd.lib.wstrack.marshallers.XmlCustomMarshaller
 import edu.umd.lib.wstrack.server.TrackController
 import grails.converters.JSON
 import grails.converters.XML
@@ -8,7 +10,12 @@ import org.codehaus.groovy.grails.web.json.JSONWriter
 class BootStrap {
 
   def init = { servletContext ->
-    if (Environment.isDevelopmentMode()) {
+	  
+	  println("Registering Marshaller...")
+	  JSON.registerObjectMarshaller(new JsonCustomMarshaller())
+	  XML.registerObjectMarshaller(new XmlCustomMarshaller())
+		
+	  if (Environment.isDevelopmentMode()) {
 
       println ("Loading sample data..." )
 
@@ -34,98 +41,7 @@ class BootStrap {
       params.status='login'
       TrackController.trackX(params)
 	  
-	  JSON.registerObjectMarshaller(new org.codehaus.groovy.grails.web.converters.marshaller.json.CollectionMarshaller() {
-		@Override
-		public boolean supports(Object object) {
-			object instanceof Map
-		}
-		
-		
-		@Override
-		public void marshalObject(Object object, JSON json) {
-			def tempMap=[:]
-			Map foo = object as Map
-			JSONWriter writer = json.getWriter();
-			for(locVsCountFinalMap in foo){
-				writer.array()
-				
-				for(fullLocationNameMap in locVsCountFinalMap.value){
-					//converter.property("location", fullLocationNameMap.key)
-					writer.object().key("location").value(fullLocationNameMap.key.toString())
-					
-					for(locationSymbolMap in fullLocationNameMap.value){
-						writer.key("key").value(locationSymbolMap.key)
-						//For every workstation
-						for(workstationMap in locationSymbolMap.value){
-							//writer.key("workstation_type").value(workstationMap.key)
-							
-							tempMap.put("type",workstationMap.key)
-							//For every pc or mac the total and available attr.
-							for(totalAvailMap in workstationMap.value){
-								//writer.key(totalAvailMap.key).value(totalAvailMap.value)
-								tempMap.put(totalAvailMap.key,totalAvailMap.value)
-							}
-							
-							writer.key("workstation").value(tempMap)
-							
-						}
-						
-					}
-					writer.endObject()
-				}
-				
-				writer.endArray()
-			}
-		}
-	  })
 	  
-	  
-	  XML.registerObjectMarshaller(new CollectionMarshaller() {
-		@Override
-		public boolean supports(Object object) {
-			object instanceof Map
-		}
-		
-//		@Override
-//		String getElementName(final Object o) {
-//			'availability'
-//		}
-		
-		@Override
-		public void marshalObject(Object object, XML converter) {
-			Map foo = object as Map
-			
-			converter.startNode("availability")
-			converter.attribute("action", "list")
-			
-			for(locVsCountFinalMap in foo){
-				
-				for(fullLocationNameMap in locVsCountFinalMap.value){
-					converter.startNode("location")
-					converter.attribute("name", fullLocationNameMap.key)
-					
-					for(locationSymbolMap in fullLocationNameMap.value){
-						converter.attribute("key", locationSymbolMap.key)
-	
-						//For every workstation
-						for(workstationMap in locationSymbolMap.value){
-							converter.startNode("workstation")
-							converter.attribute("type", workstationMap.key)
-							
-							//For every pc or mac the total and available attr.
-							for(totalAvailMap in workstationMap.value){
-								converter.attribute(totalAvailMap.key,totalAvailMap.value.toString())
-							}
-							
-							converter.end()
-						}	
-					}
-					converter.end()
-				}
-			}
-			converter.end()
-		}
-	  })
 	}
   }
   def destroy = {
