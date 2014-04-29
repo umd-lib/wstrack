@@ -17,15 +17,14 @@ class BootStrap {
 	  XML.registerObjectMarshaller(new XmlCustomMarshaller())
 		
 	  if (Environment.isDevelopmentMode()) {
-
-      println ("Loading sample data..." )
 //	  loadAndTrack()
-	  loadFile()
-	  
+	  loadDataFromFile()
 	}
   }
   
-  def loadFile(){
+  def loadDataFromFile(){
+	  
+	  println ("Loading sample data from file..." )
 	  Map params = [:]
 	  CSVReader reader = new CSVReader(new FileReader("current-2014-04-29.csv"));
 	  String [] nextLine;
@@ -52,7 +51,7 @@ class BootStrap {
   }
   
   def loadAndTrack(){
-	  
+	  println ("Loading sample data..." )
 	  Map params = [:]
 	  def librarylist = ["MCK", "NON","PAL","EPL","CHM","ARC","ART","MDR"]
 	  def osList = ["P","M"]
