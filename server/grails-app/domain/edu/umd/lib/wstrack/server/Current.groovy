@@ -9,7 +9,7 @@ class Current {
   String os
   String userHash
   Boolean guestFlag
-  
+
   static mapping = { version false }
 
   static constraints = {
@@ -57,9 +57,5 @@ class Current {
 
     return r
   }
-  
-  
-  
-  
 
 }
