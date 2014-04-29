@@ -14,7 +14,7 @@ class TrackController {
 
 		def result = [status: "success"]
 
-		if(params.status == 'login' || params.status == 'Login' || params.status == 'logout' || params.status == 'Logout') {
+		if(params.status == 'login' || params.status == 'logout') {
 
 			Current current = trackX(params)
 

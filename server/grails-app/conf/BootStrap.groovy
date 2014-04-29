@@ -23,7 +23,7 @@ class BootStrap {
 	  def librarylist = ["MCK", "NON","PAL","EPL","CHM","ARC","ART","MDR"]
 	  def osList = ["P","M"]
 	  def floorList = ["1F","2F","3F","4F","5F","6F","6F3","6F1","6F7"]
-	  def statusList = ["Login","Logout"]
+	  def statusList = ["login","logout"]
 	  Random r =null;
 	  def compName
       for (i in 0..999) {
