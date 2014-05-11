@@ -6,3 +6,4 @@ plugins/
 .classpath
 .project
 .settings/
+bin/
