@@ -14,7 +14,7 @@ class TrackController {
 
 		def result = [status: "success"]
 
-		if(params.status == 'login' || params.status == 'Login' || params.status == 'logout' || params.status == 'Logout') {
+		if(params.status == 'login' || params.status == 'logout') {
 
 			Current current = trackX(params)
 
@@ -29,12 +29,24 @@ class TrackController {
 	}
 
 	static Current trackX(Map params) {
-
-		Boolean guestFlag = (params.userName.startsWith("libguest"))
-		String userHash = generateHash(params.userName)
-
+		
+		Boolean guestFlag=false
+		
+		if(params.guestFlag!=null){
+			if(params.guestFlag=='t')
+				guestFlag=true
+			else
+				guestFlag=false
+		}else{
+			guestFlag=(params.userName.startsWith("libguest"))
+		}
+		
+		if(params.userHash==null){
+			params.userHash = generateHash(params.userName)
+		}
+		
 		// Add entry in History
-		def history = new History(guestFlag: guestFlag, computerName: params.computerName,os: params.os, status: params.status, userHash : userHash)
+		def history = new History(guestFlag: guestFlag, computerName: params.computerName,os: params.os, status: params.status, userHash : params.userHash)
 		history.save()
 
 		// Defining Current Instance which will check if a value exists in the database for a particular IP ( primary Key)
@@ -42,8 +54,12 @@ class TrackController {
 
 		if(!current) {
 			// Create entry in Current
-			current = new Current(guestFlag: guestFlag, computerName: params.computerName, os: params.os, status: params.status, userHash : userHash)
-			current.timestamp = history.timestamp
+			current = new Current(guestFlag: guestFlag, computerName: params.computerName, os: params.os, status: params.status, userHash : params.userHash)
+			if(params.timeStamp!=null){
+				current.timestamp = Date.parse("yyyy-MM-dd H:m:s",params.timeStamp)
+			}else{
+				current.timestamp = history.timestamp
+			}
 			current.save()
 
 			return current
@@ -54,8 +70,12 @@ class TrackController {
 			current.setGuestFlag(guestFlag)
 			current.setOs(params.os)
 			current.setStatus(params.status)
-			current.setUserHash(userHash)
-			current.timestamp = history.timestamp
+			current.setUserHash(params.userHash)
+			if(params.timeStamp!=null){
+				current.timestamp = Date.parse("yyyy-MM-dd H:m:s",params.timeStamp)
+			}else{
+				current.timestamp = history.timestamp
+			}
 			current.save()
 
 			return current
