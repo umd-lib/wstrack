@@ -13,8 +13,12 @@ class BootStrap {
   def init = { servletContext ->
 	  
 	  println("Registering Marshaller...")
-	  JSON.registerObjectMarshaller(new JsonCustomMarshaller())
-	  XML.registerObjectMarshaller(new XmlCustomMarshaller())
+	  JSON.createNamedConfig("JsonCustomMarshaller") {
+	  	it.registerObjectMarshaller(new JsonCustomMarshaller())
+	  }
+	  XML.createNamedConfig("XmlCustomMarshaller") {
+	    it.registerObjectMarshaller(new XmlCustomMarshaller())
+	  }
 		
 	  if (Environment.isDevelopmentMode()) {
 //	  loadAndTrack()
