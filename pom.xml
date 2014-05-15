@@ -9,4 +9,16 @@
   		<module>client</module>
   		<module>server</module>
 	</modules>
+    <distributionManagement>
+      <repository>
+        <id>nexus</id>
+        <name>Releases</name>
+        <url>https://maven.lib.umd.edu/nexus/content/repositories/releases</url>
+      </repository>
+      <snapshotRepository>
+        <id>nexus</id>
+        <name>Snapshots</name>
+        <url>https://maven.lib.umd.edu/nexus/content/repositories/snapshots</url>
+      </snapshotRepository>
+    </distributionManagement>
 </project>
