@@ -7,7 +7,27 @@ Documentation
 -------------
 
 
-  
+How to Install WSTrack on the Server
+-------------
+
+    # Stop the tomcat
+
+    cd /apps/cms/tomcat-misc
+    ./control stop
+
+    cd /apps/cms/webapps
+    mv wstrack wstrack-old.dir
+    mv wstrack{.war,-war.old}
+
+    wget "https://maven.lib.umd.edu/nexus/service/local/artifact/maven/content?r=releases&g=edu.umd.lib.wstrack.server&a=wstrack-server&v=LATEST&p=war" --content-disposition
+
+    mv wstrack-*.war wstrack.war
+    cd /apps/cms/tomcat-misc
+    ./control start
+
+    # Test
+
+    rm -rf wstrack-old.dir
 
 Build Instructions
 -------------
