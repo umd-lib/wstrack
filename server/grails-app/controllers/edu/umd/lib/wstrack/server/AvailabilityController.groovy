@@ -86,10 +86,14 @@ class AvailabilityController {
 //		}
 		
 		if(renderAs.equalsIgnoreCase("json")){
-			render result as JSON
+			JSON.use("JsonCustomMarshaller"){
+				render result as JSON
+			}
 		}
 		else if(renderAs.equalsIgnoreCase("xml")){
-			render result as XML
+			XML.use("XmlCustomMarshaller"){
+				render result as XML
+			}
 		}
 		else{
 			return result
