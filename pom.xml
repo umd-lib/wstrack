@@ -3,10 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.umd.lib.wstrack</groupId>
 	<artifactId>wstrack</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.4</version>
 	<packaging>pom</packaging>
 	<modules>
   		<module>client</module>
   		<module>server</module>
 	</modules>
+    <distributionManagement>
+      <repository>
+        <id>nexus</id>
+        <name>Releases</name>
+        <url>https://maven.lib.umd.edu/nexus/content/repositories/releases</url>
+      </repository>
+      <snapshotRepository>
+        <id>nexus</id>
+        <name>Snapshots</name>
+        <url>https://maven.lib.umd.edu/nexus/content/repositories/snapshots</url>
+      </snapshotRepository>
+    </distributionManagement>
 </project>
