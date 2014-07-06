@@ -14,9 +14,9 @@ import grails.converters.XML
  */
 class AvailabilityController {
 
-	static final PATTERNMAC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+$'
-	static final PATTERNPC = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+$'
-	static final PATTERN = '^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+$'
+	static final PATTERNMAC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+$/
+	static final PATTERNPC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+$/
+	static final PATTERN = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+$/
 	
 	def index() {
 		//Filter out non standard names
@@ -140,7 +140,7 @@ class AvailabilityController {
 			//check all the "valid" systems only
 			for(Current tempCurr:matchedAllCurrentList){
 
-				if(isMatch(tempCurr.getComputerName(),map.value)){
+				if(map.value.matcher(tempCurr.getComputerName()).matches()){
 					//Create an array list of all the systems in a particular location
 					locCurrentList.add(tempCurr)
 				}
@@ -239,33 +239,17 @@ class AvailabilityController {
 
 		def match = false
 
-		match = isMatch(localComputerName,PATTERNMAC)
+		match = PATTERNMAC.matcher(localComputerName).matches()
 		if(match){
 			return "MAC"
 		}else{
-			match = isMatch(localComputerName,PATTERNPC)
+			match = PATTERNPC.matcher(localComputerName).matches()
 			if(match){
 				return "PC"
 			}
 		}
+		return "??";
 	}
-
-	/**
-	 * This method compares the string to check with the regex pattern
-	 * and returns a true or false based on the match
-	 * @param strToCheck = String to check
-	 * @param regexPattern = Pattern used for string check without the ~/ /
-	 * @return if strToCheck=regexPattern returns true else false
-	 */
-	def isMatch(def strToCheck, def regexPattern){
-		def match = false
-		def pattern = ""
-		pattern = ~/${regexPattern}/
-		assert pattern instanceof Pattern
-		match = pattern.matcher(strToCheck).matches();
-		return match
-	}
-
 
 	/**
 	 * This class removes all the entries with non-standard computer names
@@ -277,14 +261,12 @@ class AvailabilityController {
 
 		//This fetches all the current systems.
 		def currentList = Current.list();
-		def pattern = ~/${PATTERN}/
 		//$
-		assert  pattern instanceof Pattern
 		boolean match=false;
 		def tempMatchList = []
 
 		for(Current current:currentList){
-			match = pattern.matcher(current.getComputerName()).matches();
+			match = PATTERN.matcher(current.getComputerName()).matches();
 			if(match){
 				tempMatchList.add(current);
 			}
@@ -350,7 +332,7 @@ class AvailabilityController {
 	 */
 	def findLocation(def computerName){
 		for (map in grailsApplication.config.edu.umd.lib.wstrack.server.locationMap){
-			if(isMatch(computerName,map.value['regex'])){
+			if(map.value['regex'].matcher(computerName).matches()){
 				return map.value['location']
 			}
 		}
