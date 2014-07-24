@@ -5,7 +5,7 @@
 	<groupId>edu.umd.lib.wstrack.server</groupId>
 	<artifactId>wstrack-server</artifactId>
 	<packaging>grails-app</packaging>
-	<version>1.5</version>
+	<version>1.5.1</version>
 	<name>wstrack-server</name>
 	<description>wstrack-server</description>
 

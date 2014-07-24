@@ -123,7 +123,7 @@ edu.umd.lib.wstrack.server.locationMap = [
 	CHM1F:[location:'Chemistry Library 1st floor',regex:~/(?i)^LIBWKCHM[PM]1F[0-9]+$/],
 	CHM2F:[location:'Chemistry Library 2nd floor',regex:~/(?i)^LIBWKCHM[PM]2F[0-9]+$/],
 	CHM3F:[location:'Chemistry Library 3rd floor',regex:~/(?i)^LIBWKCHM[PM]3F[0-9]+$/],
-	NON1F:[location:'Nonprint Library 1st floor',regex:~/(?i)^LIBWKNON[PM]1F[0-9]+$/],
+	LMSBF:[location:'Library Media Services Ground floor',regex:~/(?i)^LIBWKNON[PM]BF[0-9]+$/],
 	MDR1F:[location:'MARYLANDIA',regex:~/(?i)^LIBWKMDR[PM]1F[0-9]+$/],
 	PAL1F:[location:'PAL 1st floor',regex:~/(?i)^LIBWKPAL[PM]1F[0-9]+$/],
 	PAL2F:[location:'PAL 2nd floor',regex:~/(?i)^LIBWKPAL[PM]2F[0-9]+$/],

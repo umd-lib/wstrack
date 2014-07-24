@@ -14,9 +14,9 @@ import grails.converters.XML
  */
 class AvailabilityController {
 
-	static final PATTERNMAC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7]F(1|3|7)?[0-9]+$/
-	static final PATTERNPC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7]F(1|3|7)?[0-9]+$/
-	static final PATTERN = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7]F(1|3|7)?[0-9]+$/
+	static final PATTERNMAC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)M[1-7B]F(1|3|7)?[0-9]+$/
+	static final PATTERNPC = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)P[1-7B]F(1|3|7)?[0-9]+$/
+	static final PATTERN = ~/(?i)^LIBWK(MCK|NON|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7B]F(1|3|7)?[0-9]+$/
 	
 	def index() {
 		//Filter out non standard names
