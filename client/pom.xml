@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.umd.lib.wstrack.client</groupId>
 	<artifactId>wstrack-client</artifactId>
-	<version>1.6-SNAPSHOT</version>
+	<version>1.7-SNAPSHOT</version>
 	<parent>
     	<groupId>edu.umd.lib.wstrack</groupId>
     	<artifactId>wstrack</artifactId>
-    	<version>1.6-SNAPSHOT</version>
+    	<version>1.7-SNAPSHOT</version>
     	<relativePath>../pom.xml</relativePath>
     </parent>
 	<dependencies>
