@@ -108,8 +108,9 @@ log4j = {
 }
 
 edu.umd.lib.wstrack.server.locationMap = [
-	MCK1F:[location:'McKeldin Library 1st floor', regex:~/(?i)^LIBWKMCK[PM]1F[0-9]+$/],
+	MCK1F:[location:'McKeldin Library 1st floor',regex:~/(?i)^LIBWKMCK[PM]1F[0-9]+$/],
 	MCK2F:[location:'McKeldin Library 2nd floor',regex:~/(?i)^LIBWKMCK[PM]2F[0-9]+$/],
+	MCK3F:[location:'McKeldin Library 3rd floor',regex:~/(?i)^LIBWKMCK[PM]3F[0-9]+$/],
 	MCK4F:[location:'McKeldin Library 4th floor',regex:~/(?i)^LIBWKMCK[PM]4F[0-9]+$/],
 	MCK5F:[location:'McKeldin Library 5th floor',regex:~/(?i)^LIBWKMCK[PM]5F[0-9]+$/],
 	MCK6F:[location:'McKeldin Library 6th floor',regex:~/(?i)^LIBWKMCK[PM]6F[0-9]+$/],
