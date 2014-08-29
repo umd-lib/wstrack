@@ -1,0 +1,10 @@
+<plist version="1.0">
+ <dict>
+   <key>Label</key>
+   <string>wstrack-daemon</string>
+   <key>RunAtLoad</key>
+   <true />
+   <key>Program</key>
+   <string>/wstrack/login.sh</string>
+  </dict>
+</plist>
