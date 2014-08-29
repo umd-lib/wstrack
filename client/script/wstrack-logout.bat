@@ -1,0 +1,1 @@
+java -Dwstrack.debug=false -Dwstrack.env=prod -Dwstrack.status=logout -Dwstrack.computerName=%computername% -Dwstrack.username=%username% -Dwstrack.os=%OS% -jar %~dp0wstrack-client.jar

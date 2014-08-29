@@ -5,7 +5,7 @@
 	<groupId>edu.umd.lib.wstrack.server</groupId>
 	<artifactId>wstrack-server</artifactId>
 	<packaging>grails-app</packaging>
-	<version>1.5.1</version>
+	<version>1.6</version>
 	<name>wstrack-server</name>
 	<description>wstrack-server</description>
 
@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>edu.umd.lib.wstrack</groupId>
 		<artifactId>wstrack</artifactId>
-		<version>1.5</version>
+		<version>1.6</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
