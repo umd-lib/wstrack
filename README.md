@@ -40,7 +40,7 @@ How to Test the App?
 
 * 1. Build the code using `mvn  -DskipTests clean install` from the repository root directory.
 * 2. Navigate to ~/server/ and run "grails run-app"
-* 3. Navigate to ~/client/scripts/ and execute ./wstrack-client.sh [login|logout] [local|DEV|Prod] 
+* 3. Navigate to ~/client/script/ and execute ./wstrack-client.sh [login|logout] [local|DEV|Prod] 
     (This step should add a new row in the Current list.)
 
 Note - While executing "./wstrack-client.sh [login|logout] [local|DEV|Prod]" , if you get an error "Unable to access jarfile /apps/git/wstrack/client/script/wstrack-client.jar"
