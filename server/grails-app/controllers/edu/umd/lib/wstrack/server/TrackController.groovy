@@ -45,11 +45,6 @@ class TrackController {
 			params.userHash = generateHash(params.userName)
 		}
 		
-		// Strip trailing character from computerName
-		if (params.computerName?.length() > 1) {
-		    params.computerName = params['computerName'][0..-2]
-		}
-
 		// Add entry in History
 		def history = new History(guestFlag: guestFlag, computerName: params.computerName,os: params.os, status: params.status, userHash : params.userHash)
 		history.save()
