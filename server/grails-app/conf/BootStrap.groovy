@@ -57,7 +57,7 @@ class BootStrap {
   def loadAndTrack(){
 	  println ("Loading sample data..." )
 	  Map params = [:]
-	  def librarylist = ["MCK", "NON","PAL","EPL","CHM","ARC","ART","MDR"]
+	  def librarylist = ["MCK", "LMS","PAL","EPL","CHM","ARC","ART","MDR"]
 	  def osList = ["P","M"]
 	  def floorList = ["1F","2F","3F","4F","5F","6F","6F3","6F1","6F7"]
 	  def statusList = ["login","logout"]
