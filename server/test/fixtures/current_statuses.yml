@@ -1,0 +1,7 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+current_status_sample:
+  workstation_name: LIBRWKLMSPBF2J
+  status: 'login'
+  os: Windows_NT
+  user_hash: LakJJ6PHPreRRBicGqHBxA==
+  guest_flag: false

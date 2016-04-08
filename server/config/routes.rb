@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get 'current' => 'current_status#statuses'
+  put 'track/:workstation_name/:status/:os/:user_hash' => 'current_status#update_status'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

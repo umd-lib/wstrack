@@ -1,0 +1,28 @@
+<% provide(:title, 'Current Status') %>
+<h1>Current Status</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Computer Name</th>
+      <th>Status</th>
+      <th>Os</th>
+      <th>User Hash</th>
+      <th>Guest Flag</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @current_statuses.each do |status| %>
+      <tr>
+        <td><%= status.workstation_name %></td>
+        <td><%= status.status %></td>
+        <td><%= status.os %></td>
+        <td><%= status.user_hash %></td>
+        <td><%= status.guest_flag %></td>
+        <td><%= status.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @current_statuses %>
