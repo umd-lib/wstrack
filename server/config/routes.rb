@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   resources :current_statuses
   root 'home#index'
-  get 'current' => 'current_statuses#statuses'
   put 'track/:workstation_name/:status/:os/:user_hash' => 'current_statuses#update_status'
 
   # The priority is based upon order of creation: first created -> highest priority.
