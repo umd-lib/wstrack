@@ -1,0 +1,34 @@
+<% provide(:title, 'Current Status') %>
+<h1>Current Status</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Computer Name</th>
+      <th>Status</th>
+      <th>Os</th>
+      <th>User Hash</th>
+      <th>Guest Flag</th>
+      <th>Timestamp</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Destroy</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @current_statuses.each do |status| %>
+      <tr>
+        <td><%= status.workstation_name %></td>
+        <td><%= status.status %></td>
+        <td><%= status.os %></td>
+        <td><%= status.user_hash %></td>
+        <td><%= status.guest_flag %></td>
+        <td><%= status.updated_at %></td>
+        <td><%= link_to 'Show', status %></td>
+        <td><%= link_to 'Edit', edit_current_status_path(status) %></td>
+        <td><%= link_to 'Destroy', status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @current_statuses %>

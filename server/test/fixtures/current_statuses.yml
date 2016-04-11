@@ -5,3 +5,10 @@ current_status_sample:
   os: Windows_NT
   user_hash: LakJJ6PHPreRRBicGqHBxA==
   guest_flag: false
+
+sample_two:
+  workstation_name: LIBRWKLMSPBF3J
+  status: 'logout'
+  os: Windows_NT
+  user_hash: MblKK7QIQsfTTBjdHrICyB==
+  guest_flag: false

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Current name:</strong>
+  <%= @current_status.workstation_name %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @current_status.status %>
+</p>
+
+<p>
+  <strong>Os:</strong>
+  <%= @current_status.os %>
+</p>
+
+<p>
+  <strong>User hash:</strong>
+  <%= @current_status.user_hash %>
+</p>
+
+<p>
+  <strong>Guest flag:</strong>
+  <%= @current_status.guest_flag %>
+</p>
+
+<%= link_to 'Edit', edit_current_status_path(@current_status) %> |
+<%= link_to 'Back', current_statuses_path %>
