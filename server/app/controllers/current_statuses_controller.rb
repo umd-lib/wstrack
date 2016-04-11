@@ -62,18 +62,15 @@ class CurrentStatusesController < ApplicationController
     end
   end
 
-  def statuses
-    @current_statuses = CurrentStatus.paginate(page: params[:page], per_page: 10)
-  end
-
+  # Handle Tracking update from clients
   def update_status
-    current_status = CurrentStatus.find_by(workstation_name: params[:workstation_name])
-    if current_status.nil?
-      current_status = CurrentStatus.new(workstation_name: params[:workstation_name])
+    status = CurrentStatus.find_by(workstation_name: params[:workstation_name])
+    if status.nil?
+      status = CurrentStatus.new(status_params)
     else
-      current_status.update_values(status_params)
+      status.update_values(status_params)
     end
-    render nothing: true, status: current_status.save ? 200 : 400
+    render nothing: true, status: status.save ? 200 : 400
   end
 
   private
