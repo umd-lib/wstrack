@@ -53,4 +53,15 @@ class CurrentStatusTest < ActiveSupport::TestCase
     @status.workstation_name = 'SOMEINVALIDNAME'
     assert_not @status.valid?
   end
+
+  test 'verify update_values method updates correctly' do
+    values_hash = {workstation_name: 'LIBRWKARCP1F5A', status: 'logout', os: 'Mac',
+                                user_hash: 'MakJJ6PHPreRRBicGqHBxA==', guest_flag: true}
+    @status.update_values(values_hash)
+    assert @status.save
+    assert_equal values_hash[:status], @status.status
+    assert_equal values_hash[:os], @status.os
+    assert_equal values_hash[:user_hash], @status.user_hash
+    assert_equal values_hash[:guest_flag], @status.guest_flag
+  end
 end

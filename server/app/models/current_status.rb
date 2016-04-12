@@ -15,7 +15,7 @@ class CurrentStatus < ActiveRecord::Base
 
   def update_values(status_hash)
     self.status = status_hash[:status]
-    self.os = status_hash[:status]
+    self.os = status_hash[:os]
     self.user_hash = status_hash[:user_hash]
     self.guest_flag = status_hash[:guest_flag]
   end
