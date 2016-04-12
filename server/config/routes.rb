@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   resources :location_maps
   resources :current_statuses
   root 'home#index'
-  put 'track/:workstation_name/:status/:os/:user_hash' => 'current_statuses#update_status'
+
+  # Rails by default does not allow dot '.' character in URL.
+  # Adding a constraint that allows dot will overcome this issue.
+  # Here we have added a constraint that allows anything except forward-slash '/'
+  put 'track/:workstation_name/:status/:os/:user_hash' => 'current_statuses#update_status',
+      :constraints => { os: %r{[^\/]+} }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
