@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :location_maps
   resources :current_statuses
   root 'home#index'
   put 'track/:workstation_name/:status/:os/:user_hash' => 'current_statuses#update_status'
