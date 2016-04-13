@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412163330) do
+ActiveRecord::Schema.define(version: 20160412202849) do
 
   create_table "current_statuses", force: :cascade do |t|
     t.string   "workstation_name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20160412163330) do
     t.boolean  "guest_flag"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "workstation_type"
   end
 
   create_table "location_maps", force: :cascade do |t|
