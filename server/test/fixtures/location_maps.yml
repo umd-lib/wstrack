@@ -1,11 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  code: MyString
-  value: MyString
-  regex: MyString
+  code: MCK1F
+  value: Mckeldin First Floor
+  regex: /(?i)^LIBRWKMCK[PM]1F.*$/
 
-two:
-  code: MyString
-  value: MyString
-  regex: MyString
