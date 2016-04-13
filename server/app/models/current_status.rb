@@ -12,8 +12,12 @@ class CurrentStatus < ActiveRecord::Base
   before_save { workstation_name.upcase! }
   before_save { status.downcase! }
   before_save { set_workstation_type }
-  
+  before_save { set_location_map_id }
+
   default_scope -> { order(updated_at: :desc) }
+
+  has_one :location_map
+
   validates :workstation_name, presence: true, format: { with: VALID_WORKSTATION_NAME_REGEX },
                                uniqueness: { case_sensitive: false }
   validates :status, inclusion: { in: %w(login logout) }
@@ -33,6 +37,22 @@ class CurrentStatus < ActiveRecord::Base
       self.workstation_type = MAC
     elsif PATTERN_PC.match(workstation_name)
       self.workstation_type = PC
+    end
+  end
+
+  def set_location_map_id
+    self.location_map_id = LocationMap.find_matching_location(workstation_name)
+  end
+
+  # Get the location name value for the current status record.
+  def location
+    if !location_map_id.nil?
+      location_map = LocationMap.find_by(id: location_map_id)
+      if location_map.nil?
+        set_location_map_id # Reset location_map_id, as the previous id does not exist in LocationMap anymore.
+        location_map = LocationMap.find_by(id: location_map_id)
+      end
+      location_map.nil? ? nil : location_map.value
     end
   end
 end
