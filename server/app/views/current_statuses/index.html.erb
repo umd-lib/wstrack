@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th>Computer Name</th>
+      <th>Location</th>
       <th>Status</th>
       <th>Os</th>
       <th>User Hash</th>
@@ -22,6 +23,7 @@
     <% @current_statuses.each do |status| %>
       <tr>
         <td><%= status.workstation_name %></td>
+        <td><%= status.location %></td>
         <td><%= status.status %></td>
         <td><%= status.os %></td>
         <td><%= status.user_hash %></td>
