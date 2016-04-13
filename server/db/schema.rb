@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412202849) do
+ActiveRecord::Schema.define(version: 20160412203104) do
 
   create_table "current_statuses", force: :cascade do |t|
     t.string   "workstation_name"
@@ -22,7 +22,10 @@ ActiveRecord::Schema.define(version: 20160412202849) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "workstation_type"
+    t.integer  "location_map_id"
   end
+
+  add_index "current_statuses", ["location_map_id"], name: "index_current_statuses_on_location_map_id"
 
   create_table "location_maps", force: :cascade do |t|
     t.string   "code"
