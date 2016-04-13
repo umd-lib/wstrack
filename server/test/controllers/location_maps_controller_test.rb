@@ -17,8 +17,9 @@ class LocationMapsControllerTest < ActionController::TestCase
   end
 
   test 'should create location_map' do
+    unique_regex = '/(?i)^LIBRWKMCK[PM]2F.*$/'
     assert_difference('LocationMap.count') do
-      post :create, location_map: { code: @location_map.code, regex: @location_map.regex, value: @location_map.value }
+      post :create, location_map: { code: @location_map.code, regex: unique_regex, value: @location_map.value }
     end
 
     assert_redirected_to location_map_path(assigns(:location_map))
