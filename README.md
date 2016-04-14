@@ -5,7 +5,13 @@ WSTrack (Workstation Tracking Project) contains client and server projects for t
 
 Documentation
 -------------
+Developer Documentation
+-------------
+Add symlink to the pre-commit hook to run rubocop before commiting:
 
+    ln -s ../../scripts/rubocop_pre_commit_hook .git/hooks/pre-commit
+
+This script will test staged files for compliance with the rubocop rules and abort the commit if any violations are found.
 
 How to Install WSTrack on the Server
 -------------
