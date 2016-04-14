@@ -2,12 +2,16 @@
 # For each tracking update from clients, either an existing CurrentStatus record that matches the workstation_name
 # will be updated, or a new CurrentStatus record will be created.
 class CurrentStatus < ActiveRecord::Base
+  include WorkstationAvailability
+
   PATTERN_MAC = /(?i)^LIBRWK(MCK|LMS|ARC|ART|EPL|CHM|MDR|PAL)M[1-7B]F(1|3|7)?.*$/
   PATTERN_PC = /(?i)^LIBRWK(MCK|LMS|ARC|ART|EPL|CHM|MDR|PAL)P[1-7B]F(1|3|7)?.*$/
   VALID_WORKSTATION_NAME_REGEX = /\ALIBRWK(MCK|LMS|ARC|ART|EPL|CHM|MDR|PAL)[PM][1-7B]F(1|3|7)?.*\z/
 
   MAC = 'MAC'.freeze
   PC = 'PC'.freeze
+  LOGIN = 'login'.freeze
+  LOGOUT = 'logout'.freeze
 
   before_save { workstation_name.upcase! }
   before_save { status.downcase! }

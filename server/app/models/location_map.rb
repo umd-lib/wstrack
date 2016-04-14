@@ -2,6 +2,8 @@
 class LocationMap < ActiveRecord::Base
   has_many :current_status
 
+  default_scope -> { order(value: :asc) }
+
   validates :code, presence: true
   validates :value, presence: true
   validates :regex, presence: true, uniqueness: true, verify_regexp: true
