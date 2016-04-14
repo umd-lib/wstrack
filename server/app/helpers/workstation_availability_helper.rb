@@ -1,0 +1,2 @@
+module WorkstationAvailabilityHelper
+end
