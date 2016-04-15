@@ -50,7 +50,7 @@ class CurrentStatus < ActiveRecord::Base
 
   # Get the location name value for the current status record.
   def location
-    if !location_map_id.nil?
+    unless location_map_id.nil?
       location_map = LocationMap.find_by(id: location_map_id)
       if location_map.nil?
         set_location_map_id # Reset location_map_id, as the previous id does not exist in LocationMap anymore.

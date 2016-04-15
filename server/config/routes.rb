@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   put 'track/:workstation_name/:status/:os/:user_hash' => 'current_statuses#update_status',
       :constraints => { os: %r{[^\/]+} }
 
-  get 'availability' => "workstation_availability#index"
+  get 'availability' => 'workstation_availability#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

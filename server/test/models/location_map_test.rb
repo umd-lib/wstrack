@@ -1,5 +1,6 @@
 require 'test_helper'
 
+# Tests for LocationMap model validations.
 class LocationMapTest < ActiveSupport::TestCase
   def setup
     @location_map = LocationMap.new(code: 'MCK1F', value: 'Mckeldin Second Floor', regex: '/(?i)^LIBRWKMCK[PM]2F.*$/')

@@ -12,10 +12,9 @@ class LocationMap < ActiveRecord::Base
     # Find if any of the location map regex matches the given workstation_name.
     # Return LocationMap id if match found, nil if no match found.
     def find_matching_location(workstation_name)
-      self.all.each do |location_map|
+      LocationMap.find_each do |location_map|
         if (Regexp.new location_map.regex[1..-2]).match(workstation_name)
           return location_map.id
-          break
         end
       end
       nil # Return nil if no match found
