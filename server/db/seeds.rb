@@ -1,7 +1,24 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+# Seed data for LocationMap
 #
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+LocationMap.create(code: 'MCK1F', value: 'McKeldin Library 1st floor', regex: '/(?i)^LIBRWKMCK[PM]1F.*$/')
+LocationMap.create(code: 'MCK2F', value: 'McKeldin Library 2nd floor', regex: '/(?i)^LIBRWKMCK[PM]2F.*$/')
+LocationMap.create(code: 'MCK3F', value: 'McKeldin Library 3rd floor', regex: '/(?i)^LIBRWKMCK[PM]3F.*$/')
+LocationMap.create(code: 'MCK4F', value: 'McKeldin Library 4th floor', regex: '/(?i)^LIBRWKMCK[PM]4F.*$/')
+LocationMap.create(code: 'MCK5F', value: 'McKeldin Library 5th floor', regex: '/(?i)^LIBRWKMCK[PM]5F.*$/')
+LocationMap.create(code: 'MCK6F', value: 'McKeldin Library 6th floor', regex: '/(?i)^LIBRWKMCK[PM]6F.*$/')
+LocationMap.create(code: 'MCK6F', value: 'McKeldin Library 6th floor RM 6101', regex: '/(?i)^LIBRWKMCK[PM]6F1.*$/')
+LocationMap.create(code: 'MCK6F', value: 'McKeldin Library 6th floor RM 6103', regex: '/(?i)^LIBRWKMCK[PM]6F3.*$/')
+LocationMap.create(code: 'MCK6F', value: 'McKeldin Library 6th floor RM 6107', regex: '/(?i)^LIBRWKMCK[PM]6F7.*$/')
+LocationMap.create(code: 'MCK7F', value: 'McKeldin Library 7th floor', regex: '/(?i)^LIBRWKMCK[PM]7F.*$/')
+LocationMap.create(code: 'EPL1F', value: 'Engineering Library 1st floor', regex: '/(?i)^LIBRWKEPL[PM]1F.*$/')
+LocationMap.create(code: 'EPL2F', value: 'Engineering Library 2nd floor', regex: '/(?i)^LIBRWKEPL[PM]2F.*$/')
+LocationMap.create(code: 'EPL3F', value: 'Engineering Library 3rd floor', regex: '/(?i)^LIBRWKEPL[PM]3F.*$/')
+LocationMap.create(code: 'CHM1F', value: 'Chemistry Library 1st floor', regex: '/(?i)^LIBRWKCHM[PM]1F.*$/')
+LocationMap.create(code: 'CHM2F', value: 'Chemistry Library 2nd floor', regex: '/(?i)^LIBRWKCHM[PM]2F.*$/')
+LocationMap.create(code: 'CHM3F', value: 'Chemistry Library 3rd floor', regex: '/(?i)^LIBRWKCHM[PM]3F.*$/')
+LocationMap.create(code: 'LMSBF', value: 'Library Media Services Ground floor', regex: '/(?i)^LIBRWKLMS[PM]BF.*$/')
+LocationMap.create(code: 'MDR1F', value: 'MARYLANDIA', regex: '/(?i)^LIBRWKMDR[PM]1F.*$/')
+LocationMap.create(code: 'PAL1F', value: 'PAL 1st floor', regex: '/(?i)^LIBRWKPAL[PM]1F.*$/')
+LocationMap.create(code: 'PAL2F', value: 'PAL 2nd floor', regex: '/(?i)^LIBRWKPAL[PM]2F.*$/')
+LocationMap.create(code: 'ART1F', value: 'Art Library 1st floor', regex: '/(?i)^LIBRWKART[PM]1F.*$/')
+LocationMap.create(code: 'ARC1F', value: 'Arch Library', regex: '/(?i)^LIBRWKARC[PM]1F.*$/')
