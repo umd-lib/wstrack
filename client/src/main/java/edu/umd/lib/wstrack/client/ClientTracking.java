@@ -3,11 +3,14 @@ package edu.umd.lib.wstrack.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -28,7 +31,7 @@ public class ClientTracking {
    */
   public static void main(String[] args) throws MalformedURLException,
       IOException {
-    
+
     System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
 
     // configure logging
@@ -69,7 +72,12 @@ public class ClientTracking {
         throw new Exception("wstrack.os property is required");
       }
 
-      track(env, username, computerName, status, os);
+      MessageDigest md5 = MessageDigest.getInstance("MD5");
+      byte[] digest = md5.digest(username.getBytes("UTF-8"));
+      String hex = Hex.encodeHexString(digest);
+      String userHash = Base64.encodeBase64URLSafeString(hex.getBytes());
+
+      track(env, userHash, computerName, status, os);
 
     } catch (Exception e) {
       log.error("Error in ClientTracking", e);
@@ -79,7 +87,7 @@ public class ClientTracking {
   /*
    * @Javadoc - Submit track event
    */
-  public static void track(String env, String username, String computerName,
+  public static void track(String env, String userHash, String computerName,
       String status, String os) throws MalformedURLException, IOException {
 
     // map environment to baseUrl
@@ -98,7 +106,7 @@ public class ClientTracking {
       baseUrl = "http://localhost:3000/track";
     }
     log.debug("base url: " + baseUrl);
-    log.debug("username: " + username);
+    log.debug("userHash: " + userHash);
     log.debug("computerName: " + computerName);
     log.debug("status: " + status);
     log.debug("os: " + os);
@@ -108,7 +116,7 @@ public class ClientTracking {
     sb.append("/" + URLEncoder.encode(computerName, "UTF-8"));
     sb.append("/" + status);
     sb.append("/" + URLEncoder.encode(os, "UTF-8"));
-    sb.append("/" + URLEncoder.encode(username, "UTF-8"));
+    sb.append("/" + userHash);
 
     // open the connection
     URL url = new URL(sb.toString());
