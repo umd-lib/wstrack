@@ -79,6 +79,7 @@ class CurrentStatusesController < ApplicationController
       s_params = params.permit(:workstation_name, :status, :guest_flag, :os, :user_hash)
       # TO BE UPDATED (Check :user_hash to match libguest user and set this flag accordingly.)
       s_params[:guest_flag] = false
+      s_params[:user_hash] = Base64.decode64(params[:user_hash])
       s_params
     end
 
