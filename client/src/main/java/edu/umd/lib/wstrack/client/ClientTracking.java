@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 
 import org.apache.log4j.Appender;
@@ -28,6 +28,8 @@ public class ClientTracking {
    */
   public static void main(String[] args) throws MalformedURLException,
       IOException {
+    
+    System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
 
     // configure logging
     boolean debug = System.getProperty("wstrack.debug", "false").equals("true");
@@ -93,7 +95,7 @@ public class ClientTracking {
       baseUrl = "https://wwwdev.lib.umd.edu/wstrack/track";
 
     } else {
-      baseUrl = "http://localhost:8080/wstrack-server/track";
+      baseUrl = "http://localhost:3000/track";
     }
     log.debug("base url: " + baseUrl);
     log.debug("username: " + username);
@@ -110,7 +112,9 @@ public class ClientTracking {
 
     // open the connection
     URL url = new URL(sb.toString());
-    URLConnection conn = url.openConnection();
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setRequestMethod("PUT");
+    conn.setRequestProperty("Content-Length", "0");
 
     // Get the response
     BufferedReader rd = new BufferedReader(new InputStreamReader(
