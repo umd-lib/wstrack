@@ -49,3 +49,8 @@ Follow the following steps.
 1. Navigate to ~/client/scripts and remove the wstrack-client.jar file. (rm -rf wstrack-client.jar)
 2. Execute "ln -s ../target/wstrack-client-{VERSION}-jar-with-dependencies.jar wstrack-client.jar" (This will relink the jar file with the correct jar file.)
 3. Restart the server. and rerun the ./wstrack-client.sh [login|logout] [local|DEV|Prod] command.
+
+License
+-------
+
+See the [LICENSE](LICENSE.md) file for license rights and limitations (Apache 2.0).
