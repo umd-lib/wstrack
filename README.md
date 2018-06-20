@@ -19,7 +19,8 @@ How to Install WSTrack on the Server
     mv wstrack wstrack-old.dir
     mv wstrack{.war,-war.old}
 
-    wget "https://maven.lib.umd.edu/nexus/service/local/artifact/maven/content?r=releases&g=edu.umd.lib.wstrack.server&a=wstrack-server&v=LATEST&p=war" --content-disposition
+    # SNAPSHOT versions should include the full version string. (E.g. 1.7-20180620.202022-1)
+    wget -O wstrack.war 'https://maven.lib.umd.edu/nexus/service/rest/beta/search/assets/download?&group=edu.umd.lib.wstrack.server&name=wstrack-server&maven.extension=war&version=<VERSION>'
 
     mv wstrack-*.war wstrack.war
     cd /apps/cms/tomcat-misc
