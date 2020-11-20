@@ -7,6 +7,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException; 
+// import java.util.Base64;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
@@ -95,8 +99,17 @@ public class ClientTracking {
     } else {
       baseUrl = "http://localhost:8080/wstrack-server/track";
     }
+
+    String userHash = getBase64EncodedMd5(username);
+    String guestFlag = "f";
+
+    if (username.startsWith("libguest")) {
+      guestFlag = "t";
+    }
+
     log.debug("base url: " + baseUrl);
-    log.debug("username: " + username);
+    log.debug("guestFlag: " + guestFlag);
+    log.debug("userHash: " + userHash);
     log.debug("computerName: " + computerName);
     log.debug("status: " + status);
     log.debug("os: " + os);
@@ -106,7 +119,8 @@ public class ClientTracking {
     sb.append("/" + URLEncoder.encode(computerName, "UTF-8"));
     sb.append("/" + status);
     sb.append("/" + URLEncoder.encode(os, "UTF-8"));
-    sb.append("/" + URLEncoder.encode(username, "UTF-8"));
+    sb.append("/" + URLEncoder.encode(guestFlag, "UTF-8"));
+    sb.append("/" + URLEncoder.encode(userHash, "UTF-8"));
 
     // open the connection
     URL url = new URL(sb.toString());
@@ -122,5 +136,19 @@ public class ClientTracking {
 
     rd.close();
   }
+
+  public static String getBase64EncodedMd5(String input) { 
+    try { 
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest(input.getBytes());
+        // return Base64.getEncoder().encodeToString(messageDigest);
+        return DatatypeConverter.printBase64Binary(messageDigest);
+    }  
+
+    // For specifying wrong message digest algorithms 
+    catch (NoSuchAlgorithmException e) { 
+        throw new RuntimeException(e); 
+    } 
+  } 
 
 }
