@@ -6,32 +6,21 @@ WSTrack (Workstation Tracking Project) contains client and server projects for t
 Documentation
 -------------
 
-
-How to Install WSTrack on the Server
+Docker Image Build
 -------------
+To build the Docker image.
 
-    # Stop the tomcat
 
-    cd /apps/cms/tomcat-misc
-    ./control stop
+    docker build . -t <IMAGE:TAG>
 
-    cd /apps/cms/webapps
-    mv wstrack wstrack-old.dir
-    mv wstrack{.war,-war.old}
+Push to registry
 
-    # SNAPSHOT versions should include the full version string. (E.g. 1.7-20180620.202022-1)
-    wget -O wstrack.war 'https://maven.lib.umd.edu/nexus/service/rest/beta/search/assets/download?&group=edu.umd.lib.wstrack.server&name=wstrack-server&maven.extension=war&version=<VERSION>'
-
-    mv wstrack-*.war wstrack.war
-    cd /apps/cms/tomcat-misc
-    ./control start
-
-    # Test
-
-    rm -rf wstrack-old.dir
+    docker push <IMAGE:TAG>
 
 Build Instructions
 -------------
+Note: The server needs JDK 7, so build the project using JDK 7. But, when you run the client, you need to use JRE 8+ to avoid SSL handshake errors. If you just want to build the client, you can build it with JDK 8.
+
 To build projects execute `mvn  -DskipTests clean install` from the repository root directory. 
 
 That will create 2 files, a .war (the server code) located here `/wstrack/server/target/wstrack-server-{version}.war` and a .jar (the client code) located here `/wstrack/client/target/wstrack-client-{version}-jar-with-dependencies.jar`
