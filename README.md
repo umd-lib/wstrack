@@ -26,6 +26,16 @@ To build projects execute `mvn  -DskipTests clean install` from the repository r
 
 That will create 2 files, a .war (the server code) located here `/wstrack/server/target/wstrack-server-{version}.war` and a .jar (the client code) located here `/wstrack/client/target/wstrack-client-{version}-jar-with-dependencies.jar`
 
+### Deploying the client to Nexus
+
+To deploy the client package used by the workstations to Nexus:
+
+```bash
+cd client
+mvn clean install
+mvn deploy
+```
+
 ### Testing the app
 
 * 1. Build the code using `mvn  -DskipTests clean install` from the repository root directory.
