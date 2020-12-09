@@ -29,7 +29,7 @@
 				margin-bottom: 0.6em;
 				padding: 0;
 			}
-            
+
 			#status li {
 				line-height: 1.3;
 			}
@@ -82,7 +82,7 @@
 	</head>
 	<body>
 		<a href="#page-body" class="skip"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		
+
 		<div id="page-body" role="main">
 			<h1>Workstation Tracking Service</h1>
 			<p></p>
@@ -93,11 +93,10 @@
 					<li class="controller"><g:link controller="current" params="${[sort:'timestamp', max:10, order:'desc'] }">Current</g:link></li>
 					<li class="controller"><g:link controller="history" params="${[sort:'timestamp', max:10, order:'desc'] }">History</g:link></li>
 				</ul>
-				
+
 				<h2>Other</h2>
 				<ul>
-                    <li class="controller"><g:link controller="statistics" action="index">Statistics</g:link></li>
-					<li class="controller"><g:link controller="admin" action="grails">Grails Status</g:link></li>
+          <li class="controller"><g:link controller="admin" action="grails">Grails Status</g:link></li>
 					<li class="controller"><g:link controller="availability" action="index">Workstation Availability</g:link></li>
 				</ul>
 			</div>
