@@ -5,7 +5,7 @@
 	<groupId>edu.umd.lib.wstrack.server</groupId>
 	<artifactId>wstrack-server</artifactId>
 	<packaging>grails-app</packaging>
-	<version>1.8.1</version>
+	<version>1.9</version>
 	<name>wstrack-server</name>
 	<description>wstrack-server</description>
 
@@ -16,7 +16,7 @@
 	<parent>
 		<groupId>edu.umd.lib.wstrack</groupId>
 		<artifactId>wstrack</artifactId>
-		<version>1.8.1</version>
+		<version>1.9</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -161,7 +161,7 @@
 		<pluginManagement />
 
 		<plugins>
-			<!-- Disables the Maven surefire plugin for Grails applications, as we 
+			<!-- Disables the Maven surefire plugin for Grails applications, as we
 				have our own test runner -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

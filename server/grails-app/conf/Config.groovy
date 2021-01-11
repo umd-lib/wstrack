@@ -87,11 +87,12 @@ environments {
 
 // log4j configuration
 log4j = {
-  // Example of changing the log pattern for the default console
-  // appender:
-  //
+  root{
+    error "stdout"
+  }
   appenders {
-    rollingFile name: "stacktrace", maxFileSize: 1024, file: "./logs/wstrack-stacktrace.log"
+    console name:"stdout",
+                layout: pattern
   }
 
   error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
@@ -105,6 +106,9 @@ log4j = {
       'org.springframework',
       'org.hibernate',
       'net.sf.ehcache.hibernate'
+
+  info 'grails.app'
+
 }
 
 edu.umd.lib.wstrack.server.locationMap = [

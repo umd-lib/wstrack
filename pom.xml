@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>edu.umd.lib.wstrack</groupId>
 	<artifactId>wstrack</artifactId>
-	<version>1.8.1</version>
+	<version>1.9</version>
 	<packaging>pom</packaging>
 	<modules>
   		<module>client</module>
