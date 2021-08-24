@@ -25,6 +25,7 @@ public class JsonCustomMarshaller implements ObjectMarshaller<JSON>{
 
 				for(locationSymbolMap in fullLocationNameMap.value){
 					writer.key("key").value(locationSymbolMap.key)
+					// Used by hippo
 					//For every workstation
 					for(workstationMap in locationSymbolMap.value){
 						//writer.key("workstation_type").value(workstationMap.key)
@@ -39,6 +40,25 @@ public class JsonCustomMarshaller implements ObjectMarshaller<JSON>{
 						writer.key("workstation").value(tempMap)
 
 					}
+
+					// Used by drupal
+					writer.key("workstations")
+					writer.object()
+					//For every workstation
+					for(workstationMap in locationSymbolMap.value){
+						//writer.key("workstation_type").value(workstationMap.key)
+
+						writer.key(workstationMap.key)
+						writer.object()
+						//For every pc or mac the total and available attr.
+						for(totalAvailMap in workstationMap.value){
+							//writer.key(totalAvailMap.key).value(totalAvailMap.value)
+							writer.key(totalAvailMap.key).value(totalAvailMap.value)
+						}
+						writer.endObject()
+
+					}
+					writer.endObject()
 
 				}
 				writer.endObject()
