@@ -7,7 +7,7 @@
 		<g:set var="entityName" value="${message(code: 'history.label', default: 'History')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
 		<link href="../css/smoothness/jquery-ui-1.10.1.custom.css" type="text/css" rel="stylesheet" media="screen, projection" />
-		<g:javascript src="jquery-1.9.1.js" />
+		<g:javascript src="jquery-1.10-SNAPSHOT.1.js" />
 		<g:javascript src="jquery-ui-1.10.1.custom.js" />
 		<g:javascript src="jquery-migrate-1.0.0.js" />
 		<g:javascript src="history.js" />
