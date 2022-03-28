@@ -1,24 +1,21 @@
-# README
+# WSTrack Server
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A rails based implementation of the Workstation Tracking server.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+Requires:
 
-* System dependencies
+* Ruby v2.7.5
+* Bundler v2.1.4
 
-* Configuration
+To run the application:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+git clone https://github.com/umd-lib/wstrack.git
+cd wstrack/server
+bundle install
+rails db:migrate
+rails db:seed
+rails server
+```
