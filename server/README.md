@@ -15,7 +15,7 @@ To run the application:
 git clone https://github.com/umd-lib/wstrack.git
 cd wstrack/server
 bundle install
-rails db:migrate
-rails db:seed
+yarn
+rails db:reset
 rails server
 ```
