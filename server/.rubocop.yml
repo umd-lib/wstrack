@@ -1,0 +1,67 @@
+require:
+  - rubocop-rails
+
+# Enables Rails cops
+Rails:
+  Enabled: true
+
+# Exclude auto-generated files
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "config.ru"
+    - "Rakefile"
+    - "bin/**/*"
+    - "config/**/*"
+    - "db/**/*"
+    - "lib/**/*"
+  TargetRubyVersion: 2.7
+  TargetRailsVersion: 5.2
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "test/system/*_test.rb"
+
+# The following configuration exclude checks that seem
+# silly, or conflict with the way Rails naturally does
+# things.
+Style/Documentation:
+  Exclude:
+    - "app/controllers/*_controller.rb"
+    - "app/helpers/*_helper.rb"
+    - "test/test_helper.rb"
+    - "test/controllers/*_controller_test.rb"
+    - "test/helpers/*_helper_test.rb"
+    - "test/system/*_test.rb"
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - "test/**/*"
+
+Layout/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
+# Disabling the following as they interfere with the Rails layout of the
+# Gemfile, making changes when doing upgrades less visible
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/EmptyLines:
+  Exclude:
+    - Gemfile
+
+Style/StringLiterals:
+  Exclude:
+    - Gemfile
+
+Style/SymbolArray:
+  Exclude:
+    - Gemfile
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - Gemfile
