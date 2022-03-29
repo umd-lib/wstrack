@@ -98,57 +98,63 @@ pipeline {
     }
 
     stage('build') {
-      steps {
-        sh '''
-          ruby -v
-        '''
+      dir('server') {
+        steps {
+          sh '''
+            ruby -v
+          '''
+        }
       }
     }
 
     stage('test') {
-      steps {
-        sh '''
-          # Disable Spring, as it should not be needed, and may interfere with tests
-          export DISABLE_SPRING=true
-          # Configure MiniTest to use JUnit-style reporter
-          export MINITEST_REPORTER=JUnitReporter
-          bundle exec rails db:reset
-          bundle exec rails test:system test
-        '''
-      }
-      post {
-        always {
-          junit '**/test/reports/*.xml'
+      dir('server') {
+        steps {
+          sh '''
+            # Disable Spring, as it should not be needed, and may interfere with tests
+            export DISABLE_SPRING=true
+            # Configure MiniTest to use JUnit-style reporter
+            export MINITEST_REPORTER=JUnitReporter
+            bundle exec rails db:reset
+            bundle exec rails test:system test
+          '''
+        }
+        post {
+          always {
+            junit '**/test/reports/*.xml'
+          }
         }
       }
     }
 
     stage('static-analysis') {
-      steps {
-        sh '''
-        # Run RuboCop
-        # Send output to standard out for "Record compiler warnings and static analysis results"
-        # post-build action
-        #
-        # Using "|| true" so that build will be considered successful, even if there are Rubocop
-        # violation.
-        bundle exec rubocop -D --format clang || true
-      '''
-      }
-      post {
-        always {
-          // Collect Rubocop reports
-          recordIssues(tools: [ruboCop(reportEncoding: 'UTF-8')], unstableTotalAll: 1)
+      dir('server') {
+        steps {
+          sh '''
+          # Run RuboCop
+          # Send output to standard out for "Record compiler warnings and static analysis results"
+          # post-build action
+          #
+          # Using "|| true" so that build will be considered successful, even if there are Rubocop
+          # violation.
+          bundle exec rubocop -D --format clang || true
+        '''
+        }
+        post {
+          always {
+            // Collect Rubocop reports
+            recordIssues(tools: [ruboCop(reportEncoding: 'UTF-8')], unstableTotalAll: 1)
 
-          // Collect coverage reports
-          publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: true,
-                        reportDir: 'coverage/rcov',
-                        reportFiles: 'index.html',
-                        reportName: "RCov Report"
-                      ])
+            // Collect coverage reports
+            publishHTML([
+                          allowMissing: false,
+                          alwaysLinkToLastBuild: false,
+                          keepAll: true,
+                          reportDir: 'server/coverage/rcov',
+                          reportFiles: 'index.html',
+                          reportName: "RCov Report"
+                        ])
+          }
         }
       }
     }
