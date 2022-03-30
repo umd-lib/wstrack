@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Workstation Statuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Workstation name</th>
+      <th>Workstation type</th>
+      <th>Os</th>
+      <th>User hash</th>
+      <th>Status</th>
+      <th>Guest flag</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workstation_statuses.each do |workstation_status| %>
+      <tr>
+        <td><%= workstation_status.workstation_name %></td>
+        <td><%= workstation_status.workstation_type %></td>
+        <td><%= workstation_status.os %></td>
+        <td><%= workstation_status.user_hash %></td>
+        <td><%= workstation_status.status %></td>
+        <td><%= workstation_status.guest_flag %></td>
+        <td><%= link_to 'Show', workstation_status %></td>
+        <td><%= link_to 'Edit', edit_workstation_status_path(workstation_status) %></td>
+        <td><%= link_to 'Destroy', workstation_status, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Workstation Status', new_workstation_status_path %>
