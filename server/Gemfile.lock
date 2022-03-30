@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/umd-lib/umd_lib_style.git
+  revision: 75702c22c37bf1695a9ce0dabec7abc7b5dcc7dd
+  tag: 3.0.0
+  specs:
+    umd_lib_style (3.0.0)
+      rails (>= 6.1.4.7, < 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -270,12 +278,13 @@ DEPENDENCIES
   spring
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
+  umd_lib_style!
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
 
 RUBY VERSION
-   ruby 2.7.2p137
+   ruby 2.7.5p203
 
 BUNDLED WITH
    2.1.4
