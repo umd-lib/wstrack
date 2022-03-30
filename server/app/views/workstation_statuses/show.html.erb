@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Workstation name:</strong>
+  <%= @workstation_status.workstation_name %>
+</p>
+
+<p>
+  <strong>Workstation type:</strong>
+  <%= @workstation_status.workstation_type %>
+</p>
+
+<p>
+  <strong>Os:</strong>
+  <%= @workstation_status.os %>
+</p>
+
+<p>
+  <strong>User hash:</strong>
+  <%= @workstation_status.user_hash %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @workstation_status.status %>
+</p>
+
+<p>
+  <strong>Guest flag:</strong>
+  <%= @workstation_status.guest_flag %>
+</p>
+
+<%= link_to 'Edit', edit_workstation_status_path(@workstation_status) %> |
+<%= link_to 'Back', workstation_statuses_path %>

@@ -1,0 +1,47 @@
+<%= form_with(model: workstation_status) do |form| %>
+  <% if workstation_status.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(workstation_status.errors.count, "error") %> prohibited this workstation_status from being saved:</h2>
+
+      <ul>
+        <% workstation_status.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :workstation_name %>
+    <%= form.text_field :workstation_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :workstation_type %>
+    <%= form.text_field :workstation_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :os %>
+    <%= form.text_field :os %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_hash %>
+    <%= form.text_field :user_hash %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :guest_flag %>
+    <%= form.check_box :guest_flag %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
