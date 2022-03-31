@@ -98,12 +98,10 @@ pipeline {
     }
 
     stage('build') {
-      dir('server') {
-        steps {
-          sh '''
-            ruby -v
-          '''
-        }
+      steps {
+        sh '''
+          ruby -v
+        '''
       }
     }
 
