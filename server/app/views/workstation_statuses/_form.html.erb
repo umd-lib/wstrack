@@ -1,47 +1,44 @@
 <%= form_with(model: workstation_status) do |form| %>
-  <% if workstation_status.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(workstation_status.errors.count, "error") %> prohibited this workstation_status from being saved:</h2>
+  <%= render 'form_errors', errors: workstation_status.errors %>
 
-      <ul>
-        <% workstation_status.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <table class="table table-striped">
+    <tbody>
 
-  <div class="field">
-    <%= form.label :workstation_name %>
-    <%= form.text_field :workstation_name %>
-  </div>
+    <tr>
+      <th><%= form.label :workstation_name %></th>
+      <td><%= form.text_field :workstation_name, style: "min-width: 100%" %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :workstation_type %>
-    <%= form.text_field :workstation_type %>
-  </div>
+    <%#  Workstation type is automatically set! %>
+    <tr>
+      <th><%= form.label :workstation_type %></th>
+      <td><%= workstation_status.workstation_type %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :os %>
-    <%= form.text_field :os %>
-  </div>
+    <tr>
+      <th><%= form.label :os %></th>
+      <td><%= form.text_field :os, style: "min-width: 100%" %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :user_hash %></th>
+      <td><%= form.text_field :user_hash, style: "min-width: 100%" %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :status %></th>
+      <td><%= form.select(:status, WorkstationStatus.statuses, :selected => workstation_status.status) %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :user_hash %>
-    <%= form.text_field :user_hash %>
-  </div>
+    <tr>
+      <th><%= form.label :guest_flag %></th>
+      <td><%= form.check_box :guest_flag %></td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :guest_flag %>
-    <%= form.check_box :guest_flag %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <tr>
+      <th></th>
+      <td>
+        <%= form.submit class: 'btn btn-success' %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 <% end %>

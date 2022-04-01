@@ -22,11 +22,10 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
       post workstation_statuses_url,
            params: { workstation_status: { guest_flag: @workstation_status.guest_flag, os: @workstation_status.os,
                                            status: @workstation_status.status, user_hash: @workstation_status.user_hash,
-                                           workstation_name: @workstation_status.workstation_name,
-                                           workstation_type: @workstation_status.workstation_type } }
+                                           workstation_name: "#{@workstation_status.workstation_name}1" } }
     end
 
-    assert_redirected_to workstation_status_url(WorkstationStatus.last)
+    assert_redirected_to workstation_status_url(WorkstationStatus.first)
   end
 
   test 'should show workstation_status' do
@@ -43,8 +42,7 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
     patch workstation_status_url(@workstation_status),
           params: { workstation_status: { guest_flag: @workstation_status.guest_flag, os: @workstation_status.os,
                                           status: @workstation_status.status, user_hash: @workstation_status.user_hash,
-                                          workstation_name: @workstation_status.workstation_name,
-                                          workstation_type: @workstation_status.workstation_type } }
+                                          workstation_name: @workstation_status.workstation_name } }
     assert_redirected_to workstation_status_url(@workstation_status)
   end
 

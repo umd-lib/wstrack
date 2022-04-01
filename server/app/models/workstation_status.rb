@@ -8,8 +8,10 @@ class WorkstationStatus < ApplicationRecord
 
   MAC = 'MAC'
   PC = 'PC'
-  LOGIN = 'login'
-  LOGOUT = 'logout'
+
+  def self.statuses
+    %w[login logout]
+  end
 
   before_save { workstation_name.upcase! }
   before_save { status.downcase! }
@@ -19,7 +21,7 @@ class WorkstationStatus < ApplicationRecord
 
   validates :workstation_name, presence: true, format: { with: VALID_WORKSTATION_NAME_REGEX },
                                uniqueness: { case_sensitive: false }
-  validates :status, inclusion: { in: %w[login logout] }
+  validates :status, inclusion: { in: statuses }
   validates :os, presence: true
   validates :user_hash, presence: true
   validates :guest_flag, inclusion: { in: [true, false] }
