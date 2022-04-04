@@ -18,10 +18,9 @@ class WorkstationStatusesTest < ApplicationSystemTestCase
 
     check 'Guest flag' if @workstation_status.guest_flag
     fill_in 'Os', with: @workstation_status.os
-    fill_in 'Status', with: @workstation_status.status
+    select @workstation_status.status, from: 'Status'
     fill_in 'User hash', with: @workstation_status.user_hash
-    fill_in 'Workstation name', with: @workstation_status.workstation_name
-    fill_in 'Workstation type', with: @workstation_status.workstation_type
+    fill_in 'Workstation name', with: "#{@workstation_status.workstation_name}1"
     click_on 'Create Workstation status'
 
     assert_text 'Workstation status was successfully created'
@@ -30,14 +29,14 @@ class WorkstationStatusesTest < ApplicationSystemTestCase
 
   test 'updating a Workstation status' do
     visit workstation_statuses_url
+    click_on @workstation_status.workstation_name, match: :first
     click_on 'Edit', match: :first
 
     check 'Guest flag' if @workstation_status.guest_flag
     fill_in 'Os', with: @workstation_status.os
-    fill_in 'Status', with: @workstation_status.status
+    select @workstation_status.status, from: 'Status'
     fill_in 'User hash', with: @workstation_status.user_hash
     fill_in 'Workstation name', with: @workstation_status.workstation_name
-    fill_in 'Workstation type', with: @workstation_status.workstation_type
     click_on 'Update Workstation status'
 
     assert_text 'Workstation status was successfully updated'
@@ -46,6 +45,8 @@ class WorkstationStatusesTest < ApplicationSystemTestCase
 
   test 'destroying a Workstation status' do
     visit workstation_statuses_url
+    click_on @workstation_status.workstation_name, match: :first
+
     page.accept_confirm do
       click_on 'Destroy', match: :first
     end
