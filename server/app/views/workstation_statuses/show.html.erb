@@ -32,6 +32,7 @@
     <th></th>
     <td>
       <%= link_to 'Edit', edit_workstation_status_path(@workstation_status), class: 'btn btn-info' %>
+      <%= link_to 'Destroy', workstation_status_path(@workstation_status), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
       <%= link_to 'Back', workstation_statuses_path, class: 'btn btn-default' %>
     </td>
   </tbody>
