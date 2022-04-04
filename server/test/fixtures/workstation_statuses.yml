@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  workstation_name: LIBRWKEPLM6F1
+  workstation_type: MAC
+  os: MyString
+  user_hash: MyString
+  status: login
+  guest_flag: true
+
+two:
+  workstation_name: LIBRWKARTP6F2
+  workstation_type: PC
+  os: MyString
+  user_hash: MyString
+  status: logout
+  guest_flag: false

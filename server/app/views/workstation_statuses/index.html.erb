@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Workstation Statuses</h1>
+
+<table class="table table-striped statuses">
+  <thead>
+    <tr>
+      <th>Workstation name</th>
+      <th>Workstation type</th>
+      <th>Os</th>
+      <th>User hash</th>
+      <th>Status</th>
+      <th>Guest flag</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workstation_statuses.each do |workstation_status| %>
+      <tr>
+        <td><%= link_to workstation_status.workstation_name, workstation_status %></td>
+        <td><%= workstation_status.workstation_type %></td>
+        <td><%= workstation_status.os %></td>
+        <td><%= workstation_status.user_hash %></td>
+        <td><%= workstation_status.status %></td>
+        <td><%= workstation_status.guest_flag %></td>
+        <td><%= workstation_status.updated_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Workstation Status', new_workstation_status_path %>

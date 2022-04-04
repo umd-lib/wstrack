@@ -1,0 +1,39 @@
+<div class="page-heading">
+  <h1>Workstation Status</h1>
+</div>
+
+<table class="table table-striped">
+  <tbody>
+  <tr>
+    <th>Workstation name:</th>
+    <td><%= @workstation_status.workstation_name %></th>
+  </tr>
+  <tr>
+    <th>Workstation type:</th>
+    <td><%= @workstation_status.workstation_type %></td>
+  </tr>
+  <tr>
+    <th>Os</th>
+    <td><%= @workstation_status.os %></td>
+  </tr>
+  <tr>
+    <th>User hash</th>
+    <td><%= @workstation_status.user_hash %></td>
+  </tr>
+  <tr>
+    <th>Status</th>
+    <td><%= @workstation_status.status %></td>
+  </tr>
+  <tr>
+    <th>Guest flag</th>
+    <td><%= @workstation_status.guest_flag %></td>
+  </tr>
+  <tr>
+    <th></th>
+    <td>
+      <%= link_to 'Edit', edit_workstation_status_path(@workstation_status), class: 'btn btn-info' %>
+      <%= link_to 'Destroy', workstation_status_path(@workstation_status), method: :delete, data: { confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+      <%= link_to 'Back', workstation_statuses_path, class: 'btn btn-default' %>
+    </td>
+  </tbody>
+</table>
