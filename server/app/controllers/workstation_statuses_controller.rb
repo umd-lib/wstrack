@@ -25,6 +25,7 @@ class WorkstationStatusesController < ApplicationController
 
     respond_to do |format|
       if @workstation_status.save
+        set_validation_notice
         format.html do
           redirect_to workstation_status_url(@workstation_status),
                       notice: 'Workstation status was successfully created.'
@@ -41,6 +42,7 @@ class WorkstationStatusesController < ApplicationController
   def update # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       if @workstation_status.update(workstation_status_params)
+        set_validation_notice
         format.html do
           redirect_to workstation_status_url(@workstation_status),
                       notice: 'Workstation status was successfully updated.'
@@ -74,5 +76,9 @@ class WorkstationStatusesController < ApplicationController
     def workstation_status_params
       params.require(:workstation_status).permit(:workstation_name, :workstation_type, :os, :user_hash, :status,
                                                  :guest_flag)
+    end
+
+    def set_validation_notice
+      flash[:warning] = @workstation_status.validation_messages if @workstation_status.validation_messages.present?
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_01_223937) do
+ActiveRecord::Schema.define(version: 2022_04_05_172710) do
 
   create_table "locations", force: :cascade do |t|
     t.string "code"
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(version: 2022_04_01_223937) do
     t.boolean "guest_flag"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_workstation_statuses_on_location_id"
     t.index ["workstation_name"], name: "index_workstation_statuses_on_workstation_name", unique: true
   end
 
+  add_foreign_key "workstation_statuses", "locations"
 end
