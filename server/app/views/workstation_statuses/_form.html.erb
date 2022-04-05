@@ -12,7 +12,14 @@
     <%#  Workstation type is automatically set! %>
     <tr>
       <th><%= form.label :workstation_type %></th>
-      <td><%= workstation_status.workstation_type %></td>
+      <td>
+        <% unless workstation_status.workstation_type %>
+          Workstation type would be automatically set based on the workstation   name pattern.
+        <% else %>
+          <%= workstation_status.workstation_type %>
+        <% end %>
+      
+      </td>
     </tr>
 
     <tr>
@@ -37,6 +44,8 @@
       <th></th>
       <td>
         <%= form.submit class: 'btn btn-success' %>
+        <%= link_to 'Cancel', workstation_status, class: 'btn btn-danger' %>
+        <%= link_to 'List All Workstation Statuses', workstation_statuses_path, class: 'btn btn-default' %>
       </td>
     </tr>
     </tbody>
