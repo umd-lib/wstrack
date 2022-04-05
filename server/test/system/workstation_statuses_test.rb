@@ -9,7 +9,7 @@ class WorkstationStatusesTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit workstation_statuses_url
-    assert_selector 'h1', text: 'Workstation Statuses'
+    assert_selector '.h1', text: 'Workstation Statuses'
   end
 
   test 'creating a Workstation status' do

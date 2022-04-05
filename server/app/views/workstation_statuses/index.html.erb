@@ -1,6 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Workstation Statuses</h1>
+<div class="page-header">
+  <div class="row">
+    <div class="col-xs-10">
+      <span class="h1">Workstation Statuses</span>
+    </div>
+    <div class="col-xs-2">
+      <%= link_to 'New Workstation Status', new_workstation_status_path, class: 'btn btn-success pull-right' %>
+    </div>
+  </div>
+</div>
 
 <table class="table table-striped statuses">
   <thead>
@@ -29,7 +38,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Workstation Status', new_workstation_status_path %>
