@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<div class="page-header">
+  <div class="row">
+    <div class="col-xs-10">
+      <span class="h1">Locations</span>
+    </div>
+    <div class="col-xs-2">
+      <%= link_to 'New Location', new_location_path, class: 'btn btn-success pull-right' %>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Regex</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+        <td><%= link_to location.code, location %></td>
+        <td><%= location.name %></td>
+        <td><%= "/#{location.regex}/" %></td>
+        <td>
+          <span>
+            <%= link_to 'Edit', edit_location_path(location), class: 'btn btn-info' %>
+            <%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

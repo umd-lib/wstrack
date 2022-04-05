@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_164416) do
+ActiveRecord::Schema.define(version: 2022_04_01_223937) do
+
+  create_table "locations", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.string "regex"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["regex"], name: "index_locations_on_regex", unique: true
+  end
 
   create_table "workstation_statuses", force: :cascade do |t|
     t.string "workstation_name"
