@@ -4,6 +4,7 @@ require 'test_helper'
 
 # ApplicationSystemTestCase
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  include Capybara::Screenshot::MiniTestPlugin
   Capybara.register_driver :chrome_headless do |app|
     options = ::Selenium::WebDriver::Chrome::Options.new
 
@@ -15,6 +16,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     Capybara::Selenium::Driver.new(app, browser: :chrome, capabilities: options)
   end
 
-  #  driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+  #driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
   driven_by :chrome_headless
 end

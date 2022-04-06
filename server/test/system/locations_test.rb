@@ -22,6 +22,7 @@ class LocationsTest < ApplicationSystemTestCase
     fill_in 'Name', with: @location.name
     click_on 'Create Location'
 
+
     assert_text 'Location was successfully created'
     click_on 'Back'
   end

@@ -2,6 +2,7 @@
 
 require 'simplecov'
 require 'simplecov-rcov'
+require 'capybara-screenshot/minitest'
 
 SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
