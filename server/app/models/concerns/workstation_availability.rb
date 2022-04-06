@@ -14,12 +14,12 @@ module WorkstationAvailability
     # Each containing: location name, available pc count, total pc count, available mac count, total mac count
     def workstation_availability_list
       workstation_availability = []
-      Location.find_each do |location|
+      Location.all.each do |location|
         total_pc = pc_count_by_location(location.id)
         avail_pc = pc_count_by_location(location.id, status: WorkstationStatus::LOGOUT)
         total_mac = mac_count_by_location(location.id)
         avail_mac = mac_count_by_location(location.id, status: WorkstationStatus::LOGOUT)
-        workstation_availability.push(location_name: location.name, available_pc: avail_pc, total_pc: total_pc,
+        workstation_availability.push(location_name: location.name, location_code: location.code, available_pc: avail_pc, total_pc: total_pc,
                                       available_mac: avail_mac, total_mac: total_mac)
       end
       workstation_availability
