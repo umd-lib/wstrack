@@ -10,6 +10,8 @@ class Location < ApplicationRecord
     dependent: nil
   )
 
+  default_scope -> { order(name: :asc) }
+
   validates :code, presence: true
   validates :name, presence: true
   validates :regex, presence: true, uniqueness: true
