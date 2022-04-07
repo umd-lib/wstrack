@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 require 'simplecov'
@@ -21,8 +22,8 @@ Minitest::Reporters.use!(
   Minitest.backtrace_filter
 )
 
-# Suppress puma start/version output when running tests
-Capybara.server = :puma, { Silent: true } # To clean up your test output
+# Suppress puma start/version output when running 'rails test:system test'
+# Capybara.server = :puma, { Silent: true } # To clean up your test output
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
