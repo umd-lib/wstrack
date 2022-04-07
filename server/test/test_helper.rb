@@ -7,7 +7,7 @@ SimpleCov.formatters = [
   SimpleCov::Formatter::HTMLFormatter,
   SimpleCov::Formatter::RcovFormatter
 ]
-SimpleCov.start
+SimpleCov.start 'rails'
 
 # Improved Minitest output (color and progress bar)
 require 'minitest/reporters'
@@ -21,8 +21,8 @@ Minitest::Reporters.use!(
   Minitest.backtrace_filter
 )
 
-# Suppress puma start/version output when running tests
-Capybara.server = :puma, { Silent: true } # To clean up your test output
+# Suppress puma start/version output when running 'rails test:system test'
+# Capybara.server = :puma, { Silent: true } # To clean up your test output
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
@@ -30,7 +30,9 @@ require 'rails/test_help'
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
-  parallelize(workers: :number_of_processors)
+  # Disabling parallelization, because it confuses SimpleCov
+  # See https://github.com/simplecov-ruby/simplecov/issues/718
+  # parallelize(workers: :number_of_processors)
 
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all

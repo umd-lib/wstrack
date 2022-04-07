@@ -1,0 +1,27 @@
+<div class="page-heading">
+  <h1>Location</h1>
+</div>
+
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <th>Code:</th>
+      <td><%= @location.code %></td>
+    </tr>
+    <tr>
+      <th>Name:</th>
+      <td><%= @location.name %></td>
+    </tr>
+    <tr>
+      <th>Regex:</th>
+      <td><%= "/#{@location.regex}/" %></td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>
+        <%= link_to 'Edit', edit_location_path(@location), class: 'btn btn-info' %>
+        <%= link_to 'Back', locations_path, class: 'btn btn-default' %>
+      </td>
+    </tr>
+  </tbody>
+</table>

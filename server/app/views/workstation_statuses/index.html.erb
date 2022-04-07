@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <div class="page-header">
   <div class="row">
     <div class="col-xs-10">
@@ -14,8 +12,9 @@
 <table class="table table-striped statuses">
   <thead>
     <tr>
-      <th>Workstation name</th>
-      <th>Workstation type</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Type</th>
       <th>Os</th>
       <th>User hash</th>
       <th>Status</th>
@@ -28,6 +27,11 @@
     <% @workstation_statuses.each do |workstation_status| %>
       <tr>
         <td><%= link_to workstation_status.workstation_name, workstation_status %></td>
+        <td>
+          <% if workstation_status.location.present? %>
+          <%= workstation_status.location.name %>
+          <% end %>
+        </td>
         <td><%= workstation_status.workstation_type %></td>
         <td><%= workstation_status.os %></td>
         <td><%= workstation_status.user_hash %></td>

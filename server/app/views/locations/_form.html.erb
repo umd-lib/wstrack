@@ -1,0 +1,32 @@
+<%= form_with(model: location) do |form| %>
+  <%= render 'form_errors', errors: location.errors %>
+
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <th><%= form.label :code %></th>
+        <td><%= form.text_field :code, style: "min-width: 50%" %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :name %></th>
+        <td><%= form.text_field :name, style: "min-width: 100%" %></td>
+      </tr>
+      <tr>
+        <th><%= form.label :regex %></th>
+        <td class="align-middle">
+          <span class="h4 text-muted">/</span>
+          <%= form.text_field :regex, style: "min-width: 50%" %>
+          <span class="h4 text-muted">/</span>
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>
+          <%= form.submit class: 'btn btn-success' %>
+          <%= link_to 'Cancel', location, class: 'btn btn-danger' %>
+          <%= link_to 'List All Locations', locations_path, class: 'btn btn-default' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

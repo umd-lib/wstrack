@@ -25,6 +25,7 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
                                            workstation_name: "#{@workstation_status.workstation_name}1" } }
     end
 
+    assert_equal flash[:notice], 'Workstation status was successfully created.'
     assert_redirected_to workstation_status_url(WorkstationStatus.first)
   end
 
@@ -43,6 +44,8 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
           params: { workstation_status: { guest_flag: @workstation_status.guest_flag, os: @workstation_status.os,
                                           status: @workstation_status.status, user_hash: @workstation_status.user_hash,
                                           workstation_name: @workstation_status.workstation_name } }
+
+    assert_equal flash[:notice], 'Workstation status was successfully updated.'
     assert_redirected_to workstation_status_url(@workstation_status)
   end
 
@@ -51,6 +54,7 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
       delete workstation_status_url(@workstation_status)
     end
 
+    assert_equal flash[:notice], 'Workstation status was successfully destroyed.'
     assert_redirected_to workstation_statuses_url
   end
 end

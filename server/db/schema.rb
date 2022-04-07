@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_164416) do
+ActiveRecord::Schema.define(version: 2022_04_05_172710) do
+
+  create_table "locations", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.string "regex"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["regex"], name: "index_locations_on_regex", unique: true
+  end
 
   create_table "workstation_statuses", force: :cascade do |t|
     t.string "workstation_name"
@@ -21,7 +30,10 @@ ActiveRecord::Schema.define(version: 2022_03_29_164416) do
     t.boolean "guest_flag"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_workstation_statuses_on_location_id"
     t.index ["workstation_name"], name: "index_workstation_statuses_on_workstation_name", unique: true
   end
 
+  add_foreign_key "workstation_statuses", "locations"
 end
