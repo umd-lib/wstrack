@@ -3,7 +3,7 @@
 # WorkstationStatus
 class WorkstationStatus < ApplicationRecord
   include WorkstationAvailability
-  
+
   MAC = 'MAC'
   PC = 'PC'
   LOGIN = 'login'
