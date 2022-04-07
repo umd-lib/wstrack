@@ -23,6 +23,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
            params: { location: { code: @location.code, regex: "#{@location.regex}1", name: @location.name } }
     end
 
+    assert_equal flash[:notice], 'Location was successfully created.'
     assert_redirected_to location_url(Location.last)
   end
 
@@ -39,6 +40,8 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   test 'should update location' do
     patch location_url(@location),
           params: { location: { code: @location.code, regex: @location.regex, name: @location.name } }
+
+    assert_equal flash[:notice], 'Location was successfully updated.'
     assert_redirected_to location_url(@location)
   end
 
@@ -47,6 +50,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       delete location_url(@location)
     end
 
+    assert_equal flash[:notice], 'Location was successfully destroyed.'
     assert_redirected_to locations_url
   end
 end
