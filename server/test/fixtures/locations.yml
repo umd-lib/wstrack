@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  code: MyString
-  name: MyString
-  regex: MyString1
+art:
+  code: ART1F
+  name: Art Library 1st floor
+  regex: (?i)^LIBRWKART[PM]1F.*$
 
-two:
-  code: MyString
-  name: MyString
-  regex: MyString2
+epl:
+  code: EPL3F
+  name: STEM Library 3rd floor
+  regex: (?i)^LIBRWKSTEM[PM]3F.*$

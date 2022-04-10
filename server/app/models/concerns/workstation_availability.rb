@@ -16,7 +16,7 @@ module WorkstationAvailability
     # Each containing: location name, available pc count, total pc count, available mac count, total mac count
     def workstation_availability_list # rubocop:disable Metrics/MethodLength
       workstation_availability = []
-      Location.all.find_each do |location|
+      Location.order('name ASC').each do |location|
         total_pc = pc_count_by_location(location.id)
         avail_pc = pc_count_by_location(location.id, status: WorkstationStatus::LOGOUT)
         total_mac = mac_count_by_location(location.id)

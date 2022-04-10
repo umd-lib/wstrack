@@ -4,7 +4,7 @@ require 'test_helper'
 
 class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @workstation_status = workstation_statuses(:one)
+    @workstation_status = workstation_statuses(:epl_mac_ws)
   end
 
   test 'should get index' do
