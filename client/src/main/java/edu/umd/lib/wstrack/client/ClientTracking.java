@@ -96,7 +96,7 @@ public class ClientTracking {
       baseUrl = "https://wstrack-test.lib.umd.edu/track";
 
     } else {
-      baseUrl = "http://localhost:8080/wstrack-server/track";
+      baseUrl = "http://wstrack-local:3000/track";
     }
 
     String userHash = getBase64EncodedMd5(username);
