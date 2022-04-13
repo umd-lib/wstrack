@@ -55,6 +55,17 @@ class WorkstationStatusesController < ApplicationController
     end
   end
 
+  # Handle Tracking update from clients
+  def update_status
+    status = WorkstationStatus.find_by(workstation_name: params[:workstation_name])
+    if status.nil?
+      status = WorkstationStatus.new(status_params)
+    else
+      status.update_values(status_params)
+    end
+    render body: nil, status: status.save ? 200 : 400
+  end
+
   # DELETE /workstation_statuses/1 or /workstation_statuses/1.json
   def destroy
     @workstation_status.destroy
@@ -66,6 +77,10 @@ class WorkstationStatusesController < ApplicationController
   end
 
   private
+
+    def status_params
+      params.permit(:workstation_name, :status, :guest_flag, :os, :user_hash)
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_workstation_status
