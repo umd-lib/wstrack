@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<linkedHashMap>
+  <availability action="list">
+    <location name="Art Library 1st floor" key="ART1F">
+      <workstation type="pc" total="1" available="1"/>
+      <workstation type="mac" total="0" available="0"/>
+    </location>
+    <location name="STEM Library 3rd floor" key="EPL3F">
+      <workstation type="pc" total="0" available="0"/>
+      <workstation type="mac" total="1" available="0"/>
+    </location>
+  </availability>
+</linkedHashMap>

@@ -2,11 +2,15 @@
 
 # WorkstationStatus
 class WorkstationStatus < ApplicationRecord
+  include WorkstationAvailability
+
   MAC = 'MAC'
   PC = 'PC'
+  LOGIN = 'login'
+  LOGOUT = 'logout'
 
   def self.statuses
-    %w[login logout]
+    [LOGIN, LOGOUT]
   end
 
   before_save { workstation_name.upcase! }

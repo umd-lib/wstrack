@@ -4,7 +4,7 @@ require 'test_helper'
 
 class LocationsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @location = locations(:one)
+    @location = locations(:art)
   end
 
   test 'should get index' do
@@ -18,13 +18,14 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create location' do
+    location_regex = "#{@location.regex}1"
     assert_difference('Location.count') do
       post locations_url,
-           params: { location: { code: @location.code, regex: "#{@location.regex}1", name: @location.name } }
+           params: { location: { code: @location.code, regex: location_regex, name: @location.name } }
     end
 
     assert_equal flash[:notice], 'Location was successfully created.'
-    assert_redirected_to location_url(Location.last)
+    assert_redirected_to location_url(Location.find_by(regex: location_regex))
   end
 
   test 'should show location' do
