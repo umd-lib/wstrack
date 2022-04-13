@@ -16,6 +16,11 @@ To run locally, the following must be installed:
 * sqlite3
 * node v8.16.1 or later
 * yarn v1.22.0 or later
+* Edit the "/etc/hosts" file and add
+
+    ```bash
+    127.0.0.1 wstrack-local
+    ```
 
 #### Running with rbenv
 
@@ -39,7 +44,25 @@ ln -s 2.7.5 ruby-2.7.5
 
     Switching into the directory should trigger RVM to set up a gemset.
 
-2) Run the following commands to setup the application:
+2) Copy the "env_example" file to ".env":
+
+    ```bash
+    > cp env_example .env
+    ```
+
+    Edit the '.env" file:
+
+    ```bash
+    > vi .env
+    ```
+
+    and set the HOST parameter:
+
+    | Parameter              | Value                                |
+    | ---------------------- | ------------------------------------ |
+    | HOST                   | wstrack-local                        |
+
+3) Run the following commands to setup the application:
 
     ```bash
     bundle config set without 'production'
@@ -49,7 +72,7 @@ ln -s 2.7.5 ruby-2.7.5
     rails server
     ```
 
-3) The application will be available at <http://localhost:3000/>
+4) The application will be available at <http://wstrack-local:3000/>
 
 ### Running the tests
 
