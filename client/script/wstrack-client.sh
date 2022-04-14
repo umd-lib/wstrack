@@ -12,7 +12,7 @@ if [ -z "$STATUS" ]; then
 fi
 
 # command line argument 2
-# environment (optional) - server to contact (prod, stage, dev, or local) 
+# environment (optional) - server to contact (prod, qa, test, or local)
 ENVIRONMENT=local
 if [ -n "$2" ]; then
   ENVIRONMENT="$2"
