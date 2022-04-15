@@ -1,6 +1,6 @@
 # WSTrack Server
 
-A rails based implementation of the Workstation Tracking server.
+A Rails-based implementation of the Workstation Tracking server.
 
 ## Development Setup
 
@@ -38,8 +38,8 @@ ln -s 2.7.5 ruby-2.7.5
 1) Clone the Git repository and switch to the directory:
 
     ```bash
-    git clone git@github.com:umd-lib/wstrack.git
-    cd wstrack/server
+    $ git clone git@github.com:umd-lib/wstrack.git
+    $ cd wstrack/server
     ```
 
     Switching into the directory should trigger RVM to set up a gemset.
@@ -47,29 +47,19 @@ ln -s 2.7.5 ruby-2.7.5
 2) Copy the "env_example" file to ".env":
 
     ```bash
-    > cp env_example .env
+    $ cp env_example .env
     ```
 
-    Edit the '.env" file:
-
-    ```bash
-    > vi .env
-    ```
-
-    and set the HOST parameter:
-
-    | Parameter              | Value                                |
-    | ---------------------- | ------------------------------------ |
-    | HOST                   | wstrack-local                        |
+    No change to the ".env" file is needed for development.
 
 3) Run the following commands to setup the application:
 
     ```bash
-    bundle config set without 'production'
-    bundle install
-    yarn
-    rails db:reset
-    rails server
+    $ bundle config set without 'production'
+    $ bundle install
+    $ yarn
+    $ rails db:reset
+    $ rails server
     ```
 
 4) The application will be available at <http://wstrack-local:3000/>
@@ -79,7 +69,7 @@ ln -s 2.7.5 ruby-2.7.5
 To run the tests:
 
 ```bash
-rails test:system test
+$ rails test:system test
 ```
 
 ### Code Style
@@ -88,7 +78,7 @@ The application uses [Rubocop](https://docs.rubocop.org/rubocop/1.25/index.html)
 to enforce a coding standard. To run:
 
 ```bash
-rubocop -D
+$ rubocop -D
 ```
 
 ## Rake Tasks
@@ -98,11 +88,11 @@ rubocop -D
 #### Populate the database with sample data
 
 ```bash
-> rails db:populate_sample_data
+$ rails db:populate_sample_data
 ```
 
 #### Drop, create, migrate, seed and populate sample data
 
 ```bash
-> rails db:reset_with_sample_data
+$ rails db:reset_with_sample_data
 ```

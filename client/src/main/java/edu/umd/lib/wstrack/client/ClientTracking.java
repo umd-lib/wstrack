@@ -3,14 +3,14 @@ package edu.umd.lib.wstrack.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Appender;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -31,8 +31,6 @@ public class ClientTracking {
    */
   public static void main(String[] args) throws MalformedURLException,
       IOException {
-
-    System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
 
     // configure logging
     boolean debug = System.getProperty("wstrack.debug", "false").equals("true");
@@ -72,12 +70,7 @@ public class ClientTracking {
         throw new Exception("wstrack.os property is required");
       }
 
-      MessageDigest md5 = MessageDigest.getInstance("MD5");
-      byte[] digest = md5.digest(username.getBytes("UTF-8"));
-      String hex = Hex.encodeHexString(digest);
-      String userHash = Base64.encodeBase64URLSafeString(hex.getBytes());
-
-      track(env, userHash, computerName, status, os);
+      track(env, username, computerName, status, os);
 
     } catch (Exception e) {
       log.error("Error in ClientTracking", e);
@@ -87,7 +80,7 @@ public class ClientTracking {
   /*
    * @Javadoc - Submit track event
    */
-  public static void track(String env, String userHash, String computerName,
+  public static void track(String env, String username, String computerName,
       String status, String os) throws MalformedURLException, IOException {
 
     // map environment to baseUrl
@@ -95,7 +88,6 @@ public class ClientTracking {
 
     if (env.equals("prod")) {
       baseUrl = "https://wstrack.lib.umd.edu/track";
-      baseUrl = "https://www.lib.umd.edu/wstrack/track";
     } else if (env.equals("qa")) {
       baseUrl = "https://wstrack-qa.lib.umd.edu/track";
 
