@@ -19,7 +19,7 @@ Java 7 bytecode, and so should be compatible with Java 7 or later runtimes.
 
 ## Build Instructions
 
-To build the client:
+To build the client (from the "client/" subdirectory):
 
 ```bash
 $ mvn clean install
@@ -33,12 +33,12 @@ where {VERSION} is the current version (from the pom.xml file).
 
 ## Deploying to the Nexus
 
-To deploy the client package used by the workstations to Nexus:
+To deploy the client package used by the workstations to Nexus (from the
+"client/" subdirectory):
 
 ```bash
-cd client
-mvn clean install
-mvn deploy
+$ mvn clean install
+$ mvn deploy
 ```
 
 ## Usage Instructions (for Development)
