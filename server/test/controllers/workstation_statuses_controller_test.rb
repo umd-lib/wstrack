@@ -57,4 +57,23 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
     assert_equal flash[:notice], 'Workstation status was successfully destroyed.'
     assert_redirected_to workstation_statuses_url
   end
+
+  test 'wstrack client endpoint should decode URL encoded "os" param' do
+    # The "os" value from the wstrack-client will be URL encoded (i.e.,
+    # spaces replaced with "+"). This test verifies that the unencoded
+    # version (with spaces) is stored.
+    os = 'Mac OS X 10.15.3'
+    encoded_os = CGI.escape(os)
+
+    get wstrack_client_url(
+      guest_flag: @workstation_status.guest_flag,
+      os: encoded_os,
+      status: @workstation_status.status,
+      user_hash: @workstation_status.user_hash,
+      workstation_name: @workstation_status.workstation_name
+    )
+
+    status = WorkstationStatus.find_by(workstation_name: @workstation_status.workstation_name)
+    assert_equal(os, status.os)
+  end
 end

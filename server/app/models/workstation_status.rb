@@ -17,6 +17,7 @@ class WorkstationStatus < ApplicationRecord
   before_save { status.downcase! }
   before_save { set_location_id }
   before_save { set_workstation_type }
+  before_save { url_decode_os }
 
   default_scope -> { order(updated_at: :desc) }
 
@@ -68,5 +69,11 @@ class WorkstationStatus < ApplicationRecord
       self.location_id = Location.find_matching_location(workstation_name)
       self.validation_messages ||= []
       self.validation_messages.push('The workstation name did not match any location!') unless location_id
+    end
+
+    def url_decode_os
+      # Reverse URL encoding of the "os" parameter, where spaces are replaced
+      # with "+" signs
+      self.os = CGI.unescape(os)
     end
 end

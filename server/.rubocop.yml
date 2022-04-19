@@ -36,6 +36,7 @@ Style/Documentation:
     - "test/test_helper.rb"
     - "test/controllers/*_controller_test.rb"
     - "test/helpers/*_helper_test.rb"
+    - "test/models/*_test.rb"
     - "test/system/*_test.rb"
 
 Style/ClassAndModuleChildren:
