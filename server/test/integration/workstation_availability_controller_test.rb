@@ -4,12 +4,18 @@ require 'test_helper'
 
 class WorkstationAvailabilityControllerTest < ActionDispatch::IntegrationTest
   setup do
+    login_with_valid_role
+
     @art_location = locations(:art)
     @epl_location = locations(:epl)
     @epl_mac_ws = workstation_statuses(:epl_mac_ws)
     @art_pc_ws = workstation_statuses(:art_pc_ws)
     @epl_mac_ws.save
     @art_pc_ws.save
+  end
+
+  teardown do
+    reset_login
   end
 
   test 'should get index' do

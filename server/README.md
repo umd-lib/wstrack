@@ -50,7 +50,31 @@ ln -s 2.7.5 ruby-2.7.5
     $ cp env_example .env
     ```
 
-    No change to the ".env" file is needed for development.
+   Determine the values for the "SAML_SP_PRIVATE_KEY" and "SAML_SP_CERTIFICATE"
+   variables:
+
+   ```bash
+   > kubectl -n test get secret wstrack-common-env-secret -o jsonpath='{.data.SAML_SP_PRIVATE_KEY}' | base64 --decode
+   > kubectl -n test get secret wstrack-common-env-secret -o jsonpath='{.data.SAML_SP_CERTIFICATE}' | base64 --decode
+   ```
+
+   **Note:** These values are also available from the "test/sp.crt" and
+   "test/sp.key" files in the "wstrack-saml.zip" file in the
+   "SSDR/Developer Resources/DIT SAML Configurations/" directory on Box.
+
+   Edit the '.env" file:
+
+   ```bash
+   > vi .env
+   ```
+
+   and set the parameters:
+
+   | Parameter              | Value                                |
+   | ---------------------- | ------------------------------------ |
+   | HOST                   | wstrack-local                        |
+   | SAML_SP_PRIVATE_KEY    | (Output from first kubectl command)  |
+   | SAML_SP_CERTIFICATE    | (Output from second kubectl command) |
 
 3) Run the following commands to setup the application:
 
@@ -96,3 +120,10 @@ $ rails db:populate_sample_data
 ```bash
 $ rails db:reset_with_sample_data
 ```
+
+## Access Control
+
+In order to access this application, the user must be a member of the following
+Grouper group (<https://grouper.umd.edu/>):
+
+* Application Roles/Libraries/WorkstationTracking/WorkstationTracking-Administrator

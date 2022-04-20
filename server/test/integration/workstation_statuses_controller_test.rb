@@ -4,7 +4,13 @@ require 'test_helper'
 
 class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    login_with_valid_role
+
     @workstation_status = workstation_statuses(:epl_mac_ws)
+  end
+
+  teardown do
+    reset_login
   end
 
   test 'should get index' do
