@@ -58,6 +58,7 @@ class ActiveSupport::TestCase
         info: { roles: ['WorkstationTracking-Administrator'] }
       }
     )
+    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
 
     post auth_callback_url(provider: 'saml')
   end
@@ -71,7 +72,14 @@ class ActiveSupport::TestCase
         info: { roles: ['NotValidRole'] }
       }
     )
+    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
 
     post auth_callback_url(provider: 'saml')
+  end
+
+  # Clear any login credentials
+  def reset_login
+    OmniAuth.config.mock_auth[:saml] = nil
+    Rails.application.env_config['omniauth.auth'] = nil
   end
 end

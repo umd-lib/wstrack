@@ -9,6 +9,10 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     @location = locations(:art)
   end
 
+  teardown do
+    reset_login
+  end
+
   test 'should get index' do
     get locations_url
     assert_response :success

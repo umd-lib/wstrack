@@ -9,6 +9,10 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
     @workstation_status = workstation_statuses(:epl_mac_ws)
   end
 
+  teardown do
+    reset_login
+  end
+
   test 'should get index' do
     get workstation_statuses_url
     assert_response :success

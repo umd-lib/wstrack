@@ -3,7 +3,12 @@
 require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
+  teardown do
+    reset_login
+  end
+
   test 'when not logged it, redirect to login page' do
+    reset_login
     get root_url
     assert_redirected_to login_url
   end
@@ -16,9 +21,10 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should show "forbidden" page if login does not have correct role' do
+    reset_login
     login_with_invalid_role
     assert_response :forbidden
-
+    reset_login
     get root_url
     assert_redirected_to login_url
   end

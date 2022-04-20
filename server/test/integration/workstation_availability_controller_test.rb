@@ -14,6 +14,10 @@ class WorkstationAvailabilityControllerTest < ActionDispatch::IntegrationTest
     @art_pc_ws.save
   end
 
+  teardown do
+    reset_login
+  end
+
   test 'should get index' do
     get availability_url
     assert_response :success
