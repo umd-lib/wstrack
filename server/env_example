@@ -11,3 +11,15 @@
 # --- config/application.rb
 # Hostname of the application
 HOST=wstrack-local
+
+# --- config/initializers/omniauth.rb
+
+# SAML SP's Signing Key
+SAML_SP_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----"
+
+# SAML SP's Certificate
+SAML_SP_CERTIFICATE="-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"

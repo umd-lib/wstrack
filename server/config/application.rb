@@ -20,12 +20,17 @@ module Wstrack
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Configure the hostname, when HOST is provided.
-    # Note: A HOST environment variable (typically provided by a ".env" file)
-    # is REQUIRED when running the application on a server.
     #
-    # It is not strictly required, because that causes other processes that
-    # don't require a HOST (such as performing the tests, or database
-    # migrations) to fail.
+    # The HOST environment variable (typically provided by a ".env" file)
+    # is REQUIRED when running the application on a server. It is needed
+    # because this application uses SAML and Grouper, and therefore, needs
+    # a hostname in order to authenticate (this include during development).
+    #
+    # Without setting the HOST, Rails will reject form submissions as not
+    # being from an allowed hosts.
+    #
+    # It is not strictly required, because other processes (such as running
+    # the tests, or performing database migrations) do not require a HOST.
     #
     # HOST should be ignored (and config.hosts not set) when running the tests.
     if ENV['HOST'].present? && !Rails.env.test?

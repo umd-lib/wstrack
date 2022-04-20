@@ -4,6 +4,8 @@ require 'test_helper'
 
 class WorkstationAvailabilityControllerTest < ActionDispatch::IntegrationTest
   setup do
+    login_with_valid_role
+
     @art_location = locations(:art)
     @epl_location = locations(:epl)
     @epl_mac_ws = workstation_statuses(:epl_mac_ws)

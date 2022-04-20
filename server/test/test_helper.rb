@@ -38,4 +38,40 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  # Authentication login for controller tests (ActionController::TestCase)
+  def sign_in
+    request.session = { authorized: true }
+  end
+
+  # Authentication logout for controller tests (ActionController::TestCase)
+  def sign_out
+    request.session.delete(:authorized)
+  end
+
+  # Valid login for integration tests (ActionDispatch::IntegrationTest)
+  def login_with_valid_role
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:saml] = OmniAuth::AuthHash.new(
+      {
+        provider: 'saml',
+        info: { roles: ['WorkstationTracking-Administrator'] }
+      }
+    )
+
+    post auth_callback_url(provider: 'saml')
+  end
+
+  # Login with invalid role for integration tests (ActionDispatch::IntegrationTest)
+  def login_with_invalid_role
+    OmniAuth.config.test_mode = true
+    OmniAuth.config.mock_auth[:saml] = OmniAuth::AuthHash.new(
+      {
+        provider: 'saml',
+        info: { roles: ['NotValidRole'] }
+      }
+    )
+
+    post auth_callback_url(provider: 'saml')
+  end
 end
