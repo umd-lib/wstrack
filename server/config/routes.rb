@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   get 'track/:workstation_name/:status/:os/:guest_flag/:user_hash' => 'workstation_statuses#update_status',
       :constraints => { os: %r{[^\/]+} },
       as: 'wstrack_client'
+
+  get '/ping' => 'ping#verify'
 end
