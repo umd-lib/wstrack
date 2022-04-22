@@ -37,7 +37,7 @@
         <td><%= workstation_status.user_hash %></td>
         <td><%= workstation_status.status %></td>
         <td><%= workstation_status.guest_flag %></td>
-        <td><%= workstation_status.updated_at %></td>
+        <td><%= workstation_status.updated_at.strftime('%Y-%m-%d %H:%M:%S %Z') %></td>
       </tr>
     <% end %>
   </tbody>

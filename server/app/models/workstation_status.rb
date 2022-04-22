@@ -4,6 +4,8 @@
 class WorkstationStatus < ApplicationRecord
   include WorkstationAvailability
 
+  after_commit { |status| RecordHistory.perform(status) }
+
   MAC = 'MAC'
   PC = 'PC'
   LOGIN = 'login'

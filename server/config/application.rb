@@ -16,7 +16,7 @@ module Wstrack
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = 'Eastern Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Configure the hostname, when HOST is provided.
@@ -44,5 +44,7 @@ module Wstrack
       config.hosts << ENV['HOST']
       config.action_mailer.default_url_options = { host: ENV['HOST'] }
     end
+
+    config.x.history.storage_dir = ENV['HISTORY_STORAGE_DIR'] || Rails.root.join('tmp')
   end
 end

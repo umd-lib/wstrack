@@ -96,6 +96,28 @@ To run the tests:
 $ rails test:system test
 ```
 
+## CSV History File Configuration
+
+The application records workstation login/logout activity to a CSV file.
+Activity is only recorded for new records (either generated through the
+GUI, or from the API endpoint). Edits to existing records and deletions
+are *not* recorded.
+
+Activity for each day is recorded in files named for that day (the filename
+format is "YYYY-MM-DD.csv").
+
+The directory that the CSV files are written to is configured via the
+"config.x.history.storage_dir" parameter in "config/application.rb". The
+value for this parameter can be set via a "HISTORY_STORAGE_DIR" environment
+variable, otherwise it defaults to the "tmp" subdirectory in the project root.
+
+The application has been configured (via the
+"config.time_zone" parameter in "config/application.rb") to use the
+"Eastern Time (US & Canada)" timezone, to ensure that files are rolled over
+at EST/EDT midnight.
+
+The CSV file contains a "timestamp" field that reflects the "EST/EDT" timezone.
+
 ### Code Style
 
 The application uses [Rubocop](https://docs.rubocop.org/rubocop/1.25/index.html)
