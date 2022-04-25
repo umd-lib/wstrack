@@ -144,9 +144,76 @@ $ rails db:populate_sample_data
 $ rails db:reset_with_sample_data
 ```
 
+### Grails Migration Tasks
+
+The following tasks are intended to support the migration of data from the
+Grails "wstrack" application. These tasks can be removed once the Grails
+"wstrack" application has been retired.
+
+#### Clear the WorkstationStatus table
+
+Clears the "WorkstationStatus" table, prior to importing data from the CSV file
+from the Grails "wstrack" application.
+
+```bash
+$ rails db:clear_current_workstation_status
+```
+
+#### Import Grails "Current" Workstation Status CSV file
+
+Populates the "WorkstationStatus" table with a CSV file generated from the
+"Current" entries in the Grails "wstrack" application.
+
+```bash
+$ rails db:import_current_workstation_status['<CSV_FILE>']
+```
+
+where \<CSV_FILE> is the full path to the CSV file. For example, if the CSV
+file is located at "/tmp/grails_wstrack_current.csv", the command would beL
+
+```bash
+$ rails db:import_current_workstation_status['/tmp/grails_wstrack_current.csv']
+```
+
+To generate the CSV from the Grails "wstrack" application:
+
+1) Switch to the approriate Kubernetes namespace:
+
+    ```bash
+    $ kubectl config use-context <K8S_NAMESPACE>
+    ```
+
+    where \<K8S_NAMESPACE> is the Kubernetes namespace. For example, for the "test"
+    namespace", the command would be:
+
+    ```bash
+    $ kubectl config use-context test
+    ```
+
+2) Run the following command to output a CSV file to the
+   "/tmp/grails_wstrack_current.csv" file in the "wstrack-app-0" pod:
+
+    ```bash
+    $ kubectl exec wstrack-db-0 -- psql --username wstrack --dbname wstrack -c \
+      "COPY (SELECT * FROM current ORDER BY id ASC) TO '/tmp/grails_wstrack_current.csv' WITH (FORMAT CSV, HEADER)"
+    ```
+
+3) Copy the "/tmp/grails_wstrack_current.csv" file to
+   "/tmp/grails_wstrack_current.csv" on the local workstation
+
+    ```bash
+    $ kubectl cp wstrack-db-0:/tmp/grails_wstrack_current.csv /tmp/grails_wstrack_current.csv
+    ```
+
 ## Access Control
 
 In order to access this application, the user must be a member of the following
 Grouper group (<https://grouper.umd.edu/>):
 
 * Application Roles/Libraries/WorkstationTracking/WorkstationTracking-Administrator
+
+The following endpoints do not require authentication:
+
+* /ping - Used for Kubernetes application health checks
+* /track - Used by the "wstrack" client to update workstation status
+* /availability - Used to report workstation availability
