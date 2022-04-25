@@ -12,14 +12,14 @@
 <table class="table table-striped statuses">
   <thead>
     <tr>
-      <th>Name</th>
+      <th><%= sort_link(@q, :workstation_name, 'Name') %></th>
       <th>Location</th>
       <th>Type</th>
-      <th>Os</th>
-      <th>User hash</th>
-      <th>Status</th>
-      <th>Guest flag</th>
-      <th>Timestamp</th>
+      <th><%= sort_link(@q, :os, 'Os') %></th>
+      <th><%= sort_link(@q, :user_hash, 'User hash') %></th>
+      <th><%= sort_link(@q, :status, 'Status') %></th>
+      <th><%= sort_link(@q, :guest_flag, 'Guest flag') %></th>
+      <th><%= sort_link(@q, :updated_at, 'Timestamp') %></th>
     </tr>
   </thead>
 

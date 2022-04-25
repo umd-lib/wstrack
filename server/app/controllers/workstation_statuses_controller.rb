@@ -7,7 +7,9 @@ class WorkstationStatusesController < ApplicationController
 
   # GET /workstation_statuses or /workstation_statuses.json
   def index
-    @workstation_statuses = WorkstationStatus.all
+    @q = WorkstationStatus.ransack(params[:q])
+    @q.sorts = 'updated_at desc' if @q.sorts.empty?
+    @workstation_statuses = @q.result
   end
 
   # GET /workstation_statuses/1 or /workstation_statuses/1.json
