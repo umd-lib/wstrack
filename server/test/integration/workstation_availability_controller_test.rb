@@ -41,4 +41,12 @@ class WorkstationAvailabilityControllerTest < ActionDispatch::IntegrationTest
     assert_match Mime[:xml].to_str, response.content_type
     assert_equal file_fixture('avalability_list.xml').read, response.body
   end
+
+  test 'index is accessible without login' do
+    reset_login
+
+    get availability_url
+    assert_response :success
+    assert_select 'h1', 'Workstation Availability By Location'
+  end
 end
