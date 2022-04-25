@@ -12,8 +12,6 @@ class RecordHistory < ApplicationService
   end
 
   def perform(workstation_status)
-    return unless new_record?(workstation_status)
-
     self.class.semaphore.synchronize do
       timestamp = workstation_status.updated_at
       csv_record = as_csv(workstation_status, timestamp)
