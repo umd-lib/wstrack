@@ -9,7 +9,7 @@ class WorkstationStatusesController < ApplicationController
   def index
     @q = WorkstationStatus.ransack(params[:q])
     @q.sorts = 'updated_at desc' if @q.sorts.empty?
-    @workstation_statuses = @q.result
+    @workstation_statuses = @q.result.page params[:page]
   end
 
   # GET /workstation_statuses/1 or /workstation_statuses/1.json
