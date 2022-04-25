@@ -110,6 +110,7 @@ The directory that the CSV files are written to is configured via the
 "config.x.history.storage_dir" parameter in "config/application.rb". The
 value for this parameter can be set via a "HISTORY_STORAGE_DIR" environment
 variable, otherwise it defaults to the "tmp" subdirectory in the project root.
+The directory will be created, if it does not exist.
 
 The application has been configured (via the
 "config.time_zone" parameter in "config/application.rb") to use the
