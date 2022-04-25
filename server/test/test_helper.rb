@@ -79,6 +79,8 @@ class ActiveSupport::TestCase
 
   # Clear any login credentials
   def reset_login
+    reset! # Reset the existing session instance
+    OmniAuth.config.test_mode = false
     OmniAuth.config.mock_auth[:saml] = nil
     Rails.application.env_config['omniauth.auth'] = nil
   end

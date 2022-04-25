@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class WorkstationStatusesController < ApplicationController
+  skip_before_action :authenticate, only: %i[update_status]
+
   before_action :set_workstation_status, only: %i[show edit update destroy]
 
   # GET /workstation_statuses or /workstation_statuses.json

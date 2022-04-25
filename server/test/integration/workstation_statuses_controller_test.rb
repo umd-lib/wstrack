@@ -68,18 +68,21 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
     # The "os" value from the wstrack-client will be URL encoded (i.e.,
     # spaces replaced with "+"). This test verifies that the unencoded
     # version (with spaces) is stored.
-    os = 'Mac OS X 10.15.3'
+    os = 'Test OS with spaces'
     encoded_os = CGI.escape(os)
 
-    get wstrack_client_url(
-      guest_flag: @workstation_status.guest_flag,
-      os: encoded_os,
-      status: @workstation_status.status,
-      user_hash: @workstation_status.user_hash,
-      workstation_name: @workstation_status.workstation_name
-    )
+    reset_login # endpoint is available without login
 
-    status = WorkstationStatus.find_by(workstation_name: @workstation_status.workstation_name)
+    get wstrack_client_url(
+      guest_flag: 'f',
+      os: encoded_os,
+      status: 'login',
+      user_hash: 'test_hash',
+      workstation_name: 'TEST_WORKSTATION'
+    )
+    assert_response :success
+
+    status = WorkstationStatus.find_by(workstation_name: 'TEST_WORKSTATION')
     assert_equal(os, status.os)
   end
 end
