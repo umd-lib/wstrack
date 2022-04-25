@@ -85,4 +85,49 @@ class WorkstationStatusesControllerTest < ActionDispatch::IntegrationTest
     status = WorkstationStatus.find_by(workstation_name: 'TEST_WORKSTATION')
     assert_equal(os, status.os)
   end
+
+  test 'wstrack client endpoint records valid entries to history' do
+    Dir.mktmpdir do |temp_dir|
+      Rails.configuration.x.history.storage_dir = temp_dir
+
+      os = 'Mac OS X 10.15.3'
+      encoded_os = CGI.escape(os)
+
+      travel_to Time.parse('April 22, 2022 13:00:00 EDT') do
+        get wstrack_client_url(
+          guest_flag: 't',
+          os: encoded_os,
+          status: 'login',
+          user_hash: 'y3Fu6SqTdoGUdaERmrF4SA==',
+          workstation_name: 'LIBRWKSTEMM3F383'
+        )
+
+        assert_response :success
+      end
+
+      expected_storage_path = Pathname.new(temp_dir).join('2022-04-22.csv')
+      assert expected_storage_path.size?, 'No history entry was recorded.' # File exists and has non-zero size
+    end
+  end
+
+  test 'wstrack client endpoint does not record invalid entries to history' do
+    Dir.mktmpdir do |temp_dir|
+      Rails.configuration.x.history.storage_dir = temp_dir
+
+      travel_to Time.parse('April 22, 2022 13:00:00 EDT') do
+        get wstrack_client_url(
+          guest_flag: 't',
+          os: 'Test OS',
+          status: 'invalid_status',
+          user_hash: 'y3Fu6SqTdoGUdaERmrF4SA==',
+          workstation_name: 'LIBRWKSTEMM3F383'
+        )
+
+        assert_response :bad_request
+      end
+
+      expected_storage_path = Pathname.new(temp_dir).join('2022-04-22.csv')
+      assert_not expected_storage_path.exist?, 'Invalid workstation status added to history'
+    end
+  end
 end

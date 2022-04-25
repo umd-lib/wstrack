@@ -58,14 +58,20 @@ class WorkstationStatusesController < ApplicationController
   end
 
   # Handle Tracking update from clients
-  def update_status
+  def update_status # rubocop:disable Metrics/MethodLength
     status = WorkstationStatus.find_by(workstation_name: params[:workstation_name])
     if status.nil?
       status = WorkstationStatus.new(status_params)
     else
       status.update_values(status_params)
     end
-    render body: nil, status: status.save ? 200 : 400
+
+    status_code = :bad_request
+    if status.save
+      RecordHistory.perform(status)
+      status_code = :ok
+    end
+    render body: nil, status: status_code
   end
 
   # DELETE /workstation_statuses/1 or /workstation_statuses/1.json
