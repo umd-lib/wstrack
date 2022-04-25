@@ -12,6 +12,10 @@
 # Hostname of the application
 HOST=wstrack-local
 
+# Storage directory for History CSV records
+# Defaults to Rails.root.join('tmp'), if not set.
+#HISTORY_STORAGE_DIR=
+
 # --- config/initializers/omniauth.rb
 
 # SAML SP's Signing Key
