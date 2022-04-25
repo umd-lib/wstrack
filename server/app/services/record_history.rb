@@ -27,28 +27,7 @@ class RecordHistory < ApplicationService
     workstation_status.saved_change_to_id?
   end
 
-  def write_to_file(timestamp, csv_record)
-    return if storage_dir == File::NULL
-
-    filename = filename(timestamp)
-    storage_path = Pathname.new(storage_dir).join(filename)
-
-    create_file(storage_path, csv_record) unless storage_path.exist?
-    write_row(storage_path, csv_record)
-  end
-
-  def create_file(storage_path, csv_record)
-    CSV.open(storage_path, 'ab') do |csv|
-      csv << csv_record.keys
-    end
-  end
-
-  def write_row(storage_path, csv_record)
-    CSV.open(storage_path, 'ab') do |csv|
-      csv << csv_record.values
-    end
-  end
-
+  # Returns a Hash representing the CSV row to record
   def as_csv(workstation_status, timestamp) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     csv_record = {}
     csv_record[:id] = workstation_status.id
@@ -63,10 +42,39 @@ class RecordHistory < ApplicationService
     csv_record
   end
 
+  # Writes the CSV record to the appropriate file, based on the timestamp
+  def write_to_file(timestamp, csv_record)
+    return if storage_dir == File::NULL
+
+    filename = filename(timestamp)
+    storage_path = Pathname.new(storage_dir).join(filename)
+
+    create_file(storage_path, csv_record) unless storage_path.exist?
+    write_row(storage_path, csv_record)
+  end
+
+  # Creates the CSV file, and adds the header row.
+  def create_file(storage_path, csv_record)
+    FileUtils.mkdir_p(storage_dir)
+
+    CSV.open(storage_path, 'ab') do |csv|
+      csv << csv_record.keys
+    end
+  end
+
+  # Writes a single CSV row to an existing file.
+  def write_row(storage_path, csv_record)
+    CSV.open(storage_path, 'ab') do |csv|
+      csv << csv_record.values
+    end
+  end
+
+  # Returns the directory to write the CSV files to.
   def storage_dir
     Rails.configuration.x.history.storage_dir
   end
 
+  # Returns the filename for the CSV file, basd on the given timestamp
   def filename(timestamp)
     base_filename = timestamp.in_time_zone.strftime('%Y-%m-%d')
     extension = 'csv'
