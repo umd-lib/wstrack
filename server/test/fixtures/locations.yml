@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+art:
+  code: ART1F
+  name: Art Library 1st floor
+  regex: (?i)^LIBRWKART[PM]1F.*$
+
+epl:
+  code: EPL3F
+  name: STEM Library 3rd floor
+  regex: (?i)^LIBRWKSTEM[PM]3F.*$

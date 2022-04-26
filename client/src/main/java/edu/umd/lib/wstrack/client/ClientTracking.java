@@ -88,7 +88,6 @@ public class ClientTracking {
 
     if (env.equals("prod")) {
       baseUrl = "https://wstrack.lib.umd.edu/track";
-
     } else if (env.equals("qa")) {
       baseUrl = "https://wstrack-qa.lib.umd.edu/track";
 
@@ -136,18 +135,18 @@ public class ClientTracking {
     rd.close();
   }
 
-  public static String getBase64EncodedMd5(String input) { 
-    try { 
+  public static String getBase64EncodedMd5(String input) {
+    try {
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] messageDigest = md.digest(input.getBytes());
         // return Base64.getEncoder().encodeToString(messageDigest);
         return DatatypeConverter.printBase64Binary(messageDigest);
-    }  
+    }
 
-    // For specifying wrong message digest algorithms 
-    catch (NoSuchAlgorithmException e) { 
-        throw new RuntimeException(e); 
-    } 
-  } 
+    // For specifying wrong message digest algorithms
+    catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+  }
 
 }

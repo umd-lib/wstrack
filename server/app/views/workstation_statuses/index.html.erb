@@ -1,0 +1,46 @@
+<div class="page-header">
+  <div class="row">
+    <div class="col-xs-10">
+      <span class="h1">Workstation Statuses</span>
+    </div>
+    <div class="col-xs-2">
+      <%= link_to 'New Workstation Status', new_workstation_status_path, class: 'btn btn-success pull-right' %>
+    </div>
+  </div>
+</div>
+
+<%= paginate @workstation_statuses %>
+
+<table class="table table-striped statuses">
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :workstation_name, 'Name') %></th>
+      <th>Location</th>
+      <th>Type</th>
+      <th><%= sort_link(@q, :os, 'Os') %></th>
+      <th><%= sort_link(@q, :user_hash, 'User hash') %></th>
+      <th><%= sort_link(@q, :status, 'Status') %></th>
+      <th><%= sort_link(@q, :guest_flag, 'Guest flag') %></th>
+      <th><%= sort_link(@q, :updated_at, 'Timestamp') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @workstation_statuses.each do |workstation_status| %>
+      <tr>
+        <td><%= link_to workstation_status.workstation_name, workstation_status %></td>
+        <td>
+          <% if workstation_status.location.present? %>
+          <%= workstation_status.location.name %>
+          <% end %>
+        </td>
+        <td><%= workstation_status.workstation_type %></td>
+        <td><%= workstation_status.os %></td>
+        <td><%= workstation_status.user_hash %></td>
+        <td><%= workstation_status.status %></td>
+        <td><%= workstation_status.guest_flag %></td>
+        <td><%= workstation_status.updated_at.strftime('%Y-%m-%d %H:%M:%S %Z') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

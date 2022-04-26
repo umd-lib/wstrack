@@ -1,0 +1,53 @@
+<%= form_with(model: workstation_status) do |form| %>
+  <%= render 'form_errors', errors: workstation_status.errors %>
+
+  <table class="table table-striped">
+    <tbody>
+
+    <tr>
+      <th><%= form.label :workstation_name %></th>
+      <td><%= form.text_field :workstation_name, style: "min-width: 100%" %></td>
+    </tr>
+
+    <%#  Workstation type is automatically set! %>
+    <tr>
+      <th><%= form.label :workstation_type %></th>
+      <td>
+        <% unless workstation_status.workstation_type %>
+          Workstation type would be automatically set based on the workstation   name pattern.
+        <% else %>
+          <%= workstation_status.workstation_type %>
+        <% end %>
+      
+      </td>
+    </tr>
+
+    <tr>
+      <th><%= form.label :os %></th>
+      <td><%= form.text_field :os, style: "min-width: 100%" %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :user_hash %></th>
+      <td><%= form.text_field :user_hash, style: "min-width: 100%" %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :status %></th>
+      <td><%= form.select(:status, WorkstationStatus.statuses, :selected => workstation_status.status) %></td>
+    </tr>
+
+    <tr>
+      <th><%= form.label :guest_flag %></th>
+      <td><%= form.check_box :guest_flag %></td>
+    </tr>
+
+    <tr>
+      <th></th>
+      <td>
+        <%= form.submit class: 'btn btn-success' %>
+        <%= link_to 'Cancel', workstation_status, class: 'btn btn-danger' %>
+        <%= link_to 'List All Workstation Statuses', workstation_statuses_path, class: 'btn btn-default' %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>

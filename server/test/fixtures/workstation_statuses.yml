@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+epl_mac_ws:
+  workstation_name: LIBRWKSTEMM3F382
+  workstation_type: MAC
+  os: Mac OS X 10.15.3
+  user_hash: y3Fu6SqTdoGUdaERmrF4SA==
+  status: login
+  guest_flag: true
+
+art_pc_ws:
+  workstation_name: LIBRWKARTP1F6
+  workstation_type: PC
+  os: Windows_NT
+  user_hash: BFYr/B9/Ossjv0uttlpovw==
+  status: logout
+  guest_flag: false

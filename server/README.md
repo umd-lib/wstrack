@@ -1,58 +1,257 @@
-WSTrack-Server
-==============
+# WSTrack Server
 
-Workstation Tracking (server)
+A Rails-based implementation of the Workstation Tracking server.
 
-Documentation
--------------
+## Development Setup
 
-Build Instructions
--------------
-To build project execute `mvn -DskipTests clean install` from the project root directory (~/wstrack). 
+### Prerequisites
 
-That will create 1 .war (the server code) located here `./target/wstrack-server-{version}.war`
+The following instructions assume RVM (<https://rvm.io/>) is installed, to
+enable the setup of an isolated Ruby environment.
 
-##Execution
+To run locally, the following must be installed:
 
-1. Navigate to ~/wstrack/server
-2. Run grails run-app
-3. Access http://localhost:8080/wstrack-server
+* Ruby v2.7.5
+* Bundler v2.1.4
+* sqlite3
+* node v8.16.1 or later
+* yarn v1.22.0 or later
+* Edit the "/etc/hosts" file and add
 
-From the home screen you may access different links. Each of the links  on the home screen are controlled with a controller class. 
+    ```bash
+    127.0.0.1 wstrack-local
+    ```
 
-###1. Current Controller
+#### Running with rbenv
 
-[Click here to access the link](http://localhost:8080/wstrack-server/current/list?max=10&sort=timestamp&order=desc)
+If you use rbenv (<https://github.com/rbenv/rbenv>) instead of RVM for Ruby
+version management, you will need to symlink your rbenv install of Ruby 2.7.5
+to `ruby-2.7.5`:
 
-The current controller displays the list of all the Computer names, their statuses and their locations. (Please note that for "this" page, at this time, there are no checks in place to filter out nonconforming names).
+```bash
+cd "$(rbenv root)/versions"
+ln -s 2.7.5 ruby-2.7.5
+```
 
-###2. History Controller
-[Click here to access the link](http://localhost:8080/wstrack-server/history/list?max=10&sort=timestamp&order=desc)
+### Installation for development
 
-This controller is used for auditing purposes and is used to check logins/logouts based on timestamps.
+1) Clone the Git repository and switch to the directory:
 
-###3. Workstation Availability
+    ```bash
+    $ git clone git@github.com:umd-lib/wstrack.git
+    $ cd wstrack/server
+    ```
 
-The workstation availability controller caters to two functions:
-#####a. Availability by location (Web interface)
-[Click here to access the link](http://localhost:8080/wstrack-server/history/list?max=10&sort=timestamp&order=desc)
+    Switching into the directory should trigger RVM to set up a gemset.
 
-This function displays the number of PCs and MACs available at all the locations. The corresponding view used is [index.gsp](grails-app/views/availability/index.gsp)
+2) Copy the "env_example" file to ".env":
 
-#####b. Availability tracking using json/xml
-[http://localhost:8080/wstrack-server/availability/list](http://localhost:8080/wstrack-server/availability/list)
+    ```bash
+    $ cp env_example .env
+    ```
 
-This link is used to get the workstation availability information in the form of a JSON message. You can use the format parameter to specify the type of message required. The application supports JSON and XML currently with JSON being the default. 
-[http://localhost:8080/wstrack-server/availability/list?format=json](http://localhost:8080/wstrack-server/availability/list?format=json) returns a JSON message and [http://localhost:8080/wstrack-server/availability/list?format=xml](http://localhost:8080/wstrack-server/availability/list?format=xml) returns an XML message.
+   Determine the values for the "SAML_SP_PRIVATE_KEY" and "SAML_SP_CERTIFICATE"
+   variables:
 
+   ```bash
+   > kubectl -n test get secret wstrack-common-env-secret -o jsonpath='{.data.SAML_SP_PRIVATE_KEY}' | base64 --decode
+   > kubectl -n test get secret wstrack-common-env-secret -o jsonpath='{.data.SAML_SP_CERTIFICATE}' | base64 --decode
+   ```
 
-##Bootstrap data (Local)
-The random data generated in the local run is because of init() configurations made in the Bootstrap.groovy file.
+   **Note:** These values are also available from the "test/sp.crt" and
+   "test/sp.key" files in the "wstrack-saml.zip" file in the
+   "SSDR/Developer Resources/DIT SAML Configurations/" directory on Box.
 
+   Edit the '.env" file:
 
+   ```bash
+   > vi .env
+   ```
 
+   and set the parameters:
 
+   | Parameter              | Value                                |
+   | ---------------------- | ------------------------------------ |
+   | HOST                   | wstrack-local                        |
+   | SAML_SP_PRIVATE_KEY    | (Output from first kubectl command)  |
+   | SAML_SP_CERTIFICATE    | (Output from second kubectl command) |
 
+3) Run the following commands to setup the application:
 
+    ```bash
+    $ bundle config set without 'production'
+    $ bundle install
+    $ yarn
+    $ rails db:reset
+    $ rails server
+    ```
 
+4) The application will be available at <http://wstrack-local:3000/>
 
+### Running the tests
+
+To run the tests:
+
+```bash
+$ rails test:system test
+```
+
+## Server Functionality
+
+This application provides the following functionality:
+
+* a "/track" endpoint used by the "wstrack" client application to report
+  workstation logins and logouts.
+
+* Workstation Statuses - displays the workstations currently known by
+  the application (via clients accessing the "/track" endpoint)
+
+* Availability - displays workstation availability by physical location,
+  supporting a human-readable table, as well as JSON and XML formats.
+
+* Locations - a editable list of regular expressions mapping workstation names
+  to physical locations.
+
+The application also generates CSV files of the workstation logins and logouts
+history for analysis.
+
+## Client "/track" Endpoint
+
+The "/track" endpoint accepts an HTTP GET request, using a URL of the following
+format:
+
+```text
+<APPLICATION_BASE_URL>/track/<WORKSTATION_NAME>/<STATUS>/<OS>/<GUEST_FLAG>/<USER_HASH>
+```
+
+where:
+
+* \<APPLICATION_BASE_URL> - The base URL for the server
+* \<WORKSTATION_NAME> - The name of the workstation (expected, but not required,
+  to conform to one  of the "Locations" regular expressions)
+* \<STATUS> - Accepted values: "login" or "logout"
+* \<OS> - The operating system description
+* \<GUEST_FLAG> - Accepted values: "t" (true) or "f" (false)
+* \<USER_HASH> - The hashcode for the user
+
+## CSV History File Configuration
+
+The application records workstation login/logout activity to a CSV file.
+Activity is only recorded for new records (either generated through the
+GUI, or from the API endpoint). Edits to existing records and deletions
+are *not* recorded.
+
+Activity for each day is recorded in files named for that day (the filename
+format is "YYYY-MM-DD.csv").
+
+The directory that the CSV files are written to is configured via the
+"config.x.history.storage_dir" parameter in "config/application.rb". The
+value for this parameter can be set via a "HISTORY_STORAGE_DIR" environment
+variable, otherwise it defaults to the "tmp" subdirectory in the project root.
+The directory will be created, if it does not exist.
+
+The application has been configured (via the
+"config.time_zone" parameter in "config/application.rb") to use the
+"Eastern Time (US & Canada)" timezone, to ensure that files are rolled over
+at EST/EDT midnight.
+
+The CSV file contains a "timestamp" field that reflects the "EST/EDT" timezone.
+
+### Code Style
+
+The application uses [Rubocop](https://docs.rubocop.org/rubocop/1.25/index.html)
+to enforce a coding standard. To run:
+
+```bash
+$ rubocop -D
+```
+
+## Rake Tasks
+
+### Sample Data
+
+#### Populate the database with sample data
+
+```bash
+$ rails db:populate_sample_data
+```
+
+#### Drop, create, migrate, seed and populate sample data
+
+```bash
+$ rails db:reset_with_sample_data
+```
+
+### Grails Migration Tasks
+
+The following tasks are intended to support the migration of data from the
+Grails "wstrack" application. These tasks can be removed once the Grails
+"wstrack" application has been retired.
+
+#### Clear the WorkstationStatus table
+
+Clears the "WorkstationStatus" table, prior to importing data from the CSV file
+from the Grails "wstrack" application.
+
+```bash
+$ rails db:clear_current_workstation_status
+```
+
+#### Import Grails "Current" Workstation Status CSV file
+
+Populates the "WorkstationStatus" table with a CSV file generated from the
+"Current" entries in the Grails "wstrack" application.
+
+```bash
+$ rails db:import_current_workstation_status['<CSV_FILE>']
+```
+
+where \<CSV_FILE> is the full path to the CSV file. For example, if the CSV
+file is located at "/tmp/grails_wstrack_current.csv", the command would beL
+
+```bash
+$ rails db:import_current_workstation_status['/tmp/grails_wstrack_current.csv']
+```
+
+To generate the CSV from the Grails "wstrack" application:
+
+1) Switch to the approriate Kubernetes namespace:
+
+    ```bash
+    $ kubectl config use-context <K8S_NAMESPACE>
+    ```
+
+    where \<K8S_NAMESPACE> is the Kubernetes namespace. For example, for the "test"
+    namespace", the command would be:
+
+    ```bash
+    $ kubectl config use-context test
+    ```
+
+2) Run the following command to output a CSV file to the
+   "/tmp/grails_wstrack_current.csv" file in the "wstrack-app-0" pod:
+
+    ```bash
+    $ kubectl exec wstrack-db-0 -- psql --username wstrack --dbname wstrack -c \
+      "COPY (SELECT * FROM current ORDER BY id ASC) TO '/tmp/grails_wstrack_current.csv' WITH (FORMAT CSV, HEADER)"
+    ```
+
+3) Copy the "/tmp/grails_wstrack_current.csv" file to
+   "/tmp/grails_wstrack_current.csv" on the local workstation
+
+    ```bash
+    $ kubectl cp wstrack-db-0:/tmp/grails_wstrack_current.csv /tmp/grails_wstrack_current.csv
+    ```
+
+## Access Control
+
+In order to access this application, the user must be a member of the following
+Grouper group (<https://grouper.umd.edu/>):
+
+* Application Roles/Libraries/WorkstationTracking/WorkstationTracking-Administrator
+
+The following endpoints do not require authentication:
+
+* /ping - Used for Kubernetes application health checks
+* /track - Used by the "wstrack" client to update workstation status
+* /availability - Used to report workstation availability, by location

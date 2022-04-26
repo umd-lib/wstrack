@@ -7,3 +7,5 @@ plugins/
 .project
 .settings/
 bin/
+
+server/.env
