@@ -1,3 +1,33 @@
 <h1>
 Workstation Tracking
 </h1>
+
+<table class="table table-borderless">
+  <tr>
+    <td>
+      <%= link_to  'Workstation Statuses', workstation_statuses_path %>
+    </td>
+    <td>
+      Current workstation login/logout status, as reported to this server by the "wstrack" client application
+    </td>
+  </tr>
+  <tr>
+    <td data-turbolinks="false">
+      <%= link_to  'Workstation Availability', availability_path %>
+
+      <%= link_to  '(as JSON)', availability_list_path(params: { format: 'json',  }) %>
+      <%= link_to  '(as XML)', availability_list_path(params: { format: 'xml' }) %>
+    </td>
+    <td>
+      Available workstations, by location
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= link_to  'Locations', locations_path %>
+    </td>
+    <td>
+      Regular expressions mapping workstation names to physical locations
+    </td>
+  </tr>
+</table>
