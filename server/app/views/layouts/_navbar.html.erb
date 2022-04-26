@@ -1,0 +1,9 @@
+<% content_for :navbar do %>
+  <ul class="nav navbar-nav">
+    <% if logged_in? %>
+      <li class="<%= 'active' if current_page?(workstation_statuses_path) %>"><%= link_to 'Workstation Statuses', workstation_statuses_path %></li>
+      <li class="<%= 'active' if current_page?(availability_path) %>"><%= link_to  'Workstation Availability', availability_path %></li>
+      <li class="<%= 'active' if current_page?(locations_path) %>"><%= link_to 'Locations', locations_path %></li>
+    <% end %>
+  </ul>
+<% end %>

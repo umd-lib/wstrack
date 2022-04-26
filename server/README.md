@@ -96,6 +96,44 @@ To run the tests:
 $ rails test:system test
 ```
 
+## Server Functionality
+
+This application provides the following functionality:
+
+* a "/track" endpoint used by the "wstrack" client application to report
+  workstation logins and logouts.
+
+* Workstation Statuses - displays the workstations currently known by
+  the application (via clients accessing the "/track" endpoint)
+
+* Availability - displays workstation availability by physical location,
+  supporting a human-readable table, as well as JSON and XML formats.
+
+* Locations - a editable list of regular expressions mapping workstation names
+  to physical locations.
+
+The application also generates CSV files of the workstation logins and logouts
+history for analysis.
+
+## Client "/track" Endpoint
+
+The "/track" endpoint accepts an HTTP GET request, using a URL of the following
+format:
+
+```text
+<APPLICATION_BASE_URL>/track/<WORKSTATION_NAME>/<STATUS>/<OS>/<GUEST_FLAG>/<USER_HASH>
+```
+
+where:
+
+* \<APPLICATION_BASE_URL> - The base URL for the server
+* \<WORKSTATION_NAME> - The name of the workstation (expected, but not required,
+  to conform to one  of the "Locations" regular expressions)
+* \<STATUS> - Accepted values: "login" or "logout"
+* \<OS> - The operating system description
+* \<GUEST_FLAG> - Accepted values: "t" (true) or "f" (false)
+* \<USER_HASH> - The hashcode for the user
+
 ## CSV History File Configuration
 
 The application records workstation login/logout activity to a CSV file.
@@ -216,4 +254,4 @@ The following endpoints do not require authentication:
 
 * /ping - Used for Kubernetes application health checks
 * /track - Used by the "wstrack" client to update workstation status
-* /availability - Used to report workstation availability
+* /availability - Used to report workstation availability, by location
