@@ -26,9 +26,8 @@ class RecordHistory < ApplicationService
   end
 
   # Returns a Hash representing the CSV row to record
-  def as_csv(workstation_status, timestamp) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def as_csv(workstation_status, timestamp) # rubocop:disable Metrics/AbcSize
     csv_record = {}
-    csv_record[:id] = workstation_status.id
     csv_record[:workstation_name] = workstation_status.workstation_name
     csv_record[:guest_flag] = workstation_status.guest_flag ? 't' : 'f'
     csv_record[:os] = workstation_status.os

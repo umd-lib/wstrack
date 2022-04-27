@@ -41,7 +41,7 @@ class RecordHistoryTest < ActiveSupport::TestCase
     csv_hash = RecordHistory.new.as_csv(workstation_status, timestamp)
 
     expected_hash = {
-      id: workstation_status.id, workstation_name: 'LIBRWKARTM1F123',
+      workstation_name: 'LIBRWKARTM1F123',
       os: 'Mac OS X 10.15.3', user_hash: 'y3Fu6SqTdoGUdaERmrF4SA==',
       status: 'login', guest_flag: 't', location: 'Art Library 1st floor',
       type: 'MAC', timestamp: timestamp.strftime('%Y-%m-%d %H:%M:%S.%L')
@@ -65,7 +65,7 @@ class RecordHistoryTest < ActiveSupport::TestCase
     csv_hash = RecordHistory.new.as_csv(workstation_status, timestamp)
 
     expected_hash = {
-      id: workstation_status.id, workstation_name: 'TEST',
+      workstation_name: 'TEST',
       os: 'Mac OS X 10.15.3', user_hash: 'y3Fu6SqTdoGUdaERmrF4SA==',
       status: 'login', guest_flag: 't', location: nil,
       type: nil, timestamp: timestamp.strftime('%Y-%m-%d %H:%M:%S.%L')

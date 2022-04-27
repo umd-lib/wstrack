@@ -137,9 +137,8 @@ where:
 ## CSV History File Configuration
 
 The application records workstation login/logout activity to a CSV file.
-Activity is only recorded for new records (either generated through the
-GUI, or from the API endpoint). Edits to existing records and deletions
-are *not* recorded.
+Only activity on the "wstrack_client" endpoint ("/track") is recorded.
+New records, edits, or deletions through the GUI are *not* recorded.
 
 Activity for each day is recorded in files named for that day (the filename
 format is "YYYY-MM-DD.csv").
