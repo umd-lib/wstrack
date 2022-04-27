@@ -19,9 +19,8 @@ namespace :db do
       workstation_status.os = row['os']
       workstation_status.status = row['status']
       workstation_status.user_hash = row['user_hash']
-      workstation_status.updated_at = 2.days.ago
 
-      timestamp =Time.parse(row['timestamp'])
+      timestamp = Time.zone.parse(row['timestamp'])
       workstation_status.updated_at = timestamp
       workstation_status.save!
       records_imported += 1
