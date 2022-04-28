@@ -49,11 +49,14 @@ class LocationsController < ApplicationController
 
   # DELETE /locations/1 or /locations/1.json
   def destroy
-    @location.destroy
-
     respond_to do |format|
-      format.html { redirect_to locations_url, notice: 'Location was successfully destroyed.' }
-      format.json { head :no_content }
+      if delete
+        format.html { redirect_to locations_url, notice: 'Location was successfully destroyed.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to locations_url, flash: { error: @error_msg } }
+        format.json { render json: [error], status: :unprocessable_entity }
+      end
     end
   end
 
@@ -67,5 +70,13 @@ class LocationsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def location_params
       params.require(:location).permit(:code, :name, :regex)
+    end
+
+    def delete
+      @location.destroy
+      true
+    rescue ActiveRecord::InvalidForeignKey
+      @error_msg = "Location '#{@location.code}' cannot be destroyed because it has associated workstation statuses."
+      false
     end
 end

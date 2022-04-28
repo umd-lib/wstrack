@@ -60,4 +60,23 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal flash[:notice], 'Location was successfully destroyed.'
     assert_redirected_to locations_url
   end
+
+  test 'should not destroy location with associated workstation status' do
+    workstation_status = WorkstationStatus.new(
+      {
+        workstation_name: 'LIBRWKARTM1F_TEST', os: 'test', user_hash: 'test',
+        status: 'login', guest_flag: false
+      }
+    )
+    workstation_status.save!
+    assert @location.workstation_status.any?
+
+    assert_no_difference('Location.count') do
+      delete location_url(@location)
+    end
+
+    assert_equal flash[:error],
+                 "Location '#{@location.code}' cannot be destroyed because it has associated workstation statuses."
+    assert_redirected_to locations_url
+  end
 end

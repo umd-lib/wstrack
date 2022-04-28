@@ -5,7 +5,6 @@ class Location < ApplicationRecord
   has_many(
     :workstation_status,
     class_name: 'WorkstationStatus',
-    foreign_key: 'locatiin_id',
     inverse_of: :location,
     dependent: nil
   )
