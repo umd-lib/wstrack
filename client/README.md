@@ -41,6 +41,19 @@ $ mvn clean install
 $ mvn deploy
 ```
 
+The deployment to the Nexus will include a "dist" Zip file, containing the
+scripts and jar file needed on the workstation. The URL for the Zip file
+will have the format:
+
+```text
+https://maven.lib.umd.edu/nexus/repository/releases/edu/umd/lib/wstrack/client/wstrack-client/<VERSION>/wstrack-client-<VERSION>-dist.zip
+```
+
+where \<VERSION> is the version of the distribution.
+
+**Note:** Snapshot distributions will has an additional timestamp as part of the
+Zip filename. Access the Nexus to determine the Zip file name, if needed.
+
 ## Usage Instructions (for Development)
 
 1) Build the client application:
