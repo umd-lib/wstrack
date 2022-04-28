@@ -2,6 +2,19 @@
 
 A Rails-based implementation of the Workstation Tracking server.
 
+## Access Control
+
+In order to login to this application, the user must be a member of the
+following Grouper group (<https://grouper.umd.edu/>):
+
+* Application Roles/Libraries/WorkstationTracking/WorkstationTracking-Administrator
+
+The following endpoints do not require a login:
+
+* /ping - Used by Kubernetes for application health checks
+* /track - Used by the "wstrack" clients to update workstation status
+* /availability - Used to report workstation availability, by location
+
 ## Development Setup
 
 ### Prerequisites
@@ -96,6 +109,15 @@ To run the tests:
 $ rails test:system test
 ```
 
+### Code Style
+
+The application uses [Rubocop](https://docs.rubocop.org/rubocop/1.25/index.html)
+to enforce a coding standard. To run:
+
+```bash
+$ rubocop -D
+```
+
 ## Server Functionality
 
 This application provides the following functionality:
@@ -106,8 +128,8 @@ This application provides the following functionality:
 * Workstation Statuses - displays the workstations currently known by
   the application (via clients accessing the "/track" endpoint)
 
-* Availability - displays workstation availability by physical location,
-  supporting a human-readable table, as well as JSON and XML formats.
+* Availability - displays workstation availability by physical location
+  in HTML, JSON, and XML formats.
 
 * Locations - a editable list of regular expressions mapping workstation names
   to physical locations.
@@ -155,15 +177,6 @@ The application has been configured (via the
 at EST/EDT midnight.
 
 The CSV file contains a "timestamp" field that reflects the "EST/EDT" timezone.
-
-### Code Style
-
-The application uses [Rubocop](https://docs.rubocop.org/rubocop/1.25/index.html)
-to enforce a coding standard. To run:
-
-```bash
-$ rubocop -D
-```
 
 ## Rake Tasks
 
@@ -241,16 +254,3 @@ To generate the CSV from the Grails "wstrack" application:
     ```bash
     $ kubectl cp wstrack-db-0:/tmp/grails_wstrack_current.csv /tmp/grails_wstrack_current.csv
     ```
-
-## Access Control
-
-In order to access this application, the user must be a member of the following
-Grouper group (<https://grouper.umd.edu/>):
-
-* Application Roles/Libraries/WorkstationTracking/WorkstationTracking-Administrator
-
-The following endpoints do not require authentication:
-
-* /ping - Used for Kubernetes application health checks
-* /track - Used by the "wstrack" client to update workstation status
-* /availability - Used to report workstation availability, by location
