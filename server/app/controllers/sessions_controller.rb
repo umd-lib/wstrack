@@ -34,6 +34,11 @@ class SessionsController < ApplicationController
     end
 
     def roles_allowed?(roles)
-      roles.include? 'WorkstationTracking-Administrator'
+      valid_role = 'workstationtracking-administrator'
+
+      # Grouper groups may be returned in different of uppercase/lowercase
+      # forms, so need to do a case-insensitive comparison.
+      downcased_roles = roles.map(&:downcase)
+      downcased_roles.include? valid_role
     end
 end

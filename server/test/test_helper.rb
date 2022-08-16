@@ -50,12 +50,12 @@ class ActiveSupport::TestCase
   end
 
   # Valid login for integration tests (ActionDispatch::IntegrationTest)
-  def login_with_valid_role
+  def login_with_valid_role(role = 'WorkstationTracking-Administrator')
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:saml] = OmniAuth::AuthHash.new(
       {
         provider: 'saml',
-        info: { roles: ['WorkstationTracking-Administrator'] }
+        info: { roles: [role] }
       }
     )
     Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml]
