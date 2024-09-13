@@ -89,6 +89,19 @@ ln -s 2.7.5 ruby-2.7.5
    | SAML_SP_PRIVATE_KEY    | (Output from first kubectl command)  |
    | SAML_SP_CERTIFICATE    | (Output from second kubectl command) |
 
+3) Because this application is currently built with an older Ruby (2.7.5), you
+   will need to use OpenSSL 1.1 when building the puma native extensions. Before
+   running `bundle install`, you should install OpenSSL 1.1 and configure the shell
+   environment to use it:
+
+   ```zsh
+   brew install openssl@1.1
+
+   export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
+   export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
+   export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
+   ```
+
 3) Run the following commands to setup the application:
 
     ```bash
