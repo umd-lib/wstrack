@@ -1,5 +1,14 @@
 # WSTrack
 
+---
+
+## ARCHIVED REPOSITORY
+
+This repository has been archived, and is no longer being developed or
+maintained.
+
+---
+
 WSTrack (Workstation Tracking Project) contains client and server applications
 for tracking user workstation logins and logouts.
 
